@@ -1,0 +1,399 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Credenciamento de ICTs — Apresentação (mockup)</title>
+  <meta name="description" content="Mockup funcional da apresentação do MVP5 — 13 blocos, navegação por scroll/teclado. Não faz parte do produto." />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <!-- Navegação discreta: dots 01–13 + progresso. Ver main.js para scroll-spy e teclado. -->
+  <nav class="dotnav" id="dotnav" aria-label="Navegação da apresentação">
+    <button class="dotnav__item" data-target="1" aria-label="Bloco 1 — Abertura"><span>01</span></button>
+    <button class="dotnav__item" data-target="2" aria-label="Bloco 2 — O problema"><span>02</span></button>
+    <button class="dotnav__item" data-target="3" aria-label="Bloco 3 — A solução"><span>03</span></button>
+    <button class="dotnav__item" data-target="4" aria-label="Bloco 4 — Arquitetura"><span>04</span></button>
+    <button class="dotnav__item" data-target="5" aria-label="Bloco 5 — Evolução do projeto"><span>05</span></button>
+    <button class="dotnav__item" data-target="6" aria-label="Bloco 6 — Cadeia do smart contract"><span>06</span></button>
+    <button class="dotnav__item" data-target="7" aria-label="Bloco 7 — Quem construiu o quê"><span>07</span></button>
+    <button class="dotnav__item" data-target="8" aria-label="Bloco 8 — Contribuições individuais"><span>08</span></button>
+    <button class="dotnav__item" data-target="9" aria-label="Bloco 9 — Engenharia e qualidade"><span>09</span></button>
+    <button class="dotnav__item" data-target="10" aria-label="Bloco 10 — Estado atual"><span>10</span></button>
+    <button class="dotnav__item" data-target="11" aria-label="Bloco 11 — O que já construímos"><span>11</span></button>
+    <button class="dotnav__item" data-target="12" aria-label="Bloco 12 — Próxima etapa"><span>12</span></button>
+    <button class="dotnav__item" data-target="13" aria-label="Bloco 13 — Encerramento"><span>13</span></button>
+  </nav>
+
+  <div class="deck" id="deck">
+
+    <!-- ============ BLOCO 01 — ABERTURA (preservado do protótipo original) ============ -->
+    <section class="hero" id="hero" data-motion="pending" data-block="1">
+      <div class="hero__canvas-wrap" id="canvas-wrap" aria-hidden="true">
+        <canvas id="network-canvas"></canvas>
+      </div>
+      <div class="hero__scrim" aria-hidden="true"></div>
+      <div class="hero__content">
+        <p class="hero__eyebrow">Residência Web3</p>
+        <h1 class="hero__headline">Credenciamento<br />de ICTs</h1>
+        <p class="hero__subheadline">Arquitetura, rastreabilidade<br />e credenciamento on-chain.</p>
+        <p class="hero__indicator" aria-hidden="true">
+          <span class="hero__indicator-arrow">↓</span>
+          <span class="hero__indicator-label">Explorar</span>
+        </p>
+      </div>
+    </section>
+
+    <!-- ============ BLOCO 02 — O PROBLEMA ============ -->
+    <section class="block" id="block-02" data-block="2">
+      <div class="block__inner container">
+        <p class="block__index">02 / 13</p>
+        <p class="eyebrow">O problema</p>
+        <h2 class="block__title">
+          Como registrar, avaliar, habilitar,<br />
+          auditar, renovar e consultar ICTs<br />
+          <span class="accent">com rastreabilidade?</span>
+        </h2>
+        <p class="block__lead">
+          A habilitação de uma ICT tem prazo, passa por renovações e auditorias — e hoje não
+          há uma forma rápida e confiável de comprovar seu status atual sem depender de
+          verificação manual.
+        </p>
+        <div class="verb-row reveal-stagger">
+          <span class="verb-chip">Registrar</span>
+          <span class="verb-chip">Solicitar</span>
+          <span class="verb-chip">Decidir</span>
+          <span class="verb-chip">Habilitar</span>
+          <span class="verb-chip">Auditar</span>
+          <span class="verb-chip">Renovar</span>
+          <span class="verb-chip">Consultar</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ BLOCO 03 — A SOLUÇÃO ============ -->
+    <section class="block" id="block-03" data-block="3">
+      <div class="block__inner container">
+        <p class="block__index">03 / 13</p>
+        <p class="eyebrow">A solução</p>
+        <h2 class="block__title">Um registro híbrido on-chain / off-chain</h2>
+        <p class="block__lead">
+          Estado mínimo e vigência vivem no smart contract; o histórico é reconstituído via
+          eventos; qualquer pessoa consulta o status atual sem carteira nem login.
+        </p>
+        <ol class="flow flow--h" aria-label="Fluxo de negócio">
+          <li class="flow__step"><span class="flow__dot"></span><span class="flow__label">ICT</span></li>
+          <li class="flow__step"><span class="flow__dot"></span><span class="flow__label">Registro</span></li>
+          <li class="flow__step"><span class="flow__dot"></span><span class="flow__label">Solicitação</span></li>
+          <li class="flow__step"><span class="flow__dot"></span><span class="flow__label">Decisão</span></li>
+          <li class="flow__step"><span class="flow__dot"></span><span class="flow__label">Habilitação</span></li>
+          <li class="flow__step"><span class="flow__dot"></span><span class="flow__label">Auditoria</span></li>
+          <li class="flow__step"><span class="flow__dot"></span><span class="flow__label">Renovação</span></li>
+          <li class="flow__step flow__step--accent"><span class="flow__dot"></span><span class="flow__label">Consulta pública</span></li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- ============ BLOCO 04 — ARQUITETURA ============ -->
+    <section class="block" id="block-04" data-block="4">
+      <div class="block__inner container">
+        <p class="block__index">04 / 13</p>
+        <p class="eyebrow">Arquitetura</p>
+        <h2 class="block__title">Componentes reais do sistema</h2>
+        <div class="arch-diagram" aria-label="Diagrama de arquitetura">
+          <div class="arch-box arch-box--top">Frontend <small>Next.js — público (merged) + área interna (PR aberto)</small></div>
+          <div class="arch-arrow">↓</div>
+          <div class="arch-box arch-box--mid">Backend <small>NestJS — não iniciado</small></div>
+          <div class="arch-branch">
+            <div class="arch-arrow arch-arrow--l">↙</div>
+            <div class="arch-arrow arch-arrow--r">↘</div>
+          </div>
+          <div class="arch-row">
+            <div class="arch-box">Banco <small>PostgreSQL / Prisma — não iniciado</small></div>
+            <div class="arch-box arch-box--accent">Smart Contract <small>Solidity — 5/5 operações em código, 1 mergeada</small></div>
+          </div>
+        </div>
+        <p class="block__note">MinIO/S3 (documentos) e rede de teste (Anvil/Sepolia) já provisionados na infraestrutura, sem task de integração de código aberta ainda.</p>
+      </div>
+    </section>
+
+    <!-- ============ BLOCO 05 — EVOLUÇÃO DO PROJETO ============ -->
+    <section class="block" id="block-05" data-block="5">
+      <div class="block__inner container">
+        <p class="block__index">05 / 13</p>
+        <p class="eyebrow">Evolução do projeto</p>
+        <h2 class="block__title">Quatro fases, não uma lista de issues</h2>
+        <div class="phase-grid">
+          <div class="phase-card">
+            <p class="phase-card__title">Fundação</p>
+            <div class="phase-card__tasks">
+              <span class="task-chip"><span class="tag tag--merged">T-001</span><span class="task-chip__resp">Lukas</span></span>
+              <span class="task-chip"><span class="tag tag--merged">T-002</span><span class="task-chip__resp">Lukas</span></span>
+              <span class="task-chip"><span class="tag tag--merged">T-003</span><span class="task-chip__resp">Lukas · Alison</span></span>
+              <span class="task-chip"><span class="tag tag--merged">T-004</span><span class="task-chip__resp">Kaique</span></span>
+              <span class="task-chip"><span class="tag tag--blocked">T-005</span><span class="task-chip__resp">Alison</span></span>
+            </div>
+          </div>
+          <div class="phase-card">
+            <p class="phase-card__title">Smart Contract</p>
+            <div class="phase-card__tasks">
+              <span class="task-chip"><span class="tag tag--merged">T-006</span><span class="task-chip__resp">Gabriel</span></span>
+              <span class="task-chip"><span class="tag tag--blocked">T-007</span><span class="task-chip__resp">Gabriel</span></span>
+              <span class="task-chip"><span class="tag tag--open">T-008</span><span class="task-chip__resp">Lukas</span></span>
+              <span class="task-chip"><span class="tag tag--open">T-009</span><span class="task-chip__resp">Lukas</span></span>
+              <span class="task-chip"><span class="tag tag--open">T-010</span><span class="task-chip__resp">Lukas</span></span>
+            </div>
+          </div>
+          <div class="phase-card">
+            <p class="phase-card__title">Backend</p>
+            <div class="phase-card__tasks">
+              <span class="task-chip"><span class="tag tag--notstarted">T-011</span><span class="task-chip__resp">Alison</span></span>
+              <span class="task-chip"><span class="tag tag--notstarted">T-012</span><span class="task-chip__resp">Lukas</span></span>
+              <span class="task-chip"><span class="tag tag--notstarted">T-013</span><span class="task-chip__resp">Lukas</span></span>
+            </div>
+          </div>
+          <div class="phase-card">
+            <p class="phase-card__title">Frontend / Integração</p>
+            <div class="phase-card__tasks">
+              <span class="task-chip"><span class="tag tag--open">T-014</span><span class="task-chip__resp">Kaique</span></span>
+              <span class="task-chip"><span class="tag tag--notstarted">T-015</span><span class="task-chip__resp">Kaique</span></span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ BLOCO 06 — CADEIA DO SMART CONTRACT ============ -->
+    <section class="block" id="block-06" data-block="6">
+      <div class="block__inner container">
+        <p class="block__index">06 / 13</p>
+        <p class="eyebrow">Cadeia do smart contract</p>
+        <h2 class="block__title">Cada etapa construída sobre a anterior</h2>
+        <ol class="chain">
+          <li class="chain__step">
+            <div class="chain__head"><span class="chain__task">T-006</span><span class="tag tag--merged">MERGED</span></div>
+            <p class="chain__label">Registro da ICT — <code>registerICT</code></p>
+          </li>
+          <li class="chain__step">
+            <div class="chain__head"><span class="chain__task">T-007</span><span class="tag tag--blocked">BLOCKED</span></div>
+            <p class="chain__label">Solicitação / decisão — <code>submitApplication</code>, <code>recordDecision</code></p>
+          </li>
+          <li class="chain__step">
+            <div class="chain__head"><span class="chain__task">T-008</span><span class="tag tag--open">OPEN_PR</span></div>
+            <p class="chain__label">Ativação — <code>activateAccreditation</code></p>
+          </li>
+          <li class="chain__step">
+            <div class="chain__head"><span class="chain__task">T-009</span><span class="tag tag--open">OPEN_PR</span></div>
+            <p class="chain__label">Auditoria / renovação — <code>recordAudit</code>, <code>renewAccreditation</code></p>
+          </li>
+          <li class="chain__step">
+            <div class="chain__head"><span class="chain__task">T-010</span><span class="tag tag--open">OPEN_PR</span></div>
+            <p class="chain__label">Status atual — <code>getCurrentStatus</code></p>
+          </li>
+        </ol>
+        <p class="block__note">T-008, T-009 e T-010 já têm código pronto e CI verde — dependem do merge de T-007 (hoje bloqueada por conflito) para avançar na cadeia.</p>
+      </div>
+    </section>
+
+    <!-- ============ BLOCO 07 — QUEM CONSTRUIU O QUÊ ============ -->
+    <section class="block" id="block-07" data-block="7">
+      <div class="block__inner container">
+        <p class="block__index">07 / 13</p>
+        <p class="eyebrow">Quem construiu o quê</p>
+        <h2 class="block__title">Áreas de contribuição, sem ranking</h2>
+        <div class="people-grid">
+          <div class="person-card">
+            <p class="person-card__name">Lukas</p>
+            <ul class="person-card__areas">
+              <li>Arquitetura</li><li>Segurança</li><li>Smart Contract</li><li>Auditoria técnica local</li>
+            </ul>
+          </div>
+          <div class="person-card">
+            <p class="person-card__name">Gabriel</p>
+            <ul class="person-card__areas">
+              <li>Base do fluxo on-chain</li><li>Registro</li><li>Solicitação</li>
+            </ul>
+          </div>
+          <div class="person-card">
+            <p class="person-card__name">Alison</p>
+            <ul class="person-card__areas">
+              <li>Custódia de chaves</li><li>Papéis</li><li>Backend (designada)</li>
+            </ul>
+          </div>
+          <div class="person-card">
+            <p class="person-card__name">Kaique</p>
+            <ul class="person-card__areas">
+              <li>Frontend</li><li>Landing</li><li>Área interna</li>
+            </ul>
+          </div>
+          <div class="person-card person-card--mentor">
+            <p class="person-card__name">Heitor</p>
+            <ul class="person-card__areas">
+              <li>Mentoria</li><li>Review</li><li>Gate técnico</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ BLOCO 08 — CONTRIBUIÇÕES INDIVIDUAIS ============ -->
+    <section class="block" id="block-08" data-block="8">
+      <div class="block__inner container">
+        <p class="block__index">08 / 13</p>
+        <p class="eyebrow">Contribuições individuais</p>
+        <h2 class="block__title">Responsabilidade por pessoa</h2>
+        <div class="contrib-grid">
+          <div class="card">
+            <p class="card__name">Lukas</p>
+            <p class="card__role">Arquitetura · Segurança · Smart Contract</p>
+            <p class="card__meta"><strong>Tasks:</strong> T-001, T-002, T-003, T-008, T-009, T-010, T-012, T-013</p>
+            <p class="card__meta"><strong>PRs:</strong> #5, #6, #23, #24, #25</p>
+          </div>
+          <div class="card">
+            <p class="card__name">Gabriel</p>
+            <p class="card__role">Smart Contract</p>
+            <p class="card__meta"><strong>Tasks:</strong> T-006, T-007</p>
+            <p class="card__meta"><strong>PRs:</strong> #21, #22</p>
+          </div>
+          <div class="card">
+            <p class="card__name">Alison</p>
+            <p class="card__role">Documentação / Arquitetura · Backend (designada)</p>
+            <p class="card__meta"><strong>Tasks:</strong> T-003 (coautoria), T-005, T-011</p>
+            <p class="card__meta"><strong>PRs:</strong> #20</p>
+          </div>
+          <div class="card">
+            <p class="card__name">Kaique</p>
+            <p class="card__role">Frontend</p>
+            <p class="card__meta"><strong>Tasks:</strong> T-004, T-014, T-015</p>
+            <p class="card__meta"><strong>PRs:</strong> #7, #26</p>
+          </div>
+          <div class="card card--mentor">
+            <p class="card__name">Heitor</p>
+            <p class="card__role">Mentoria e review técnica (gate de aprovação)</p>
+            <p class="card__meta"><strong>Reviews:</strong> PR #6, #20, #21, #22</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ BLOCO 09 — ENGENHARIA E QUALIDADE ============ -->
+    <section class="block" id="block-09" data-block="9">
+      <div class="block__inner container">
+        <p class="block__index">09 / 13</p>
+        <p class="eyebrow">Engenharia e qualidade</p>
+        <h2 class="block__title">Do issue ao merge</h2>
+        <ol class="flow flow--h flow--dense" aria-label="Processo de desenvolvimento">
+          <li class="flow__step"><span class="flow__dot"></span><span class="flow__label">Issue</span></li>
+          <li class="flow__step"><span class="flow__dot"></span><span class="flow__label">Branch</span></li>
+          <li class="flow__step"><span class="flow__dot"></span><span class="flow__label">Implementação</span></li>
+          <li class="flow__step"><span class="flow__dot"></span><span class="flow__label">Testes</span></li>
+          <li class="flow__step"><span class="flow__dot"></span><span class="flow__label">Pull Request</span></li>
+          <li class="flow__step"><span class="flow__dot"></span><span class="flow__label">CI</span></li>
+          <li class="flow__step"><span class="flow__dot"></span><span class="flow__label">Review</span></li>
+          <li class="flow__step"><span class="flow__dot"></span><span class="flow__label">Mentoria</span></li>
+          <li class="flow__step flow__step--accent"><span class="flow__dot"></span><span class="flow__label">Merge</span></li>
+        </ol>
+        <div class="stacked-note">
+          <p class="stacked-note__title">Branches empilhadas (stacked)</p>
+          <p class="chain-mini">T-007 → T-008 → T-009 → T-010</p>
+          <p class="block__note">O desenvolvimento continuou sobre branches anteriores enquanto as reviews estavam em andamento, mantendo a cadeia de dependências sem bloquear o time inteiro à espera de um único PR.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ BLOCO 10 — ESTADO ATUAL ============ -->
+    <section class="block" id="block-10" data-block="10">
+      <div class="block__inner container">
+        <p class="block__index">10 / 13</p>
+        <p class="eyebrow">Estado atual</p>
+        <h2 class="block__title">15 tasks, cinco estados</h2>
+        <div class="status-grid">
+          <div class="status-col">
+            <p class="status-col__title"><span class="tag tag--merged">MERGED</span> 4</p>
+            <p class="status-col__items">T-002 · T-003 · T-004 · T-006</p>
+          </div>
+          <div class="status-col">
+            <p class="status-col__title"><span class="tag tag--open">OPEN_PR</span> 4</p>
+            <p class="status-col__items">T-008 · T-009 · T-010 · T-014</p>
+          </div>
+          <div class="status-col">
+            <p class="status-col__title"><span class="tag tag--blocked">BLOCKED</span> 2</p>
+            <p class="status-col__items">T-005 · T-007</p>
+          </div>
+          <div class="status-col">
+            <p class="status-col__title"><span class="tag tag--done-nopr">DONE_NO_PR</span> 1</p>
+            <p class="status-col__items">T-001</p>
+          </div>
+          <div class="status-col">
+            <p class="status-col__title"><span class="tag tag--notstarted">NOT_STARTED</span> 4</p>
+            <p class="status-col__items">T-011 · T-012 · T-013 · T-015</p>
+          </div>
+        </div>
+        <p class="block__note">Implementado ≠ mergeado em <code>main</code>: código pronto e CI verde não significam que a funcionalidade já está integrada.</p>
+      </div>
+    </section>
+
+    <!-- ============ BLOCO 11 — O QUE JÁ CONSTRUÍMOS ============ -->
+    <section class="block" id="block-11" data-block="11">
+      <div class="block__inner container">
+        <p class="block__index">11 / 13</p>
+        <p class="eyebrow">O que já construímos</p>
+        <h2 class="block__title">Entregas reais, por status</h2>
+        <div class="built-columns">
+          <div class="built-col">
+            <p class="built-col__title">Em <code>main</code></p>
+            <ul class="built-list">
+              <li>Arquitetura do contrato (ADR-001)</li>
+              <li>Modelo de ameaças</li>
+              <li>Registro de ICT (<code>registerICT</code>)</li>
+              <li>Landing pública</li>
+            </ul>
+          </div>
+          <div class="built-col">
+            <p class="built-col__title">Pronto, aguardando merge</p>
+            <ul class="built-list">
+              <li>Custódia de chaves (ADR-002)</li>
+              <li>Solicitação e decisão</li>
+              <li>Ativação de habilitação</li>
+              <li>Auditoria e renovação</li>
+              <li>Consulta pública de status</li>
+              <li>Área interna — casca de navegação</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ BLOCO 12 — PRÓXIMA ETAPA ============ -->
+    <section class="block" id="block-12" data-block="12">
+      <div class="block__inner container">
+        <p class="block__index">12 / 13</p>
+        <p class="eyebrow">Próxima etapa</p>
+        <h2 class="block__title">O caminho lógico a partir daqui</h2>
+        <ol class="next-steps">
+          <li><span class="next-steps__num">1</span> Resolver o conflito de merge do PR #20 (T-005, ADR-002)</li>
+          <li><span class="next-steps__num">2</span> Resolver o conflito e a base do PR #22 (T-007)</li>
+          <li><span class="next-steps__num">3</span> Mergear T-008 → T-009 → T-010 em sequência</li>
+          <li><span class="next-steps__num">4</span> Iniciar T-011, destravando T-012 e T-013 em paralelo</li>
+          <li><span class="next-steps__num">5</span> Iniciar T-015 após T-012 e T-014 estarem prontos</li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- ============ BLOCO 13 — ENCERRAMENTO ============ -->
+    <section class="block block--closing" id="block-13" data-block="13">
+      <div class="block__inner container block__inner--center">
+        <p class="eyebrow">Residência Web3</p>
+        <h2 class="block__title block__title--closing">Credenciamento de ICTs</h2>
+        <p class="block__lead block__lead--center">
+          Da decisão arquitetural<br />a um fluxo funcional<br />de credenciamento.
+        </p>
+      </div>
+    </section>
+
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.min.js"></script>
+  <script src="main.js"></script>
+</body>
+</html>

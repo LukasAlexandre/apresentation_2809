@@ -1,0 +1,1022 @@
+/* Bloco 01 — Abertura — protótipo isolado.
+   Fonte de verdade: docs/apresentacao/08-BLOCO-01-ABERTURA.md e 09-CONCEPT-BLOCO-01.md */
+
+:root {
+  --bg-base: #05070c;
+  --bg-base-2: #0a0f1a;
+  --text-primary: #f4f6fa;
+  --text-secondary: #aab3c2;
+  --text-tertiary: #7c8798;
+  --accent: #7dd3fc;
+  --accent-soft: #38bdf8;
+
+  --eyebrow-size: clamp(0.72rem, 0.6rem + 0.4vw, 0.85rem);
+  --headline-size: clamp(2.6rem, 1.6rem + 4.2vw, 5.4rem);
+  --subheadline-size: clamp(1.05rem, 0.9rem + 0.6vw, 1.35rem);
+  --indicator-size: clamp(0.78rem, 0.72rem + 0.2vw, 0.9rem);
+
+  color-scheme: dark;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  background: var(--bg-base);
+  height: 100%;
+}
+
+body {
+  font-family: -apple-system, "Segoe UI", "Inter", "Helvetica Neue", Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+/* ---------- Hero (Bloco 01) ---------- */
+
+.hero {
+  position: relative;
+  min-height: 100vh;
+  min-height: 100svh;
+  width: 100%;
+  overflow: hidden;
+  background:
+    radial-gradient(ellipse 90% 70% at 78% 42%, rgba(56, 189, 248, 0.08), transparent 60%),
+    linear-gradient(160deg, var(--bg-base-2) 0%, var(--bg-base) 55%, #030507 100%);
+  display: flex;
+  align-items: center;
+}
+
+.hero__canvas-wrap {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+}
+
+#network-canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+/* Camada de legibilidade — nunca a fonte do conteúdo, só reforço de contraste. */
+.hero__scrim {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  background: linear-gradient(
+    90deg,
+    rgba(5, 7, 12, 0.72) 0%,
+    rgba(5, 7, 12, 0.42) 32%,
+    rgba(5, 7, 12, 0.06) 58%,
+    rgba(5, 7, 12, 0) 78%
+  );
+}
+
+.hero__content {
+  position: relative;
+  z-index: 3;
+  width: 100%;
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 0 clamp(24px, 6vw, 96px);
+  padding-top: env(safe-area-inset-top, 0px);
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+
+.hero__eyebrow {
+  margin: 0 0 1.1em;
+  font-size: var(--eyebrow-size);
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--text-tertiary);
+  opacity: 0;
+  transform: translateY(10px);
+}
+
+.hero__headline {
+  margin: 0;
+  font-size: var(--headline-size);
+  font-weight: 700;
+  line-height: 1.04;
+  letter-spacing: -0.02em;
+  color: var(--text-primary);
+  max-width: 14ch;
+  opacity: 0;
+  transform: translateY(16px);
+}
+
+.hero__subheadline {
+  margin: 0.9em 0 0;
+  font-size: var(--subheadline-size);
+  font-weight: 400;
+  line-height: 1.45;
+  color: var(--text-secondary);
+  max-width: 30ch;
+  opacity: 0;
+  transform: translateY(14px);
+}
+
+.hero__indicator {
+  margin: clamp(2.5rem, 8vh, 4.5rem) 0 0;
+  display: flex;
+  align-items: center;
+  gap: 0.55em;
+  font-size: var(--indicator-size);
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  color: var(--text-tertiary);
+  opacity: 0;
+}
+
+.hero__indicator-arrow {
+  display: inline-block;
+  color: var(--accent);
+  animation: none;
+}
+
+/* ---------- Entrada (sequência de aparição) ---------- */
+/* Ativada via classe no <main data-motion="ready">, adicionada por main.js.
+   Sem JS ou com prefers-reduced-motion, o CSS abaixo já garante estado final visível
+   (ver bloco de fallback logo adiante). */
+
+.hero[data-motion="ready"] .hero__eyebrow {
+  animation: rise 0.9s cubic-bezier(0.16, 1, 0.3, 1) 0.75s forwards;
+}
+.hero[data-motion="ready"] .hero__headline {
+  animation: rise 1.05s cubic-bezier(0.16, 1, 0.3, 1) 0.95s forwards;
+}
+.hero[data-motion="ready"] .hero__subheadline {
+  animation: rise 0.9s cubic-bezier(0.16, 1, 0.3, 1) 1.25s forwards;
+}
+.hero[data-motion="ready"] .hero__indicator {
+  animation: fade-in 0.8s ease-out 1.55s forwards;
+}
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Nenhum JS rodou (ex.: script bloqueado) ou motion ainda não iniciou por outro motivo:
+   depois de um instante, garantir que o conteúdo principal nunca fique invisível. */
+.hero:not([data-motion="ready"]):not([data-motion="skip"]) .hero__eyebrow,
+.hero:not([data-motion="ready"]):not([data-motion="skip"]) .hero__headline,
+.hero:not([data-motion="ready"]):not([data-motion="skip"]) .hero__subheadline,
+.hero:not([data-motion="ready"]):not([data-motion="skip"]) .hero__indicator {
+  animation: fade-in 0.6s ease-out 1.8s forwards;
+}
+
+/* prefers-reduced-motion e fallback "skip": conteúdo direto, sem nenhuma animação de entrada. */
+.hero[data-motion="skip"] .hero__eyebrow,
+.hero[data-motion="skip"] .hero__headline,
+.hero[data-motion="skip"] .hero__subheadline,
+.hero[data-motion="skip"] .hero__indicator {
+  opacity: 1;
+  transform: none;
+  animation: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero__eyebrow,
+  .hero__headline,
+  .hero__subheadline,
+  .hero__indicator {
+    opacity: 1 !important;
+    transform: none !important;
+    animation: none !important;
+  }
+}
+
+/* ---------- Fallback sem WebGL ---------- */
+/* Classe adicionada ao <body> por main.js quando a criação do contexto WebGL falha. */
+body.no-webgl .hero {
+  background:
+    radial-gradient(ellipse 70% 60% at 80% 38%, rgba(56, 189, 248, 0.10), transparent 62%),
+    radial-gradient(ellipse 40% 45% at 92% 60%, rgba(125, 211, 252, 0.06), transparent 70%),
+    linear-gradient(160deg, var(--bg-base-2) 0%, var(--bg-base) 55%, #030507 100%);
+}
+body.no-webgl .hero__canvas-wrap {
+  display: none;
+}
+body.no-webgl .hero__scrim {
+  display: none;
+}
+
+/* ---------- Responsividade ---------- */
+
+@media (max-width: 1024px) {
+  .hero__scrim {
+    background: linear-gradient(
+      90deg,
+      rgba(5, 7, 12, 0.78) 0%,
+      rgba(5, 7, 12, 0.5) 40%,
+      rgba(5, 7, 12, 0.1) 68%,
+      rgba(5, 7, 12, 0) 85%
+    );
+  }
+}
+
+@media (max-width: 720px) {
+  .hero {
+    align-items: flex-end;
+    padding-top: calc(30vh + env(safe-area-inset-top, 0px));
+  }
+
+  .hero__canvas-wrap {
+    /* Rede migra para o topo, ocupando só a faixa superior — nunca domina a tela. */
+    inset: 0 0 auto 0;
+    height: 46vh;
+  }
+
+  .hero__scrim {
+    background: linear-gradient(
+      180deg,
+      rgba(5, 7, 12, 0) 0%,
+      rgba(5, 7, 12, 0.55) 68%,
+      rgba(5, 7, 12, 0.92) 100%
+    );
+  }
+
+  .hero__content {
+    padding-bottom: calc(clamp(28px, 8vh, 56px) + env(safe-area-inset-bottom, 0px));
+  }
+
+  .hero__headline {
+    max-width: 18ch;
+  }
+
+  .hero__subheadline {
+    max-width: none;
+  }
+
+  .hero__indicator {
+    margin-top: clamp(1.8rem, 6vh, 3rem);
+  }
+}
+
+@media (max-width: 720px) and (max-height: 560px) {
+  /* Telas baixas em paisagem: reduzir a faixa da rede para não empurrar o texto para fora. */
+  .hero__canvas-wrap {
+    height: 34vh;
+  }
+  .hero {
+    padding-top: calc(20vh + env(safe-area-inset-top, 0px));
+  }
+}
+
+/* =====================================================================
+   DESIGN SYSTEM — Blocos 02–13
+   Reaproveita os tokens definidos em :root no topo deste arquivo.
+   ===================================================================== */
+
+.container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 clamp(24px, 6vw, 96px);
+}
+
+.deck {
+  position: relative;
+}
+
+.block {
+  position: relative;
+  min-height: 100vh;
+  min-height: 100svh;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  background: linear-gradient(180deg, var(--bg-base) 0%, var(--bg-base-2) 100%);
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+  padding: clamp(64px, 10vh, 120px) 0;
+  overflow: hidden;
+  scroll-margin-top: 0;
+}
+
+.block__inner {
+  position: relative;
+  z-index: 2;
+  padding-top: env(safe-area-inset-top, 0px);
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+
+.block__inner--center {
+  text-align: center;
+}
+
+.block__index {
+  margin: 0 0 1.4em;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  color: var(--text-tertiary);
+  font-variant-numeric: tabular-nums;
+}
+
+.eyebrow {
+  margin: 0 0 0.9em;
+  font-size: clamp(0.72rem, 0.6rem + 0.3vw, 0.85rem);
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--text-tertiary);
+}
+
+.block__title {
+  margin: 0;
+  font-size: clamp(1.9rem, 1.2rem + 2.6vw, 3.4rem);
+  font-weight: 700;
+  line-height: 1.12;
+  letter-spacing: -0.01em;
+  color: var(--text-primary);
+  max-width: 22ch;
+}
+
+.block__title--closing {
+  max-width: none;
+}
+
+.block__lead {
+  margin: 0.9em 0 0;
+  font-size: clamp(1rem, 0.9rem + 0.4vw, 1.2rem);
+  font-weight: 400;
+  line-height: 1.5;
+  color: var(--text-secondary);
+  max-width: 60ch;
+}
+
+.block__lead--center {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.block__note {
+  margin: 1.6em 0 0;
+  font-size: 0.9rem;
+  line-height: 1.55;
+  color: var(--text-tertiary);
+  max-width: 68ch;
+}
+
+.block__note code,
+.chain__label code {
+  font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+  font-size: 0.9em;
+  color: var(--accent);
+  background: rgba(125, 211, 252, 0.08);
+  padding: 0.1em 0.4em;
+  border-radius: 4px;
+}
+
+.accent {
+  color: var(--accent);
+}
+
+/* ---------- Bloco 02: verbos ---------- */
+
+.verb-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  margin-top: 2.2rem;
+}
+
+.verb-chip {
+  padding: 0.5em 1.1em;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 999px;
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  background: rgba(255, 255, 255, 0.02);
+}
+
+/* ---------- Fluxo (Blocos 03 e 09) ---------- */
+
+.flow {
+  list-style: none;
+  margin: 2.6rem 0 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  row-gap: 1.1rem;
+  column-gap: 0;
+  align-items: center;
+  max-width: 980px;
+}
+
+.flow__step {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  padding: 0 1rem 0 0;
+  position: relative;
+}
+
+.flow__step:not(:last-child)::after {
+  content: "";
+  width: 22px;
+  height: 1px;
+  background: rgba(125, 211, 252, 0.35);
+  margin: 0 0.55rem;
+  flex: none;
+}
+
+.flow--dense {
+  column-gap: 0;
+  row-gap: 0.9rem;
+}
+
+.flow__dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--accent-soft);
+  box-shadow: 0 0 8px rgba(56, 189, 248, 0.6);
+  flex: none;
+}
+
+.flow__step--accent .flow__dot {
+  background: var(--accent);
+  box-shadow: 0 0 12px rgba(125, 211, 252, 0.9);
+}
+
+.flow__label {
+  font-size: 0.95rem;
+  color: var(--text-secondary);
+  white-space: nowrap;
+}
+
+.flow__step--accent .flow__label {
+  color: var(--text-primary);
+  font-weight: 600;
+}
+
+.flow--dense .flow__label {
+  font-size: 0.85rem;
+}
+
+/* ---------- Bloco 04: arquitetura ---------- */
+
+.arch-diagram {
+  margin-top: 2.6rem;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 0.5rem;
+  max-width: 620px;
+}
+
+.arch-box {
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 12px;
+  padding: 1rem 1.3rem;
+  color: var(--text-primary);
+  font-weight: 600;
+  font-size: 0.95rem;
+  width: 100%;
+}
+
+.arch-box--top,
+.arch-box--mid {
+  max-width: 620px;
+}
+
+.arch-box small {
+  display: block;
+  margin-top: 0.3em;
+  font-weight: 400;
+  font-size: 0.78rem;
+  color: var(--text-tertiary);
+}
+
+.arch-box--accent {
+  border-color: rgba(125, 211, 252, 0.4);
+  background: rgba(125, 211, 252, 0.06);
+}
+
+.arch-arrow {
+  color: var(--text-tertiary);
+  font-size: 1.1rem;
+  padding-left: 1.6rem;
+}
+
+.arch-branch {
+  display: flex;
+  justify-content: space-between;
+  max-width: 380px;
+  padding: 0 2.4rem;
+  color: var(--text-tertiary);
+  font-size: 1.1rem;
+}
+
+.arch-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  align-items: stretch;
+}
+
+.arch-row .arch-box {
+  max-width: none;
+}
+
+@media (max-width: 620px) {
+  .arch-row {
+    grid-template-columns: 1fr;
+  }
+  .arch-branch {
+    max-width: none;
+    justify-content: center;
+    gap: 2.4rem;
+    padding: 0;
+  }
+}
+
+/* ---------- Bloco 05: fases ---------- */
+
+.phase-grid {
+  margin-top: 2.6rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1rem;
+}
+
+.phase-card {
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  padding: 1.3rem;
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.phase-card__title {
+  margin: 0 0 0.9em;
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: var(--text-primary);
+}
+
+.phase-card__tasks {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+/* ---------- Tags de estado (reutilizadas nos Blocos 05, 06, 10, 11) ---------- */
+
+.tag {
+  display: inline-flex;
+  align-items: center;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  padding: 0.28em 0.65em;
+  border-radius: 999px;
+  border: 1px solid transparent;
+  white-space: nowrap;
+}
+
+.tag--merged {
+  color: #86efac;
+  background: rgba(74, 222, 128, 0.1);
+  border-color: rgba(74, 222, 128, 0.28);
+}
+
+.tag--open {
+  color: #7dd3fc;
+  background: rgba(125, 211, 252, 0.1);
+  border-color: rgba(125, 211, 252, 0.28);
+}
+
+.tag--blocked {
+  color: #fca5a5;
+  background: rgba(248, 113, 113, 0.1);
+  border-color: rgba(248, 113, 113, 0.28);
+}
+
+.tag--done-nopr {
+  color: #d8b4fe;
+  background: rgba(216, 180, 254, 0.1);
+  border-color: rgba(216, 180, 254, 0.28);
+}
+
+.tag--notstarted {
+  color: var(--text-tertiary);
+  background: rgba(255, 255, 255, 0.04);
+  border-color: rgba(255, 255, 255, 0.12);
+}
+
+/* ---------- Bloco 06: cadeia do smart contract ---------- */
+
+.chain {
+  list-style: none;
+  margin: 2.6rem 0 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  max-width: 640px;
+}
+
+.chain__step {
+  position: relative;
+  padding: 0.9rem 0 0.9rem 1.6rem;
+  border-left: 1px solid rgba(125, 211, 252, 0.25);
+}
+
+.chain__step:last-child {
+  border-left-color: transparent;
+}
+
+.chain__step::before {
+  content: "";
+  position: absolute;
+  left: -5px;
+  top: 1.2rem;
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: var(--accent-soft);
+  box-shadow: 0 0 8px rgba(56, 189, 248, 0.6);
+}
+
+.chain__head {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+}
+
+.chain__task {
+  font-weight: 700;
+  color: var(--text-primary);
+  font-size: 0.95rem;
+}
+
+.chain__label {
+  margin: 0.35em 0 0;
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+}
+
+.chain-mini {
+  font-size: 0.95rem;
+  color: var(--accent);
+  letter-spacing: 0.02em;
+  margin: 0.4em 0 0.9em;
+}
+
+.stacked-note {
+  margin-top: 2.6rem;
+  padding: 1.2rem 1.4rem;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.02);
+  max-width: 640px;
+}
+
+.stacked-note__title {
+  margin: 0;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+/* ---------- Blocos 07/08: pessoas ---------- */
+
+.people-grid {
+  margin-top: 2.6rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+  gap: 1rem;
+}
+
+.person-card {
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  padding: 1.2rem;
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.person-card--mentor {
+  border-color: rgba(125, 211, 252, 0.3);
+  background: rgba(125, 211, 252, 0.05);
+}
+
+.person-card__name {
+  margin: 0 0 0.7em;
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.person-card__areas {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35em;
+}
+
+.person-card__areas li {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+}
+
+.contrib-grid {
+  margin-top: 2.6rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 1rem;
+}
+
+.card {
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  padding: 1.3rem;
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.card--mentor {
+  border-color: rgba(125, 211, 252, 0.3);
+  background: rgba(125, 211, 252, 0.05);
+}
+
+.card__name {
+  margin: 0 0 0.2em;
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.card__role {
+  margin: 0 0 0.8em;
+  font-size: 0.82rem;
+  color: var(--accent);
+}
+
+.card__meta {
+  margin: 0.3em 0 0;
+  font-size: 0.82rem;
+  line-height: 1.5;
+  color: var(--text-secondary);
+}
+
+/* ---------- Bloco 10: estado atual ---------- */
+
+.status-grid {
+  margin-top: 2.6rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 1rem;
+}
+
+.status-col {
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  padding: 1.2rem;
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.status-col__title {
+  margin: 0 0 0.8em;
+  display: flex;
+  align-items: center;
+  gap: 0.5em;
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.status-col__items {
+  margin: 0;
+  font-size: 0.82rem;
+  line-height: 1.6;
+  color: var(--text-secondary);
+}
+
+/* ---------- Bloco 11: o que já construímos ---------- */
+
+.built-columns {
+  margin-top: 2.6rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1.6rem;
+  max-width: 760px;
+}
+
+.built-col__title {
+  margin: 0 0 0.8em;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text-tertiary);
+  letter-spacing: 0.03em;
+}
+
+.built-col__title code {
+  color: var(--accent);
+  font-size: 0.95em;
+}
+
+.built-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5em;
+}
+
+.built-list li {
+  font-size: 0.92rem;
+  color: var(--text-secondary);
+  padding-left: 1.1em;
+  position: relative;
+}
+
+.built-list li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.55em;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--accent-soft);
+}
+
+/* ---------- Bloco 12: próxima etapa ---------- */
+
+.next-steps {
+  margin: 2.6rem 0 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  max-width: 620px;
+}
+
+.next-steps li {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.9rem;
+  font-size: 0.98rem;
+  color: var(--text-secondary);
+  line-height: 1.5;
+}
+
+.next-steps__num {
+  flex: none;
+  width: 1.7em;
+  height: 1.7em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  border: 1px solid rgba(125, 211, 252, 0.35);
+  color: var(--accent);
+  font-size: 0.82rem;
+  font-weight: 700;
+}
+
+/* ---------- Bloco 13: encerramento ---------- */
+
+.block--closing {
+  background: radial-gradient(ellipse 70% 60% at 50% 40%, rgba(56, 189, 248, 0.07), transparent 65%),
+    linear-gradient(180deg, var(--bg-base) 0%, #030507 100%);
+}
+
+.block--closing .block__title--closing {
+  font-size: clamp(2.2rem, 1.6rem + 3vw, 3.8rem);
+  margin: 0 auto;
+}
+
+/* =====================================================================
+   NAVEGAÇÃO — dots 01–13 (scroll-spy via main.js)
+   ===================================================================== */
+
+.dotnav {
+  position: fixed;
+  right: clamp(10px, 2vw, 22px);
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 50;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.dotnav__item {
+  appearance: none;
+  border: none;
+  background: transparent;
+  width: 22px;
+  height: 22px;
+  padding: 0;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.dotnav__item span {
+  font-size: 0;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.22);
+  display: block;
+  transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.dotnav__item:hover span {
+  background: rgba(255, 255, 255, 0.5);
+}
+
+.dotnav__item.is-active span {
+  background: var(--accent);
+  transform: scale(1.6);
+  box-shadow: 0 0 8px rgba(125, 211, 252, 0.7);
+}
+
+@media (max-width: 720px) {
+  .dotnav {
+    right: 8px;
+    gap: 7px;
+  }
+  .dotnav__item {
+    width: 16px;
+    height: 16px;
+  }
+}
+
+/* ---------- Motion leve dos blocos 02–13 (fade + rise ao entrar na viewport) ----------
+   Apresentação ao vivo: conteúdo precisa estar legível em ~300–700ms, mesmo navegando
+   rápido entre blocos distantes — por isso durações e delays curtos. */
+
+.block__inner > * {
+  opacity: 0;
+  transform: translateY(10px);
+}
+
+.block.is-visible .block__inner > * {
+  animation: rise 0.38s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.block.is-visible .block__inner > *:nth-child(1) { animation-delay: 0s; }
+.block.is-visible .block__inner > *:nth-child(2) { animation-delay: 0.04s; }
+.block.is-visible .block__inner > *:nth-child(3) { animation-delay: 0.08s; }
+.block.is-visible .block__inner > *:nth-child(4) { animation-delay: 0.12s; }
+.block.is-visible .block__inner > *:nth-child(5) { animation-delay: 0.16s; }
+.block.is-visible .block__inner > *:nth-child(6) { animation-delay: 0.2s; }
+.block.is-visible .block__inner > *:nth-child(n + 7) { animation-delay: 0.22s; }
+
+/* Sem JS ou motion ainda não avaliado: garantir visibilidade após um instante curto. */
+.block:not(.is-visible) .block__inner > * {
+  animation: fade-in 0.3s ease-out 0.4s forwards;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .block__inner > * {
+    opacity: 1 !important;
+    transform: none !important;
+    animation: none !important;
+  }
+}
+
+@media (max-width: 720px) {
+  .block {
+    padding: clamp(56px, 12vh, 90px) 0;
+  }
+  .arch-row {
+    flex-direction: column;
+  }
+  .flow__step:not(:last-child)::after {
+    width: 14px;
+  }
+}
