@@ -693,6 +693,13 @@ body.no-webgl .hero__scrim {
   color: var(--text-secondary);
 }
 
+.chain__resp {
+  margin-left: auto;
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+  white-space: nowrap;
+}
+
 .chain-mini {
   font-size: 0.95rem;
   color: var(--accent);
