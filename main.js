@@ -62,11 +62,12 @@
   var reduceMotion = prefersReducedMotion();
 
   var CONFIG = {
-    clusterCount: isNarrow ? 3 : 5,
-    nodesPerCluster: isNarrow ? 7 : 11,
-    looseNodes: isNarrow ? 5 : 10,
-    haloNodeRatio: 0.09, // fração dos nós que ganham halo suave
-    connectDistance: isNarrow ? 1.5 : 1.65,
+    // Densidade ~2.5x maior que a versão original — mais presença de rede sem virar ruído.
+    clusterCount: isNarrow ? 4 : 8,
+    nodesPerCluster: isNarrow ? 9 : 18,
+    looseNodes: isNarrow ? 8 : 20,
+    haloNodeRatio: 0.11, // fração dos nós que ganham halo suave
+    connectDistance: isNarrow ? 1.6 : 1.85,
     partialLineRatio: 0.28, // fração das conexões desenhadas como "ainda se formando" (dashed)
     clusterSpread: [0.7, 1.15], // abertura de cada cluster (min/max) — lattice aberto, não bola densa
     // Faixa em X onde os CENTROS dos clusters ficam distribuídos, do centro da tela para a
@@ -83,6 +84,13 @@
     nodeColor: 0xbfe3f5,
     autoRotate: !reduceMotion,
     mouseParallax: !reduceMotion && !isCoarsePointer,
+    // "Vida" das partículas: deslocamento contínuo em x/y (leve z), por cluster + por nó.
+    // Amplitudes pequenas de propósito — sensação de reorganização suave, não caos.
+    liveMotion: !reduceMotion,
+    clusterDriftAmp: [0.22, 0.4],
+    clusterDriftFreq: [0.06, 0.14],
+    nodeJitterAmp: [0.06, 0.16],
+    nodeJitterFreq: [0.18, 0.42],
   };
 
   var THREE = window.THREE;
@@ -94,6 +102,18 @@
   var pointerTarget = { x: 0, y: 0 };
   var pointerCurrent = { x: 0, y: 0 };
   var clock = new THREE.Clock();
+
+  // Estado do motion "vivo" — preenchido em buildNetwork(), consumido em updateLiveMotion().
+  var nodeBase = []; // THREE.Vector3[] — posição de repouso de cada nó
+  var nodeClusterIndex = []; // int[] — a qual cluster cada nó pertence (-1 = solto)
+  var nodePhase = []; // { ax, ay, az, fx, fy, fz, px, py, pz }[] — jitter individual
+  var clusterPhase = []; // { ax, ay, fx, fy, px, py }[] — drift compartilhado do cluster
+  var livePositions = null; // Float32Array plana (x,y,z por nó), recalculada a cada frame
+  var solidPairs = []; // [i, j, ...] índices de nós conectados por linha sólida
+  var dashedPairs = []; // [i, j, ...] índices de nós conectados por linha tracejada
+  var solidPosAttr = null;
+  var dashedPosAttr = null;
+  var haloNodeIndex = []; // índice do nó que cada sprite de halo acompanha
 
   function init() {
     renderer = new THREE.WebGLRenderer({
@@ -150,6 +170,17 @@
       var cz = rand(vol.z[0] + 0.5, vol.z[1] - 0.5);
       var spread = rand(CONFIG.clusterSpread[0], CONFIG.clusterSpread[1]);
 
+      // Fase de drift compartilhada por todo o cluster — dá "autonomia" ao grupo:
+      // os nós de um mesmo cluster oscilam juntos, clusters diferentes dessincronizados.
+      clusterPhase[c] = {
+        ax: rand(CONFIG.clusterDriftAmp[0], CONFIG.clusterDriftAmp[1]),
+        ay: rand(CONFIG.clusterDriftAmp[0], CONFIG.clusterDriftAmp[1]),
+        fx: rand(CONFIG.clusterDriftFreq[0], CONFIG.clusterDriftFreq[1]),
+        fy: rand(CONFIG.clusterDriftFreq[0], CONFIG.clusterDriftFreq[1]),
+        px: rand(0, Math.PI * 2),
+        py: rand(0, Math.PI * 2),
+      };
+
       for (var n = 0; n < CONFIG.nodesPerCluster; n++) {
         nodes.push(
           new THREE.Vector3(
@@ -158,6 +189,7 @@
             cz + gaussian() * spread * 0.7
           )
         );
+        nodeClusterIndex.push(c);
       }
     }
 
@@ -166,10 +198,37 @@
       nodes.push(
         new THREE.Vector3(rand(vol.x[0], vol.x[1]), rand(vol.y[0], vol.y[1]), rand(vol.z[0], vol.z[1]))
       );
+      nodeClusterIndex.push(-1);
+    }
+
+    nodeBase = nodes;
+
+    // Jitter individual por nó — pequena amplitude, frequência levemente diferente entre
+    // nós vizinhos para parecer "vivo" em vez de sincronizado (evita efeito "respiração única").
+    for (var p = 0; p < nodes.length; p++) {
+      nodePhase.push({
+        ax: rand(CONFIG.nodeJitterAmp[0], CONFIG.nodeJitterAmp[1]),
+        ay: rand(CONFIG.nodeJitterAmp[0], CONFIG.nodeJitterAmp[1]),
+        az: rand(CONFIG.nodeJitterAmp[0], CONFIG.nodeJitterAmp[1]) * 0.6,
+        fx: rand(CONFIG.nodeJitterFreq[0], CONFIG.nodeJitterFreq[1]),
+        fy: rand(CONFIG.nodeJitterFreq[0], CONFIG.nodeJitterFreq[1]),
+        fz: rand(CONFIG.nodeJitterFreq[0], CONFIG.nodeJitterFreq[1]),
+        px: rand(0, Math.PI * 2),
+        py: rand(0, Math.PI * 2),
+        pz: rand(0, Math.PI * 2),
+      });
+    }
+
+    livePositions = new Float32Array(nodes.length * 3);
+    for (var b = 0; b < nodes.length; b++) {
+      livePositions[b * 3] = nodes[b].x;
+      livePositions[b * 3 + 1] = nodes[b].y;
+      livePositions[b * 3 + 2] = nodes[b].z;
     }
 
     // ---- Pontos (nós) ----
-    var pointsGeo = new THREE.BufferGeometry().setFromPoints(nodes);
+    var pointsGeo = new THREE.BufferGeometry();
+    pointsGeo.setAttribute("position", new THREE.BufferAttribute(livePositions, 3));
     var pointsMat = new THREE.PointsMaterial({
       color: CONFIG.nodeColor,
       size: isNarrow ? 0.05 : 0.045,
@@ -181,54 +240,57 @@
     networkGroup.add(pointsMesh);
 
     // ---- Conexões entre nós próximos (dentro do mesmo cluster, na prática) ----
-    var solidVerts = [];
-    var dashedVerts = [];
+    // Topologia calculada uma única vez (a partir da posição de repouso); a cada frame só
+    // as posições das pontas são atualizadas, o que mantém o custo por frame em O(conexões).
     var maxDist = CONFIG.connectDistance;
 
     for (var i = 0; i < nodes.length; i++) {
       for (var j = i + 1; j < nodes.length; j++) {
         var d = nodes[i].distanceTo(nodes[j]);
         if (d < maxDist) {
-          var target = Math.random() < CONFIG.partialLineRatio ? dashedVerts : solidVerts;
-          target.push(nodes[i].x, nodes[i].y, nodes[i].z);
-          target.push(nodes[j].x, nodes[j].y, nodes[j].z);
+          var target = Math.random() < CONFIG.partialLineRatio ? dashedPairs : solidPairs;
+          target.push(i, j);
         }
       }
     }
 
-    if (solidVerts.length) {
+    if (solidPairs.length) {
+      solidPosAttr = new THREE.BufferAttribute(new Float32Array(solidPairs.length * 3), 3);
       var solidGeo = new THREE.BufferGeometry();
-      solidGeo.setAttribute("position", new THREE.Float32BufferAttribute(solidVerts, 3));
+      solidGeo.setAttribute("position", solidPosAttr);
       var solidMat = new THREE.LineBasicMaterial({
         color: CONFIG.lineColor,
         transparent: true,
-        opacity: 0.22,
+        opacity: 0.25,
       });
       lineSegments = new THREE.LineSegments(solidGeo, solidMat);
       networkGroup.add(lineSegments);
     }
 
-    if (dashedVerts.length) {
+    if (dashedPairs.length) {
+      dashedPosAttr = new THREE.BufferAttribute(new Float32Array(dashedPairs.length * 3), 3);
       var dashedGeo = new THREE.BufferGeometry();
-      dashedGeo.setAttribute("position", new THREE.Float32BufferAttribute(dashedVerts, 3));
+      dashedGeo.setAttribute("position", dashedPosAttr);
       var dashedMat = new THREE.LineDashedMaterial({
         color: CONFIG.lineColor,
         transparent: true,
-        opacity: 0.16,
+        opacity: 0.18,
         dashSize: 0.22,
         gapSize: 0.28,
       });
       dashedSegments = new THREE.LineSegments(dashedGeo, dashedMat);
-      dashedSegments.computeLineDistances();
       networkGroup.add(dashedSegments);
     }
+
+    syncLinePositions(); // primeira escrita, com as posições de repouso
 
     // ---- Halos suaves em alguns nós (sprites, sem asset externo) ----
     haloGroup = new THREE.Group();
     var haloTexture = makeHaloTexture();
     var haloCount = Math.round(nodes.length * CONFIG.haloNodeRatio);
     for (var h = 0; h < haloCount; h++) {
-      var pick = nodes[Math.floor(Math.random() * nodes.length)];
+      var pickIndex = Math.floor(Math.random() * nodes.length);
+      var pick = nodes[pickIndex];
       var spriteMat = new THREE.SpriteMaterial({
         map: haloTexture,
         color: CONFIG.haloColor,
@@ -242,11 +304,85 @@
       sprite.scale.set(scale, scale, 1);
       sprite.position.copy(pick);
       haloGroup.add(sprite);
+      haloNodeIndex.push(pickIndex);
     }
     networkGroup.add(haloGroup);
 
     // Leve ajuste fino além da distribuição de clusters (que já favorece centro-direita).
     networkGroup.position.x = isNarrow ? 0 : 0.4;
+  }
+
+  // Escreve em `livePositions` a posição de cada nó neste instante (repouso + drift do
+  // cluster + jitter individual) e propaga para pontos, linhas e halos.
+  function updateLiveMotion(elapsed) {
+    var n;
+    for (n = 0; n < nodeBase.length; n++) {
+      var base = nodeBase[n];
+      var jp = nodePhase[n];
+      var ox = jp.ax * Math.sin(elapsed * jp.fx + jp.px);
+      var oy = jp.ay * Math.sin(elapsed * jp.fy + jp.py);
+      var oz = jp.az * Math.sin(elapsed * jp.fz + jp.pz);
+
+      var ci = nodeClusterIndex[n];
+      if (ci >= 0) {
+        var cp = clusterPhase[ci];
+        ox += cp.ax * Math.sin(elapsed * cp.fx + cp.px);
+        oy += cp.ay * Math.sin(elapsed * cp.fy + cp.py);
+      }
+
+      livePositions[n * 3] = base.x + ox;
+      livePositions[n * 3 + 1] = base.y + oy;
+      livePositions[n * 3 + 2] = base.z + oz;
+    }
+    pointsMesh.geometry.attributes.position.needsUpdate = true;
+
+    syncLinePositions();
+
+    for (var h = 0; h < haloGroup.children.length; h++) {
+      var ni = haloNodeIndex[h];
+      haloGroup.children[h].position.set(
+        livePositions[ni * 3],
+        livePositions[ni * 3 + 1],
+        livePositions[ni * 3 + 2]
+      );
+    }
+  }
+
+  // Reescreve os vértices das linhas a partir de `livePositions`, seguindo a topologia
+  // fixa calculada em buildNetwork() (solidPairs / dashedPairs).
+  function syncLinePositions() {
+    var k;
+    if (solidPosAttr) {
+      var sArr = solidPosAttr.array;
+      for (k = 0; k < solidPairs.length; k += 2) {
+        var si = solidPairs[k],
+          sj = solidPairs[k + 1];
+        var so = k * 3;
+        sArr[so] = livePositions[si * 3];
+        sArr[so + 1] = livePositions[si * 3 + 1];
+        sArr[so + 2] = livePositions[si * 3 + 2];
+        sArr[so + 3] = livePositions[sj * 3];
+        sArr[so + 4] = livePositions[sj * 3 + 1];
+        sArr[so + 5] = livePositions[sj * 3 + 2];
+      }
+      solidPosAttr.needsUpdate = true;
+    }
+    if (dashedPosAttr) {
+      var dArr = dashedPosAttr.array;
+      for (k = 0; k < dashedPairs.length; k += 2) {
+        var di = dashedPairs[k],
+          dj = dashedPairs[k + 1];
+        var doff = k * 3;
+        dArr[doff] = livePositions[di * 3];
+        dArr[doff + 1] = livePositions[di * 3 + 1];
+        dArr[doff + 2] = livePositions[di * 3 + 2];
+        dArr[doff + 3] = livePositions[dj * 3];
+        dArr[doff + 4] = livePositions[dj * 3 + 1];
+        dArr[doff + 5] = livePositions[dj * 3 + 2];
+      }
+      dashedPosAttr.needsUpdate = true;
+      dashedSegments.computeLineDistances();
+    }
   }
 
   // Aproximação simples de distribuição gaussiana (Box-Muller), para clusters com núcleo denso
@@ -332,6 +468,10 @@
   function tick() {
     raf = requestAnimationFrame(tick);
     var elapsed = clock.getElapsedTime();
+
+    if (CONFIG.liveMotion) {
+      updateLiveMotion(elapsed);
+    }
 
     if (CONFIG.autoRotate) {
       // Rotação muito lenta — sensação de estabilidade, não de "objeto girando".

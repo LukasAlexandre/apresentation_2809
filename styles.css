@@ -832,9 +832,24 @@ body.no-webgl .hero__scrim {
 
 .status-col__items {
   margin: 0;
+  padding: 0;
+  list-style: none;
   font-size: 0.82rem;
   line-height: 1.6;
   color: var(--text-secondary);
+}
+
+.status-col__items li {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.6em;
+}
+
+.status-col__who {
+  color: var(--text-tertiary, rgba(255, 255, 255, 0.45));
+  font-size: 0.9em;
+  white-space: nowrap;
 }
 
 /* ---------- Bloco 11: o que já construímos ---------- */
@@ -874,6 +889,17 @@ body.no-webgl .hero__scrim {
   color: var(--text-secondary);
   padding-left: 1.1em;
   position: relative;
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.8em;
+}
+
+.built-list__who {
+  flex: none;
+  font-size: 0.78rem;
+  color: var(--text-tertiary, rgba(255, 255, 255, 0.45));
+  white-space: nowrap;
 }
 
 .built-list li::before {
@@ -906,6 +932,15 @@ body.no-webgl .hero__scrim {
   font-size: 0.98rem;
   color: var(--text-secondary);
   line-height: 1.5;
+}
+
+.next-steps__who {
+  flex: none;
+  margin-left: auto;
+  padding-left: 0.9rem;
+  font-size: 0.78rem;
+  color: var(--text-tertiary, rgba(255, 255, 255, 0.45));
+  white-space: nowrap;
 }
 
 .next-steps__num {

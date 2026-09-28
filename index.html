@@ -310,23 +310,43 @@
         <div class="status-grid">
           <div class="status-col">
             <p class="status-col__title"><span class="tag tag--merged">MERGED</span> 4</p>
-            <p class="status-col__items">T-002 · T-003 · T-004 · T-006</p>
+            <ul class="status-col__items">
+              <li>T-002 <span class="status-col__who">Lukas</span></li>
+              <li>T-003 <span class="status-col__who">Lukas · Alison</span></li>
+              <li>T-004 <span class="status-col__who">Kaique</span></li>
+              <li>T-006 <span class="status-col__who">Gabriel</span></li>
+            </ul>
           </div>
           <div class="status-col">
             <p class="status-col__title"><span class="tag tag--open">OPEN_PR</span> 4</p>
-            <p class="status-col__items">T-008 · T-009 · T-010 · T-014</p>
+            <ul class="status-col__items">
+              <li>T-008 <span class="status-col__who">Lukas</span></li>
+              <li>T-009 <span class="status-col__who">Lukas</span></li>
+              <li>T-010 <span class="status-col__who">Lukas</span></li>
+              <li>T-014 <span class="status-col__who">Kaique</span></li>
+            </ul>
           </div>
           <div class="status-col">
             <p class="status-col__title"><span class="tag tag--blocked">BLOCKED</span> 2</p>
-            <p class="status-col__items">T-005 · T-007</p>
+            <ul class="status-col__items">
+              <li>T-005 <span class="status-col__who">Alison</span></li>
+              <li>T-007 <span class="status-col__who">Gabriel</span></li>
+            </ul>
           </div>
           <div class="status-col">
             <p class="status-col__title"><span class="tag tag--done-nopr">DONE_NO_PR</span> 1</p>
-            <p class="status-col__items">T-001</p>
+            <ul class="status-col__items">
+              <li>T-001 <span class="status-col__who">Lukas</span></li>
+            </ul>
           </div>
           <div class="status-col">
             <p class="status-col__title"><span class="tag tag--notstarted">NOT_STARTED</span> 4</p>
-            <p class="status-col__items">T-011 · T-012 · T-013 · T-015</p>
+            <ul class="status-col__items">
+              <li>T-011 <span class="status-col__who">Alison</span></li>
+              <li>T-012 <span class="status-col__who">Lukas</span></li>
+              <li>T-013 <span class="status-col__who">Lukas</span></li>
+              <li>T-015 <span class="status-col__who">Kaique</span></li>
+            </ul>
           </div>
         </div>
         <p class="block__note">Implementado ≠ mergeado em <code>main</code>: código pronto e CI verde não significam que a funcionalidade já está integrada.</p>
@@ -343,21 +363,21 @@
           <div class="built-col">
             <p class="built-col__title">Em <code>main</code></p>
             <ul class="built-list">
-              <li>Arquitetura do contrato (ADR-001)</li>
-              <li>Modelo de ameaças</li>
-              <li>Registro de ICT (<code>registerICT</code>)</li>
-              <li>Landing pública</li>
+              <li>Arquitetura do contrato (ADR-001) <span class="built-list__who">Lukas</span></li>
+              <li>Modelo de ameaças <span class="built-list__who">Lukas · Alison</span></li>
+              <li>Registro de ICT (<code>registerICT</code>) <span class="built-list__who">Gabriel</span></li>
+              <li>Landing pública <span class="built-list__who">Kaique</span></li>
             </ul>
           </div>
           <div class="built-col">
             <p class="built-col__title">Pronto, aguardando merge</p>
             <ul class="built-list">
-              <li>Custódia de chaves (ADR-002)</li>
-              <li>Solicitação e decisão</li>
-              <li>Ativação de habilitação</li>
-              <li>Auditoria e renovação</li>
-              <li>Consulta pública de status</li>
-              <li>Área interna — casca de navegação</li>
+              <li>Custódia de chaves (ADR-002) <span class="built-list__who">Alison</span></li>
+              <li>Solicitação e decisão <span class="built-list__who">Gabriel</span></li>
+              <li>Ativação de habilitação <span class="built-list__who">Lukas</span></li>
+              <li>Auditoria e renovação <span class="built-list__who">Lukas</span></li>
+              <li>Consulta pública de status <span class="built-list__who">Lukas</span></li>
+              <li>Área interna — casca de navegação <span class="built-list__who">Kaique</span></li>
             </ul>
           </div>
         </div>
@@ -371,11 +391,11 @@
         <p class="eyebrow">Próxima etapa</p>
         <h2 class="block__title">O caminho lógico a partir daqui</h2>
         <ol class="next-steps">
-          <li><span class="next-steps__num">1</span> Resolver o conflito de merge do PR #20 (T-005, ADR-002)</li>
-          <li><span class="next-steps__num">2</span> Resolver o conflito e a base do PR #22 (T-007)</li>
-          <li><span class="next-steps__num">3</span> Mergear T-008 → T-009 → T-010 em sequência</li>
-          <li><span class="next-steps__num">4</span> Iniciar T-011, destravando T-012 e T-013 em paralelo</li>
-          <li><span class="next-steps__num">5</span> Iniciar T-015 após T-012 e T-014 estarem prontos</li>
+          <li><span class="next-steps__num">1</span> Resolver o conflito de merge do PR #20 (T-005, ADR-002) <span class="next-steps__who">Alison</span></li>
+          <li><span class="next-steps__num">2</span> Resolver o conflito e a base do PR #22 (T-007) <span class="next-steps__who">Gabriel</span></li>
+          <li><span class="next-steps__num">3</span> Mergear T-008 → T-009 → T-010 em sequência <span class="next-steps__who">Lukas</span></li>
+          <li><span class="next-steps__num">4</span> Iniciar T-011, destravando T-012 e T-013 em paralelo <span class="next-steps__who">Alison → Lukas</span></li>
+          <li><span class="next-steps__num">5</span> Iniciar T-015 após T-012 e T-014 estarem prontos <span class="next-steps__who">Kaique</span></li>
         </ol>
       </div>
     </section>
