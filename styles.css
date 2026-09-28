@@ -583,7 +583,19 @@ body.no-webgl .hero__scrim {
 .phase-card__tasks {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.4rem;
+  gap: 0.6rem 0.5rem;
+}
+
+.task-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5em;
+}
+
+.task-chip__resp {
+  font-size: 0.82rem;
+  color: var(--text-secondary, rgba(255, 255, 255, 0.65));
+  white-space: nowrap;
 }
 
 /* ---------- Tags de estado (reutilizadas nos Blocos 05, 06, 10, 11) ---------- */
