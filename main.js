@@ -496,8 +496,8 @@
 })();
 
 /**
- * Navegação da apresentação completa (13 blocos): dots laterais, scroll-spy,
- * atalhos de teclado e reveal leve dos blocos 02–13 ao entrar na viewport.
+ * Navegação da apresentação completa (11 slides): dots laterais, scroll-spy,
+ * atalhos de teclado e reveal leve dos slides 02–11 ao entrar na viewport.
  * Independente do bloco de rede 3D acima — roda mesmo se o Three.js falhar.
  */
 (function () {
@@ -540,7 +540,7 @@
   // dispara e todo clique/tecla seguinte é ignorado silenciosamente. Comparar
   // Date.now() a cada chamada não tem esse risco: não existe estado que precise de um
   // timer para ser "destravado". O alvo é sempre recalculado e limitado a maxScroll(),
-  // então mesmo o último bloco (13) alinha exatamente ao topo da viewport.
+  // então mesmo o último slide (11) alinha exatamente ao topo da viewport.
   var lastNavAt = 0;
   var NAV_COOLDOWN = 300; // ms — só para absorver tecla segurada/duplo clique, nunca trava
 
