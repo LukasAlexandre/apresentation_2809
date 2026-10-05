@@ -579,7 +579,7 @@ body.no-webgl .hero__scrim {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 1rem;
-  max-width: 960px;
+  max-width: 1040px;
 }
 
 .story-step {

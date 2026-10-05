@@ -1,153 +1,69 @@
 # Roteiro de apresentação — Credenciamento de ICTs
 
-**Duração-alvo:** 4min30s a 5min (estimativa abaixo: **4min45s**).
-**Formato:** 11 slides. Cada slide tem uma ideia só; a fala complementa o visual, não lê o slide.
-**Base de status:** levantamento do GitHub de 05/10/2026. Antes de apresentar, vale conferir se algo mudou (ver "Checagem antes de apresentar" no final).
+**Duração-alvo:** 4min30s a 5min. **Estimativa:** ~4min50s (cerca de 650 palavras faladas, ritmo calmo).
+**Como usar:** leia uma vez e conte com as suas palavras. O que está em *itálico* no fim de cada bloco é a ponte para o próximo slide: ela é o que faz virar uma história, não uma lista.
+**Base de status:** GitHub em 05/10/2026 (conferido de novo antes deste roteiro; sem mudanças).
+**Observação:** onde a fala diz "você", está falando com o Heitor. Na versão para a gerência, troque por "o mentor" ou "o Heitor".
 
 ---
 
-## SLIDE 01 — Abertura
-**Tempo:** 15 s
+## 01 · Abertura — 15 s
+"O projeto que a gente está construindo se chama Credenciamento de ICTs. ICT é Instituição Científica, Tecnológica e de Inovação, ou seja, as instituições que fazem pesquisa e inovação. Em uma frase: a gente quer criar um jeito confiável de registrar e consultar se uma instituição está credenciada."
 
-**Fala:**
-"Oi, Heitor. A gente vai te mostrar o projeto Credenciamento de ICTs.
-ICT é Instituição Científica, Tecnológica e de Inovação: aquelas instituições que fazem pesquisa e inovação.
-Em uma frase: é um jeito confiável de registrar e consultar se uma instituição está credenciada."
+*Mas para isso fazer sentido, vale começar pelo problema.*
 
-**Ponte:** "Mas por que isso precisa existir?"
+## 02 · O problema — 30 s
+"Imagina que alguém precisa saber: essa instituição está credenciada agora? Parece simples, mas o credenciamento não é um carimbo único. A instituição se cadastra, pede a habilitação, é analisada, recebe o credenciamento por um prazo, pode ser auditada e depois precisa renovar. Hoje, para responder com segurança, alguém precisa conferir tudo isso manualmente."
 
----
+*Foi daí que veio a nossa ideia.*
 
-## SLIDE 02 — O problema
-**Tempo:** 30 s
+## 03 · A ideia — 20 s
+"A ideia foi a seguinte: cada etapa importante fica registrada, com data e responsável. E qualquer pessoa consegue consultar a situação atual da instituição, sem cadastro e sem login."
 
-**Fala:**
-"Tudo começa com uma pergunta simples: *esta instituição está credenciada agora?*
-Parece fácil, mas o credenciamento não é um carimbo único. A instituição se cadastra, pede a habilitação, é analisada, recebe a habilitação por um prazo, pode ser auditada e, depois, precisa renovar.
-Hoje, para responder com segurança qual é a situação atual, alguém precisa verificar tudo isso manualmente."
+*Na prática, funciona assim.*
 
-**Ponte:** "Foi isso que a gente quis resolver."
+## 04 · Como funciona — 40 s
+"Primeiro, a instituição é cadastrada no sistema. Depois, ela solicita o credenciamento, e o responsável analisa e decide. Se for aprovada, recebe o credenciamento com prazo de validade. Com o tempo, pode passar por auditoria e renovação. E, no final, qualquer pessoa consulta a situação atual.
+Já aproveito para mostrar onde estamos: o cadastro está pronto, e os outros cinco passos já foram construídos e estão em revisão. Você já olhou e a gente está fazendo os ajustes que você pediu."
 
----
+*Agora, por que usar blockchain nisso?*
 
-## SLIDE 03 — A ideia
-**Tempo:** 20 s
+## 05 · Por que blockchain? — 25 s
+"Por um motivo bem direto: as decisões do credenciamento precisam deixar histórico. Cada registro mostra o que aconteceu, quando e quem fez, e esse histórico não pode ser reescrito depois. E tem um cuidado: documentos completos e dados pessoais não ficam públicos. Lembrando que, por enquanto, é uma prova de conceito, com dados de teste."
 
-**Fala:**
-"A nossa ideia tem duas partes.
-Primeiro: cada etapa importante do credenciamento fica registrada, com data e responsável.
-Segundo: qualquer pessoa consegue consultar a situação atual da instituição, sem precisar de cadastro nem de login."
+*Só que a gente não saiu programando.*
 
-**Ponte:** "Vou mostrar como isso funciona na prática."
+## 06 · Como planejamos — 25 s
+"Antes de desenvolver, a gente planejou. Partiu do problema, definiu as regras do sistema, mapeou os riscos, decidiu quem pode fazer cada ação e dividiu o trabalho em 15 tarefas. Só depois começou a construir. E cada entrega é testada e revisada antes de entrar no projeto."
 
----
+*E essa divisão ficou assim.*
 
-## SLIDE 04 — Como funciona
-**Tempo:** 40 s
+## 07 · Nosso time — 30 s
+"O Lukas cuida das regras, dos riscos e de parte do fluxo de credenciamento: ativação, auditoria e consulta pública. O Gabriel cuida da entrada da instituição, o cadastro e a solicitação. A Alison cuida das regras de autorização, de quem pode fazer o quê, e da base de usuários. O Kaique cuida da experiência web, o site público e a área interna. E o Heitor faz a mentoria, a revisão e a aprovação."
 
-**Fala:**
-"É uma história em seis passos.
-A instituição entra no sistema. Pede o credenciamento. O responsável analisa e decide. A instituição recebe uma situação e um prazo. Pode passar por auditoria e renovação. E, no final, qualquer pessoa consulta a situação atual.
-E já aproveito esse slide pra mostrar onde a gente está: o primeiro passo, o cadastro, está pronto. Os outros cinco já estão construídos e *em revisão*, ou seja, você já analisou e a gente está fazendo os ajustes que você pediu."
+*Com essa divisão, o que a gente já consegue mostrar?*
 
-**Ponte:** "Agora, você deve estar se perguntando: por que blockchain?"
+## 08 · O que já construímos — 35 s
+"Já temos resultados concretos. As regras do sistema estão definidas, os principais riscos estão mapeados e as regras de autorização também. O site público e a área interna já existem, e o cadastro da instituição está implementado. Também temos a base inicial de usuários implementada, mas aqui eu prefiro ser honesto: a validação final ainda está pendente, então não vou chamar de concluída."
 
----
+*Então, olhando o projeto como um todo, onde a gente está hoje?*
 
-## SLIDE 05 — Por que blockchain?
-**Tempo:** 25 s
+## 09 · Onde estamos agora — 25 s
+"Em quatro frentes. No planejamento, 4 de 4 entregas concluídas. No fluxo de credenciamento, uma etapa aprovada e quatro em revisão. Em sistema e usuários, a base está implementada, mas faltam o login e o resto. E na experiência web, site público e área interna prontos, falta o login. Resumindo: a gente está saindo da construção das peças para começar a conectá-las."
 
-**Fala:**
-"A gente usa blockchain por um motivo só: as decisões do credenciamento precisam deixar histórico.
-Cada registro mostra o que aconteceu, quando e quem fez, e esse histórico não pode ser reescrito depois.
-E tem um cuidado importante: documentos completos e dados pessoais não ficam públicos.
-Lembrando que hoje é uma prova de conceito, num ambiente de teste e com dados de teste."
+*E conectar as peças é exatamente o que vem agora.*
 
-**Ponte:** "Mas a gente não começou programando."
+## 10 · Próximos passos — 25 s
+"Primeiro, concluir os ajustes das etapas em revisão, que é o Gabriel e o Lukas. Depois, implementar o login e o resto do sistema, com o Lukas. Em seguida, conectar interface, sistema e registros do credenciamento, com o Kaique e o Lukas. Aí a gente testa o fluxo completo e prepara a demonstração da primeira versão, o MVP. Esses dois últimos são da equipe toda."
+
+*E o resultado que a gente quer entregar é este.*
+
+## 11 · Resultado esperado — 15 s
+"Uma pessoa consulta uma ICT, vê a situação atual e consegue confiar no histórico que levou até ali. A gente quer transformar um processo complexo em uma consulta simples, confiável e rastreável. Obrigado."
 
 ---
 
-## SLIDE 06 — Como planejamos
-**Tempo:** 25 s
-
-**Fala:**
-"A gente primeiro entendeu e planejou, depois construiu.
-Partimos do problema, definimos as regras do sistema, mapeamos os riscos, decidimos quem pode fazer o quê, dividimos o trabalho em 15 tarefas, e só então começamos o desenvolvimento.
-E cada entrega é testada e revisada antes de entrar no projeto. Essa revisão é a sua parte."
-
-**Ponte:** "Quem faz o quê?"
-
----
-
-## SLIDE 07 — Nosso time
-**Tempo:** 30 s
-
-**Fala:**
-"Cada pessoa cuida de uma parte do problema.
-O Lukas cuida das regras, dos riscos e de parte do fluxo central: ativação, auditoria e consulta pública.
-O Gabriel cuida da entrada da instituição e do início do credenciamento: o cadastro e a solicitação.
-A Alison cuida das regras de autorização, de quem pode fazer cada ação, e da base de usuários.
-O Kaique cuida da experiência web, o site público e a área interna.
-E o Heitor faz a mentoria, a revisão e a aprovação das entregas."
-
-**Ponte:** "E o que isso já virou?"
-
----
-
-## SLIDE 08 — O que já construímos
-**Tempo:** 35 s
-
-**Fala:**
-"Resultados concretos.
-As regras do sistema estão definidas. Os principais riscos estão mapeados. As regras de autorização também. O site público e a área interna já existem. E o cadastro da instituição está implementado.
-Além disso, a base inicial de usuários está implementada. Aqui eu quero ser honesto: a validação final ainda está pendente, então não vou chamar de concluída."
-
-**Ponte:** "Então, em termos de projeto, onde a gente está?"
-
----
-
-## SLIDE 09 — Onde estamos agora
-**Tempo:** 25 s
-
-**Fala:**
-"Quatro frentes.
-Planejamento e preparação: 4 de 4 entregas concluídas.
-Fluxo central do credenciamento: uma etapa aprovada e quatro em revisão.
-Sistema e usuários: a base de usuários está implementada; faltam o login e o resto da estrutura.
-Experiência web: site público e área interna prontos; falta o login.
-Resumindo: a gente está saindo da construção das peças para começar a conectá-las."
-
-**Ponte:** "E o que falta pra chegar no MVP?"
-
----
-
-## SLIDE 10 — Próximos passos
-**Tempo:** 25 s
-
-**Fala:**
-"Cinco passos.
-Um: concluir os ajustes das etapas em revisão, o Gabriel e o Lukas.
-Dois: implementar o login e a estrutura restante do sistema, com o Lukas.
-Três: conectar interface, sistema e registros do credenciamento, com o Kaique e o Lukas.
-Quatro: testar o fluxo completo.
-Cinco: preparar a demonstração do MVP.
-Os dois últimos são da equipe toda."
-
-**Ponte:** "Fechando."
-
----
-
-## SLIDE 11 — Resultado esperado
-**Tempo:** 15 s
-
-**Fala:**
-"A ideia é simples: alguém consulta uma ICT, vê a situação atual e confia no histórico que levou até ela.
-O objetivo é transformar um processo complexo numa consulta simples, confiável e rastreável.
-Obrigado. Ficamos à disposição pra perguntas."
-
----
-
-## Tempo total
+## Tempo
 
 | Slide | Tempo |
 |---|---|
@@ -162,20 +78,46 @@ Obrigado. Ficamos à disposição pra perguntas."
 | 09 Onde estamos agora | 0:25 |
 | 10 Próximos passos | 0:25 |
 | 11 Resultado esperado | 0:15 |
-| **Total** | **4:45** |
+| **Total** | **4:50** |
+
+---
+
+## 10 perguntas prováveis do Heitor
+
+**1. O que exatamente já funciona?**
+Já está aprovado: o cadastro oficial da instituição, o site público, a área interna e toda a parte de regras e riscos. As outras etapas do fluxo (solicitação e decisão, ativação, auditoria e renovação, consulta) já estão construídas e com os testes passando, mas ainda em revisão, então não chamo de pronto. A base de usuários está implementada, com validação final pendente.
+
+**2. Por que blockchain?**
+Porque o credenciamento precisa de um histórico confiável. Cada decisão importante fica registrada com data e responsável, e depois não dá para reescrever. Assim, quem consulta não depende de uma base controlada por uma única pessoa.
+
+**3. O que ainda falta?**
+Concluir os ajustes das quatro etapas em revisão, fazer o login e o resto do sistema, conectar o site, o sistema e os registros, testar o fluxo completo e preparar a demonstração da primeira versão.
+
+**4. Qual foi a maior dificuldade?**
+Manter as etapas do fluxo encadeadas: cada uma depende da anterior, então quando a primeira teve conflito e pedidos de ajuste, as outras precisaram acompanhar. *(Esta resposta foi tirada do que aparece no repositório. Se a dificuldade que o grupo sentiu foi outra, use a sua.)*
+
+**5. Por que algumas partes ainda estão em revisão?**
+Porque você apontou ajustes: faltavam testes para provar algumas regras, uma regra de solicitação estava mais restritiva do que o combinado e um caso do status da consulta pública estava errado. A gente está corrigindo antes da aprovação, que é para isso que a revisão serve.
+
+**6. Como as partes do grupo se conectam?**
+É uma cadeia: o cadastro vem antes da solicitação, que vem antes da decisão, da ativação, da auditoria e renovação e da consulta. Por isso essas etapas foram feitas em sequência. O site e o sistema de usuários se conectam ao fluxo no próximo passo, com login e integração.
+
+**7. Como vocês garantem que ninguém altera um registro antigo?**
+Cada decisão fica gravada na blockchain com data e responsável. Se algo muda, como uma renovação ou uma nova auditoria, isso vira um novo registro ligado ao anterior, e o anterior continua lá. Uma segunda auditoria, por exemplo, não apaga a primeira.
+
+**8. O que fica público?**
+A situação atual da instituição, que qualquer pessoa consulta sem login. Documentos completos e dados pessoais não ficam públicos: na blockchain vão só identificadores e uma "impressão digital" dos documentos, e os arquivos ficam em armazenamento privado.
+
+**9. O que acontece depois que uma ICT é credenciada?**
+O credenciamento tem prazo de validade. Nesse período ela pode ser auditada: o resultado é registrado, mas sozinho não derruba o credenciamento. Quando o prazo acaba, a situação passa a "vencida", e dá para renovar, ligando a nova habilitação à anterior.
+
+**10. Quando teremos o fluxo completo?**
+Não tenho uma data fechada. O caminho é: concluir as quatro etapas em revisão, fazer o login e o resto do sistema, conectar tudo e testar o fluxo completo. *(Se o grupo tiver uma estimativa, é o momento de dizê-la.)*
 
 ---
 
 ## Checagem antes de apresentar
 
-Os números dos slides 04, 08, 09 e 10 vêm do estado do GitHub em 05/10/2026. Se algo mudou, atualizar o slide e esta fala:
-
-- **Etapas em revisão (T-007, T-008, T-009, T-010):** se alguma for aprovada (merge feito pelo Heitor), passa de "em revisão" para "pronta".
-- **Base de usuários (T-011):** segue "implementada, validação final pendente" até ser confirmada com a Alison.
-- **Login e estrutura (T-012, T-013, T-015):** ainda planejadas; se alguém começar, ajustar o slide 09.
-
-## Se o Heitor perguntar
-
-- **"O que é blockchain, afinal?"** Um registro compartilhado em que o que é gravado não pode ser apagado nem reescrito depois. Basta isso; os detalhes técnicos ficam para depois.
-- **"Isso está em produção?"** Não. É uma prova de conceito, em ambiente de teste e com dados fictícios.
-- **"O que significa 'em revisão'?"** A etapa já foi construída e testada, você já analisou e pediu ajustes, e estamos fazendo esses ajustes antes da aprovação.
+- **T-007, T-008, T-009, T-010:** se o Heitor aprovar alguma, ela deixa de ser "em revisão". Atualize os slides 04, 09 e 10 e as falas desses blocos.
+- **T-011 (base de usuários):** segue "implementada, validação final pendente" até ser confirmada com a Alison.
+- **T-012, T-013, T-015:** ainda planejadas. Se alguém começar, ajuste o slide 09.
