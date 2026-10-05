@@ -79,9 +79,9 @@
     clusterSpread: [0.7, 1.15], // abertura de cada cluster (min/max) — lattice aberto, não bola densa
     // Faixa em X onde os CENTROS dos clusters ficam distribuídos, do centro da tela para a
     // direita (o grupo em si permanece com deslocamento adicional, ver networkGroup.position.x).
-    clusterCenterRangeX: isNarrow ? [-1.6, 1.6] : [-0.5, 6.5],
+    clusterCenterRangeX: isNarrow ? [-1.6, 1.6] : [0.4, 6.5],
     volume: {
-      x: [isNarrow ? -3.2 : -1.8, isNarrow ? 3.2 : 8.5],
+      x: [isNarrow ? -3.2 : -1.1, isNarrow ? 3.2 : 8.5],
       y: [-3.6, 3.6],
       z: [-3.2, 2.4],
     },
