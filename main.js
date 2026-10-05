@@ -62,13 +62,20 @@
   var reduceMotion = prefersReducedMotion();
 
   var CONFIG = {
-    // Densidade ~2.5x maior que a versão original — mais presença de rede sem virar ruído.
-    clusterCount: isNarrow ? 4 : 8,
-    nodesPerCluster: isNarrow ? 9 : 18,
-    looseNodes: isNarrow ? 8 : 20,
+    // Densidade ~2x a da versão anterior (164 -> ~330 nós no desktop) — rede viva, não ruído.
+    clusterCount: isNarrow ? 6 : 12,
+    nodesPerCluster: isNarrow ? 12 : 24,
+    looseNodes: isNarrow ? 16 : 44,
     haloNodeRatio: 0.11, // fração dos nós que ganham halo suave
     connectDistance: isNarrow ? 1.6 : 1.85,
-    partialLineRatio: 0.28, // fração das conexões desenhadas como "ainda se formando" (dashed)
+    partialLineRatio: 0.3, // fração dos pares próximos desenhada como "ainda se formando" (dashed, fixa)
+    // Conexões sólidas DINÂMICAS: recalculadas a cada frame pela distância real entre os nós,
+    // então surgem, se reforçam e somem conforme as partículas se movem.
+    dynLinkDistance: isNarrow ? 0.75 : 0.88,
+    dynLinkMax: isNarrow ? 1100 : 2600,
+    // Interação sutil com o cursor: nós próximos são afastados e voltam suavemente.
+    pointerRadius: 1.5,
+    pointerPush: 0.55,
     clusterSpread: [0.7, 1.15], // abertura de cada cluster (min/max) — lattice aberto, não bola densa
     // Faixa em X onde os CENTROS dos clusters ficam distribuídos, do centro da tela para a
     // direita (o grupo em si permanece com deslocamento adicional, ver networkGroup.position.x).
@@ -87,7 +94,7 @@
     // "Vida" das partículas: deslocamento contínuo em x/y (leve z), por cluster + por nó.
     // Amplitudes pequenas de propósito — sensação de reorganização suave, não caos.
     liveMotion: !reduceMotion,
-    clusterDriftAmp: [0.22, 0.4],
+    clusterDriftAmp: [0.3, 0.55],
     clusterDriftFreq: [0.06, 0.14],
     nodeJitterAmp: [0.06, 0.16],
     nodeJitterFreq: [0.18, 0.42],
@@ -114,6 +121,25 @@
   var solidPosAttr = null;
   var dashedPosAttr = null;
   var haloNodeIndex = []; // índice do nó que cada sprite de halo acompanha
+  var dynSegments = null; // linhas sólidas dinâmicas (LineSegments com cor por vértice)
+  var dynGeo = null;
+  var dynPos = null;
+  var dynCol = null;
+  var pushX = null; // deslocamento suavizado por nó causado pelo cursor
+  var pushY = null;
+  var linkFrame = 0;
+  var pointerActive = false;
+  var pointerWorld = { x: 0, y: 0 };
+  var LINE_RGB = [
+    ((CONFIG.lineColor >> 16) & 255) / 255,
+    ((CONFIG.lineColor >> 8) & 255) / 255,
+    (CONFIG.lineColor & 255) / 255,
+  ];
+  var NODE_RGB = [
+    ((CONFIG.nodeColor >> 16) & 255) / 255,
+    ((CONFIG.nodeColor >> 8) & 255) / 255,
+    (CONFIG.nodeColor & 255) / 255,
+  ];
 
   function init() {
     renderer = new THREE.WebGLRenderer({
@@ -143,6 +169,9 @@
     window.addEventListener("resize", onResize, { passive: true });
     if (CONFIG.mouseParallax) {
       window.addEventListener("mousemove", onMouseMove, { passive: true });
+      document.documentElement.addEventListener("mouseleave", function () {
+        pointerActive = false;
+      });
     }
     document.addEventListener("visibilitychange", onVisibilityChange);
 
@@ -229,9 +258,23 @@
     // ---- Pontos (nós) ----
     var pointsGeo = new THREE.BufferGeometry();
     pointsGeo.setAttribute("position", new THREE.BufferAttribute(livePositions, 3));
+    // Profundidade: nós mais próximos da câmera (z maior) brilham mais; os distantes recuam.
+    var pointColors = new Float32Array(nodes.length * 3);
+    for (var pc = 0; pc < nodes.length; pc++) {
+      var depth = (nodes[pc].z - vol.z[0]) / (vol.z[1] - vol.z[0]);
+      depth = Math.max(0, Math.min(1, depth));
+      var bright = (0.38 + 0.62 * depth) * (0.72 + 0.28 * Math.random());
+      pointColors[pc * 3] = NODE_RGB[0] * bright;
+      pointColors[pc * 3 + 1] = NODE_RGB[1] * bright;
+      pointColors[pc * 3 + 2] = NODE_RGB[2] * bright;
+    }
+    pointsGeo.setAttribute("color", new THREE.BufferAttribute(pointColors, 3));
+    pushX = new Float32Array(nodes.length);
+    pushY = new Float32Array(nodes.length);
     var pointsMat = new THREE.PointsMaterial({
-      color: CONFIG.nodeColor,
-      size: isNarrow ? 0.05 : 0.045,
+      color: 0xffffff,
+      vertexColors: true,
+      size: isNarrow ? 0.055 : 0.05,
       transparent: true,
       opacity: 0.85,
       sizeAttenuation: true,
@@ -247,25 +290,31 @@
     for (var i = 0; i < nodes.length; i++) {
       for (var j = i + 1; j < nodes.length; j++) {
         var d = nodes[i].distanceTo(nodes[j]);
-        if (d < maxDist) {
-          var target = Math.random() < CONFIG.partialLineRatio ? dashedPairs : solidPairs;
-          target.push(i, j);
+        if (d < maxDist && Math.random() < CONFIG.partialLineRatio) {
+          dashedPairs.push(i, j);
         }
       }
     }
 
-    if (solidPairs.length) {
-      solidPosAttr = new THREE.BufferAttribute(new Float32Array(solidPairs.length * 3), 3);
-      var solidGeo = new THREE.BufferGeometry();
-      solidGeo.setAttribute("position", solidPosAttr);
-      var solidMat = new THREE.LineBasicMaterial({
-        color: CONFIG.lineColor,
+    // Linhas sólidas dinâmicas: buffers de tamanho máximo fixo, preenchidos a cada frame.
+    dynPos = new Float32Array(CONFIG.dynLinkMax * 6);
+    dynCol = new Float32Array(CONFIG.dynLinkMax * 6);
+    dynGeo = new THREE.BufferGeometry();
+    dynGeo.setAttribute("position", new THREE.BufferAttribute(dynPos, 3));
+    dynGeo.setAttribute("color", new THREE.BufferAttribute(dynCol, 3));
+    dynGeo.setDrawRange(0, 0);
+    dynSegments = new THREE.LineSegments(
+      dynGeo,
+      new THREE.LineBasicMaterial({
+        vertexColors: true,
         transparent: true,
-        opacity: 0.25,
-      });
-      lineSegments = new THREE.LineSegments(solidGeo, solidMat);
-      networkGroup.add(lineSegments);
-    }
+        opacity: 1,
+        blending: THREE.AdditiveBlending,
+        depthWrite: false,
+      })
+    );
+    dynSegments.frustumCulled = false;
+    networkGroup.add(dynSegments);
 
     if (dashedPairs.length) {
       dashedPosAttr = new THREE.BufferAttribute(new Float32Array(dashedPairs.length * 3), 3);
@@ -283,6 +332,7 @@
     }
 
     syncLinePositions(); // primeira escrita, com as posições de repouso
+    updateDynamicLinks();
 
     // ---- Halos suaves em alguns nós (sprites, sem asset externo) ----
     haloGroup = new THREE.Group();
@@ -316,6 +366,17 @@
   // cluster + jitter individual) e propaga para pontos, linhas e halos.
   function updateLiveMotion(elapsed) {
     var n;
+    var hasPointer = CONFIG.mouseParallax && pointerActive;
+    var pr2 = CONFIG.pointerRadius * CONFIG.pointerRadius;
+    if (hasPointer) {
+      // Converte o cursor (-0.5..0.5 da janela) para o plano z=0 da cena.
+      var halfH = Math.tan((camera.fov * Math.PI) / 360) * camera.position.z;
+      var halfW = halfH * camera.aspect;
+      var targetX = pointerTarget.x * 2 * halfW - networkGroup.position.x;
+      var targetY = -pointerTarget.y * 2 * halfH;
+      pointerWorld.x += (targetX - pointerWorld.x) * 0.18;
+      pointerWorld.y += (targetY - pointerWorld.y) * 0.18;
+    }
     for (n = 0; n < nodeBase.length; n++) {
       var base = nodeBase[n];
       var jp = nodePhase[n];
@@ -330,13 +391,37 @@
         oy += cp.ay * Math.sin(elapsed * cp.fy + cp.py);
       }
 
-      livePositions[n * 3] = base.x + ox;
-      livePositions[n * 3 + 1] = base.y + oy;
+      var px = base.x + ox;
+      var py = base.y + oy;
+
+      // Interação sutil: o cursor afasta de leve os nós próximos; ao sair, voltam suavemente.
+      var tx = 0;
+      var ty = 0;
+      if (hasPointer) {
+        var ddx = px - pointerWorld.x;
+        var ddy = py - pointerWorld.y;
+        var dd2 = ddx * ddx + ddy * ddy;
+        if (dd2 < pr2 && dd2 > 1e-6) {
+          var dd = Math.sqrt(dd2);
+          var falloff = 1 - dd / CONFIG.pointerRadius;
+          var amt = falloff * falloff * CONFIG.pointerPush;
+          tx = (ddx / dd) * amt;
+          ty = (ddy / dd) * amt;
+        }
+      }
+      pushX[n] += (tx - pushX[n]) * 0.07;
+      pushY[n] += (ty - pushY[n]) * 0.07;
+
+      livePositions[n * 3] = px + pushX[n];
+      livePositions[n * 3 + 1] = py + pushY[n];
       livePositions[n * 3 + 2] = base.z + oz;
     }
     pointsMesh.geometry.attributes.position.needsUpdate = true;
 
     syncLinePositions();
+    // Links recalculados a cada 2 quadros: imperceptível a 60fps, metade do custo.
+    linkFrame++;
+    if ((linkFrame & 1) === 0) updateDynamicLinks();
 
     for (var h = 0; h < haloGroup.children.length; h++) {
       var ni = haloNodeIndex[h];
@@ -346,6 +431,55 @@
         livePositions[ni * 3 + 2]
       );
     }
+  }
+
+  // Recalcula as conexões sólidas a cada frame: pares a menos de dynLinkDistance se ligam, e a
+  // intensidade cai com a distância — links surgem e somem enquanto a rede se reorganiza.
+  function updateDynamicLinks() {
+    if (!dynGeo) return;
+    var maxD = CONFIG.dynLinkDistance;
+    var maxD2 = maxD * maxD;
+    var cap = CONFIG.dynLinkMax;
+    var lp = livePositions;
+    var n = nodeBase.length;
+    var k = 0;
+    outer: for (var i = 0; i < n; i++) {
+      var ix = lp[i * 3];
+      var iy = lp[i * 3 + 1];
+      var iz = lp[i * 3 + 2];
+      for (var j = i + 1; j < n; j++) {
+        var dx = ix - lp[j * 3];
+        if (dx > maxD || dx < -maxD) continue;
+        var dy = iy - lp[j * 3 + 1];
+        if (dy > maxD || dy < -maxD) continue;
+        var dz = iz - lp[j * 3 + 2];
+        var d2 = dx * dx + dy * dy + dz * dz;
+        if (d2 >= maxD2) continue;
+        var f = 1 - Math.sqrt(d2) / maxD;
+        f = f * f * 0.85;
+        var o = k * 6;
+        dynPos[o] = ix;
+        dynPos[o + 1] = iy;
+        dynPos[o + 2] = iz;
+        dynPos[o + 3] = lp[j * 3];
+        dynPos[o + 4] = lp[j * 3 + 1];
+        dynPos[o + 5] = lp[j * 3 + 2];
+        var r = LINE_RGB[0] * f;
+        var g = LINE_RGB[1] * f;
+        var b = LINE_RGB[2] * f;
+        dynCol[o] = r;
+        dynCol[o + 1] = g;
+        dynCol[o + 2] = b;
+        dynCol[o + 3] = r;
+        dynCol[o + 4] = g;
+        dynCol[o + 5] = b;
+        k++;
+        if (k >= cap) break outer;
+      }
+    }
+    dynGeo.setDrawRange(0, k * 2);
+    dynGeo.attributes.position.needsUpdate = true;
+    dynGeo.attributes.color.needsUpdate = true;
   }
 
   // Reescreve os vértices das linhas a partir de `livePositions`, seguindo a topologia
@@ -428,6 +562,7 @@
     var ny = event.clientY / window.innerHeight - 0.5;
     pointerTarget.x = nx;
     pointerTarget.y = ny;
+    pointerActive = true;
   }
 
   // ---------- Pausa fora de viewport / aba oculta (performance) ----------

@@ -71,9 +71,9 @@ body {
   pointer-events: none;
   background: linear-gradient(
     90deg,
-    rgba(5, 7, 12, 0.72) 0%,
-    rgba(5, 7, 12, 0.42) 32%,
-    rgba(5, 7, 12, 0.06) 58%,
+    rgba(5, 7, 12, 0.8) 0%,
+    rgba(5, 7, 12, 0.52) 32%,
+    rgba(5, 7, 12, 0.1) 58%,
     rgba(5, 7, 12, 0) 78%
   );
 }
@@ -969,6 +969,39 @@ body.no-webgl .hero__scrim {
   font-size: clamp(1.9rem, 1.3rem + 2.6vw, 3.2rem);
   max-width: 22ch;
   margin: 0 auto;
+}
+
+/* ---------- Backgrounds animados dos slides 02–11 (ver bg.js) ---------- */
+/* Camada decorativa atrás do conteúdo. A máscara reduz a intensidade sobre a área do texto,
+   para que o fundo dê atmosfera sem competir com a leitura. */
+
+.block__fx {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.9s ease;
+  -webkit-mask-image: radial-gradient(ellipse 48% 50% at 42% 52%, rgba(0, 0, 0, 0.5) 30%, #000 100%);
+  mask-image: radial-gradient(ellipse 48% 50% at 42% 52%, rgba(0, 0, 0, 0.5) 30%, #000 100%);
+}
+
+.block.is-visible .block__fx {
+  opacity: 1;
+}
+
+/* Fechamento: texto centralizado, então a área protegida também é central. */
+.block__fx--closing {
+  -webkit-mask-image: radial-gradient(ellipse 40% 36% at 50% 50%, rgba(0, 0, 0, 0.5) 30%, #000 100%);
+  mask-image: radial-gradient(ellipse 40% 36% at 50% 50%, rgba(0, 0, 0, 0.5) 30%, #000 100%);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .block__fx {
+    transition: none;
+  }
 }
 
 /* ---------- Responsividade dos novos componentes ---------- */
