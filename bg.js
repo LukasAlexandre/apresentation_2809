@@ -1,5 +1,5 @@
 /**
- * Backgrounds animados dos slides 02–11 (Canvas 2D, sem dependências).
+ * Backgrounds animados dos slides 02–10 (Canvas 2D, sem dependências).
  *
  * Uma família visual única — pontos, linhas finas e pulsos na mesma paleta azul do slide 01 —
  * com uma "cena" por slide, escolhida para reforçar a mensagem daquele slide (dúvida, ordem,
@@ -19,20 +19,19 @@
 
   var SCENE_BY_BLOCK = {
     2: "scatter", // O problema — pontos soltos, links que se formam e se desfazem
-    3: "order", // A ideia — rede organizada, calma
+    3: "order", // A solução — rede organizada, calma
     4: "flow", // Como funciona — fluxo horizontal
     5: "ledger", // Por que blockchain — cadeia de registros com pulsos
-    6: "build", // Como planejamos — progressão em degraus
-    7: "ambient", // Nosso time — sistema compartilhado, discreto
-    8: "pulse", // O que já construímos — grade técnica com pulsos
-    9: "progress", // Onde estamos — varredura de progresso
-    10: "path", // Próximos passos — trajetória rumo ao horizonte
-    11: "closing", // Resultado — rede solene e centrada
+    6: "build", // Como estamos construindo — progressão em degraus
+    7: "ambient", // Quem está construindo — sistema compartilhado, discreto
+    8: "progress", // O que já construímos e onde estamos — varredura de progresso
+    9: "path", // Próximos passos — trajetória rumo ao horizonte
+    10: "closing", // Resultado — rede solene e centrada
   };
 
   var reduceMotionQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
   var DPR = Math.min(window.devicePixelRatio || 1, 1.5);
-  var A = "125,211,252"; // --accent
+  var A = "0,168,150"; // --brand-teal (#00A896)
   // Ganho global de intensidade dos fundos (um só botão para calibrar presença x legibilidade).
   var GAIN = 2.1;
   var rgbaCache = {};
@@ -59,9 +58,9 @@
     c.width = c.height = 64;
     var g = c.getContext("2d");
     var gr = g.createRadialGradient(32, 32, 0, 32, 32, 32);
-    gr.addColorStop(0, "rgba(190,235,255,0.95)");
-    gr.addColorStop(0.35, "rgba(125,211,252,0.32)");
-    gr.addColorStop(1, "rgba(125,211,252,0)");
+    gr.addColorStop(0, "rgba(235,236,150,0.95)");
+    gr.addColorStop(0.35, "rgba(214,215,82,0.32)");
+    gr.addColorStop(1, "rgba(0,168,150,0)");
     g.fillStyle = gr;
     g.fillRect(0, 0, 64, 64);
     return c;
@@ -310,10 +309,10 @@
     };
   }
 
-  // 06 — Como planejamos: progressão em degraus; um pulso sobe a escada e acende cada etapa.
+  // 06 — Como estamos construindo: progressão em 5 degraus (uma por etapa do slide); um pulso sobe a escada e acende cada etapa.
   function build(w, h) {
     var pts = [];
-    for (var i = 0; i < 7; i++) pts.push([w * (0.78 + 0.03 * i), h * (0.9 - 0.1 * i)]);
+    for (var i = 0; i < 5; i++) pts.push([w * (0.78 + 0.03 * i), h * (0.9 - 0.1 * i)]);
     var path = [pts[0]];
     for (var s = 1; s < pts.length; s++) {
       path.push([pts[s][0], pts[s - 1][1]]);
@@ -410,67 +409,9 @@
     };
   }
 
-  // 08 — O que já construímos: grade técnica fina, com pulsos que acendem os cruzamentos.
-  function pulse(w, h) {
-    var G = clamp(w / 1920, 0.7, 1) * 112;
-    var rings = [];
-    var next = 0.5;
-    var grid = layer(w, h, function (gg) {
-      var gx, gy;
-      gg.strokeStyle = rgba(0.035);
-      gg.lineWidth = 1;
-      gg.beginPath();
-      for (gx = 0; gx <= w; gx += G) {
-        gg.moveTo(gx, 0);
-        gg.lineTo(gx, h);
-      }
-      for (gy = 0; gy <= h; gy += G) {
-        gg.moveTo(0, gy);
-        gg.lineTo(w, gy);
-      }
-      gg.stroke();
-      for (gx = 0; gx <= w; gx += G) {
-        for (gy = 0; gy <= h; gy += G) dot(gg, gx, gy, 1.1, 0.12);
-      }
-    });
-    return {
-      draw: function (g, t) {
-        var x, y, i;
-        g.drawImage(grid, 0, 0, w, h);
-        if (t > next) {
-          rings.push({ x: Math.round(rand(2, w / G - 2)) * G, y: Math.round(rand(1, h / G - 1)) * G, born: t });
-          next = t + rand(2.2, 3.6);
-        }
-        for (i = rings.length - 1; i >= 0; i--) if (t - rings[i].born > 4.2) rings.splice(i, 1);
-        if (rings.length) {
-          for (x = 0; x <= w; x += G) {
-            for (y = 0; y <= h; y += G) {
-              var b = 0;
-              for (i = 0; i < rings.length; i++) {
-                var age = t - rings[i].born;
-                var r = age * 110;
-                var d = Math.hypot(x - rings[i].x, y - rings[i].y);
-                b = Math.max(b, Math.exp(-((d - r) * (d - r)) / (2 * 38 * 38)) * (1 - age / 4.2));
-              }
-              if (b > 0.04) {
-                dot(g, x, y, 1.1 + b * 1.6, b * 0.7);
-                if (b > 0.1) glow(g, x, y, 22, b * 0.5);
-              }
-            }
-          }
-        }
-        for (i = 0; i < rings.length; i++) {
-          var ag = t - rings[i].born;
-          g.strokeStyle = rgba(0.14 * (1 - ag / 4.2));
-          g.beginPath();
-          g.arc(rings[i].x, rings[i].y, ag * 110, 0, 6.2832);
-          g.stroke();
-        }
-      },
-    };
-  }
-
-  // 09 — Onde estamos: riscos de luz que avançam e uma varredura de progresso na base.
+  // 08 — O que já construímos e onde estamos: riscos de luz que avançam e uma varredura de
+  // progresso na base (evolução do projeto). Substitui o antigo "pulse" (grade), que era do slide 08
+  // anterior; um único canvas para o slide unificado.
   function progress(w, h) {
     var n = scaled(46, w, h, 20);
     var S = [];
@@ -520,7 +461,7 @@
     };
   }
 
-  // 10 — Próximos passos: linhas que convergem para um horizonte; pontos avançam até ele.
+  // 09 — Próximos passos: linhas que convergem para um horizonte; pontos avançam até ele.
   function path(w, h) {
     var vx = w * 0.9;
     var vy = h * 0.5;
@@ -552,7 +493,7 @@
     };
   }
 
-  // 11 — Resultado esperado: rede solene e centrada, em leve órbita, com brilho central.
+  // 10 — Resultado esperado: rede solene e centrada, em leve órbita, com brilho central.
   function closing(w, h) {
     var n = scaled(150, w, h, 60);
     var cx = w * 0.5;
@@ -602,7 +543,7 @@
     };
   }
 
-  var FACTORY = { scatter: scatter, order: order, flow: flow, ledger: ledger, build: build, ambient: ambient, pulse: pulse, progress: progress, path: path, closing: closing };
+  var FACTORY = { scatter: scatter, order: order, flow: flow, ledger: ledger, build: build, ambient: ambient, progress: progress, path: path, closing: closing };
 
   // ---------------------------------------------------------------------------------------
   // Motor: um canvas por slide, um único loop, só o slide visível é desenhado.

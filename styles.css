@@ -1,14 +1,35 @@
 /* Bloco 01 — Abertura — protótipo isolado.
    Fonte de verdade: docs/apresentacao/08-BLOCO-01-ABERTURA.md e 09-CONCEPT-BLOCO-01.md */
 
+/* Fontes oficiais do site Web 3.0 / iRede (https://web3.irede.org.br): Supreme (corpo) e Kdam Thmor Pro (títulos). */
+@font-face { font-family: "Supreme"; font-weight: 300; font-display: swap; src: url("assets/fonts/Supreme-Light.woff2") format("woff2"); }
+@font-face { font-family: "Supreme"; font-weight: 400; font-display: swap; src: url("assets/fonts/Supreme-Regular.woff2") format("woff2"); }
+@font-face { font-family: "Supreme"; font-weight: 500; font-display: swap; src: url("assets/fonts/Supreme-Medium.woff2") format("woff2"); }
+@font-face { font-family: "Supreme"; font-weight: 700; font-display: swap; src: url("assets/fonts/Supreme-Bold.woff2") format("woff2"); }
+@font-face { font-family: "Kdam Thmor Pro"; font-weight: 400; font-display: swap; src: url("assets/fonts/KdamThmorPro.woff2") format("woff2"); }
+
+/* Tokens — valores medidos no CSS publicado de web3.irede.org.br (não há manual de marca disponível).
+   Fundo #0E1E32 · gradiente de marca #D6D752 → #00A896 · tint mint rgba(1,255,188,.1) · texto branco. */
 :root {
-  --bg-base: #05070c;
-  --bg-base-2: #0a0f1a;
-  --text-primary: #f4f6fa;
-  --text-secondary: #aab3c2;
-  --text-tertiary: #7c8798;
-  --accent: #7dd3fc;
-  --accent-soft: #38bdf8;
+  --bg-base: #0e1e32;
+  --bg-base-2: #0b1828;
+  --bg-deep: #091526;
+  --brand-lime: #d6d752;
+  --brand-teal: #00a896;
+  --brand-mint: #01ffbc;
+  --brand-gradient: linear-gradient(90deg, #d6d752, #00a896);
+  --brand-gradient-v: linear-gradient(180deg, #d6d752, #00a896);
+  --text-primary: #ffffff;
+  --text-secondary: rgba(255, 255, 255, 0.78);
+  --text-tertiary: rgba(255, 255, 255, 0.55);
+  --accent: #d6d752;
+  --accent-soft: #00a896;
+  --line: rgba(0, 168, 150, 0.45);
+  --card-bg: rgba(255, 255, 255, 0.03);
+  --card-border: rgba(255, 255, 255, 0.12);
+
+  --font-display: "Kdam Thmor Pro", "Segoe UI", sans-serif;
+  --font-body: "Supreme", "Segoe UI", "Helvetica Neue", Arial, sans-serif;
 
   --eyebrow-size: clamp(0.72rem, 0.6rem + 0.4vw, 0.85rem);
   --headline-size: clamp(2.6rem, 1.6rem + 4.2vw, 5.4rem);
@@ -31,7 +52,7 @@ body {
 }
 
 body {
-  font-family: -apple-system, "Segoe UI", "Inter", "Helvetica Neue", Arial, sans-serif;
+  font-family: var(--font-body);
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
 }
@@ -45,8 +66,8 @@ body {
   width: 100%;
   overflow: hidden;
   background:
-    radial-gradient(ellipse 90% 70% at 78% 42%, rgba(56, 189, 248, 0.08), transparent 60%),
-    linear-gradient(160deg, var(--bg-base-2) 0%, var(--bg-base) 55%, #030507 100%);
+    radial-gradient(ellipse 90% 70% at 78% 42%, rgba(0, 168, 150, 0.08), transparent 60%),
+    linear-gradient(160deg, var(--bg-base-2) 0%, var(--bg-base) 55%, var(--bg-deep) 100%);
   display: flex;
   align-items: center;
 }
@@ -71,10 +92,10 @@ body {
   pointer-events: none;
   background: linear-gradient(
     90deg,
-    rgba(5, 7, 12, 0.8) 0%,
-    rgba(5, 7, 12, 0.52) 32%,
-    rgba(5, 7, 12, 0.1) 58%,
-    rgba(5, 7, 12, 0) 78%
+    rgba(9, 21, 38, 0.8) 0%,
+    rgba(9, 21, 38, 0.52) 32%,
+    rgba(9, 21, 38, 0.1) 58%,
+    rgba(9, 21, 38, 0) 78%
   );
 }
 
@@ -227,9 +248,9 @@ body {
 /* Classe adicionada ao <body> por main.js quando a criação do contexto WebGL falha. */
 body.no-webgl .hero {
   background:
-    radial-gradient(ellipse 70% 60% at 80% 38%, rgba(56, 189, 248, 0.10), transparent 62%),
-    radial-gradient(ellipse 40% 45% at 92% 60%, rgba(125, 211, 252, 0.06), transparent 70%),
-    linear-gradient(160deg, var(--bg-base-2) 0%, var(--bg-base) 55%, #030507 100%);
+    radial-gradient(ellipse 70% 60% at 80% 38%, rgba(0, 168, 150, 0.10), transparent 62%),
+    radial-gradient(ellipse 40% 45% at 92% 60%, rgba(0, 168, 150, 0.06), transparent 70%),
+    linear-gradient(160deg, var(--bg-base-2) 0%, var(--bg-base) 55%, var(--bg-deep) 100%);
 }
 body.no-webgl .hero__canvas-wrap {
   display: none;
@@ -244,10 +265,10 @@ body.no-webgl .hero__scrim {
   .hero__scrim {
     background: linear-gradient(
       90deg,
-      rgba(5, 7, 12, 0.78) 0%,
-      rgba(5, 7, 12, 0.5) 40%,
-      rgba(5, 7, 12, 0.1) 68%,
-      rgba(5, 7, 12, 0) 85%
+      rgba(9, 21, 38, 0.78) 0%,
+      rgba(9, 21, 38, 0.5) 40%,
+      rgba(9, 21, 38, 0.1) 68%,
+      rgba(9, 21, 38, 0) 85%
     );
   }
 }
@@ -267,9 +288,9 @@ body.no-webgl .hero__scrim {
   .hero__scrim {
     background: linear-gradient(
       180deg,
-      rgba(5, 7, 12, 0) 0%,
-      rgba(5, 7, 12, 0.55) 68%,
-      rgba(5, 7, 12, 0.92) 100%
+      rgba(9, 21, 38, 0) 0%,
+      rgba(9, 21, 38, 0.55) 68%,
+      rgba(9, 21, 38, 0.92) 100%
     );
   }
 
@@ -301,7 +322,7 @@ body.no-webgl .hero__scrim {
 }
 
 /* =====================================================================
-   DESIGN SYSTEM — Slides 02–11
+   DESIGN SYSTEM — Slides 02–10
    Reaproveita os tokens definidos em :root no topo deste arquivo.
    ===================================================================== */
 
@@ -399,7 +420,7 @@ body.no-webgl .hero__scrim {
   font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
   font-size: 0.9em;
   color: var(--accent);
-  background: rgba(125, 211, 252, 0.08);
+  background: rgba(0, 168, 150, 0.08);
   padding: 0.1em 0.4em;
   border-radius: 4px;
 }
@@ -408,7 +429,7 @@ body.no-webgl .hero__scrim {
   color: var(--accent);
 }
 
-/* ---------- Fluxo horizontal (slides 02 e 11) ---------- */
+/* ---------- Fluxo horizontal (slides 02 e 10) ---------- */
 
 .flow {
   list-style: none;
@@ -445,7 +466,7 @@ body.no-webgl .hero__scrim {
   content: "";
   width: 22px;
   height: 1px;
-  background: rgba(125, 211, 252, 0.35);
+  background: rgba(0, 168, 150, 0.45);
   margin: 0 0.55rem;
   flex: none;
 }
@@ -455,23 +476,23 @@ body.no-webgl .hero__scrim {
   height: 8px;
   border-radius: 50%;
   background: var(--accent-soft);
-  box-shadow: 0 0 8px rgba(56, 189, 248, 0.6);
+  box-shadow: 0 0 8px rgba(0, 168, 150, 0.6);
   flex: none;
 }
 
 .flow__step--accent .flow__dot {
   background: var(--accent);
-  box-shadow: 0 0 12px rgba(125, 211, 252, 0.9);
+  box-shadow: 0 0 12px rgba(0, 168, 150, 0.9);
 }
 
 .flow__label {
-  font-size: 0.95rem;
+  font-size: 1.05rem;
   color: var(--text-secondary);
 }
 
 .flow--faint .flow__label {
-  color: var(--text-tertiary);
-  font-size: 0.88rem;
+  color: var(--text-secondary);
+  font-size: 1rem;
   white-space: nowrap;
 }
 
@@ -493,9 +514,9 @@ body.no-webgl .hero__scrim {
 .idea-grid {
   margin-top: 2.6rem;
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
   gap: 1rem;
-  max-width: 820px;
+  max-width: 1040px;
 }
 
 .idea-card {
@@ -506,8 +527,8 @@ body.no-webgl .hero__scrim {
 }
 
 .idea-card--accent {
-  border-color: rgba(125, 211, 252, 0.35);
-  background: rgba(125, 211, 252, 0.06);
+  border-color: rgba(0, 168, 150, 0.45);
+  background: rgba(0, 168, 150, 0.06);
 }
 
 .idea-card__title {
@@ -529,7 +550,7 @@ body.no-webgl .hero__scrim {
 .tag {
   display: inline-flex;
   align-items: center;
-  font-size: 0.72rem;
+  font-size: 0.8rem;
   font-weight: 600;
   letter-spacing: 0.03em;
   padding: 0.28em 0.65em;
@@ -539,71 +560,21 @@ body.no-webgl .hero__scrim {
 }
 
 .tag--merged {
-  color: #86efac;
-  background: rgba(74, 222, 128, 0.1);
-  border-color: rgba(74, 222, 128, 0.28);
+  color: var(--brand-lime);
+  background: rgba(214, 215, 82, 0.1);
+  border-color: rgba(214, 215, 82, 0.28);
 }
 
 .tag--open {
-  color: #7dd3fc;
-  background: rgba(125, 211, 252, 0.1);
-  border-color: rgba(125, 211, 252, 0.28);
+  color: var(--brand-teal);
+  background: rgba(0, 168, 150, 0.1);
+  border-color: rgba(0, 168, 150, 0.28);
 }
 
 .tag--pending {
-  color: #d8b4fe;
-  background: rgba(216, 180, 254, 0.1);
-  border-color: rgba(216, 180, 254, 0.28);
-}
-
-/* ---------- Slide 04: como funciona ---------- */
-
-.step-num {
-  flex: none;
-  width: 1.7em;
-  height: 1.7em;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 50%;
-  border: 1px solid rgba(125, 211, 252, 0.35);
-  color: var(--accent);
-  font-size: 0.82rem;
-  font-weight: 700;
-}
-
-.story-grid {
-  list-style: none;
-  margin: 2.4rem 0 0;
-  padding: 0;
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 1rem;
-  max-width: 1040px;
-}
-
-.story-step {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 0.8rem;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 12px;
-  padding: 1.2rem;
-  background: rgba(255, 255, 255, 0.02);
-}
-
-.story-step--accent {
-  border-color: rgba(125, 211, 252, 0.35);
-  background: rgba(125, 211, 252, 0.06);
-}
-
-.story-step__text {
-  margin: 0;
-  flex: 1;
-  font-size: 1.02rem;
-  line-height: 1.4;
-  color: var(--text-primary);
+  color: rgba(255,255,255,.7);
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.28);
 }
 
 /* ---------- Slide 05: linha do tempo de registros ---------- */
@@ -622,7 +593,7 @@ body.no-webgl .hero__scrim {
 .ledger__item {
   position: relative;
   padding-top: 1.5rem;
-  border-top: 1px solid rgba(125, 211, 252, 0.3);
+  border-top: 1px solid rgba(0, 168, 150, 0.3);
 }
 
 .ledger__dot {
@@ -633,7 +604,7 @@ body.no-webgl .hero__scrim {
   height: 9px;
   border-radius: 50%;
   background: var(--accent-soft);
-  box-shadow: 0 0 8px rgba(56, 189, 248, 0.6);
+  box-shadow: 0 0 8px rgba(0, 168, 150, 0.6);
 }
 
 .ledger__title {
@@ -645,7 +616,7 @@ body.no-webgl .hero__scrim {
 
 .ledger__meta {
   margin: 0.3em 0 0;
-  font-size: 0.8rem;
+  font-size: 0.88rem;
   color: var(--text-tertiary);
 }
 
@@ -656,15 +627,15 @@ body.no-webgl .hero__scrim {
   margin: 2.6rem 0 0;
   padding: 0;
   display: grid;
-  grid-template-columns: repeat(7, 1fr);
-  gap: 0.6rem;
-  max-width: 1000px;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 1rem;
+  max-width: 1040px;
 }
 
 .plan-step {
   position: relative;
   padding-top: 1.5rem;
-  border-top: 1px solid rgba(125, 211, 252, 0.3);
+  border-top: 1px solid rgba(0, 168, 150, 0.3);
 }
 
 .plan-step__dot {
@@ -675,21 +646,21 @@ body.no-webgl .hero__scrim {
   height: 9px;
   border-radius: 50%;
   background: var(--accent-soft);
-  box-shadow: 0 0 8px rgba(56, 189, 248, 0.6);
+  box-shadow: 0 0 8px rgba(0, 168, 150, 0.6);
 }
 
 .plan-step--accent {
-  border-top-color: rgba(125, 211, 252, 0.8);
+  border-top-color: rgba(0, 168, 150, 0.8);
 }
 
 .plan-step--accent .plan-step__dot {
   background: var(--accent);
-  box-shadow: 0 0 12px rgba(125, 211, 252, 0.9);
+  box-shadow: 0 0 12px rgba(0, 168, 150, 0.9);
 }
 
 .plan-step__label {
   margin: 0;
-  font-size: 0.95rem;
+  font-size: 1.1rem;
   font-weight: 600;
   line-height: 1.3;
   color: var(--text-primary);
@@ -718,8 +689,8 @@ body.no-webgl .hero__scrim {
 }
 
 .person-card--mentor {
-  border-color: rgba(125, 211, 252, 0.3);
-  background: rgba(125, 211, 252, 0.05);
+  border-color: rgba(0, 168, 150, 0.3);
+  background: rgba(0, 168, 150, 0.05);
 }
 
 .person-card__name {
@@ -731,7 +702,7 @@ body.no-webgl .hero__scrim {
 
 .person-card__role {
   margin: 0 0 1em;
-  font-size: 0.82rem;
+  font-size: 0.92rem;
   line-height: 1.4;
   color: var(--accent);
 }
@@ -746,202 +717,31 @@ body.no-webgl .hero__scrim {
 }
 
 .person-card__areas li {
-  font-size: 0.85rem;
+  font-size: 0.95rem;
   line-height: 1.35;
   color: var(--text-secondary);
-}
-
-.ref {
-  display: block;
-  margin-top: 0.1em;
-  font-size: 0.72rem;
-  color: var(--text-tertiary);
-  letter-spacing: 0.03em;
-}
-
-/* ---------- Slide 08: o que já construímos ---------- */
-
-.checklist {
-  list-style: none;
-  margin: 2.2rem 0 0;
-  padding: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 0.2rem;
-  max-width: 780px;
-}
-
-.checklist__item {
-  display: flex;
-  align-items: center;
-  gap: 0.9rem;
-  padding: 0.7rem 0;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
-}
-
-.checklist__text {
-  flex: 1;
-  font-size: 1.05rem;
-  color: var(--text-primary);
-}
-
-.checklist__text .tag {
-  margin-left: 0.6rem;
-  vertical-align: middle;
-}
-
-.checklist__who {
-  flex: none;
-  text-align: right;
-  font-size: 0.85rem;
-  color: var(--text-secondary);
-}
-
-.checklist__who .ref {
-  display: inline;
-  margin-left: 0.4em;
-}
-
-.check {
-  flex: none;
-  position: relative;
-  width: 1.3rem;
-  height: 1.3rem;
-  border-radius: 50%;
-  border: 1px solid rgba(74, 222, 128, 0.45);
-  background: rgba(74, 222, 128, 0.1);
-}
-
-.check::after {
-  content: "";
-  position: absolute;
-  left: 0.42rem;
-  top: 0.2rem;
-  width: 0.28rem;
-  height: 0.55rem;
-  border: solid #86efac;
-  border-width: 0 2px 2px 0;
-  transform: rotate(45deg);
-}
-
-.check--pending {
-  border-color: rgba(216, 180, 254, 0.45);
-  background: rgba(216, 180, 254, 0.1);
-}
-
-.check--pending::after {
-  border-color: #d8b4fe;
-}
-
-/* ---------- Slide 09: onde estamos ---------- */
-
-.progress-list {
-  margin-top: 2.2rem;
-  display: flex;
-  flex-direction: column;
-  gap: 1.1rem;
-  max-width: 900px;
-}
-
-.progress-row {
-  display: grid;
-  grid-template-columns: 230px 1fr;
-  gap: 1.4rem;
-  align-items: start;
-}
-
-.progress-row__label {
-  margin: 0;
-  font-size: 1rem;
-  font-weight: 600;
-  line-height: 1.3;
-  color: var(--text-primary);
-}
-
-.progress-row__note {
-  margin: 0.5em 0 0;
-  font-size: 0.85rem;
-  color: var(--text-secondary);
-}
-
-.bar {
-  display: flex;
-  gap: 5px;
-  max-width: 420px;
-}
-
-.seg {
-  display: block;
-  flex: 1;
-  height: 10px;
-  border-radius: 999px;
-}
-
-.seg--done { background: #4ade80; }
-.seg--review { background: var(--accent-soft); }
-.seg--pending { background: #c084fc; }
-.seg--todo { background: rgba(255, 255, 255, 0.12); }
-
-.legend {
-  list-style: none;
-  margin: 1.8rem 0 0;
-  padding: 0;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem 1.4rem;
-  font-size: 0.78rem;
-  color: var(--text-tertiary);
-}
-
-.legend li {
-  display: flex;
-  align-items: center;
-  gap: 0.5em;
-}
-
-.legend .seg {
-  flex: none;
-  width: 18px;
-  height: 8px;
-}
-
-.progress-msg {
-  margin: 1.6rem 0 0;
-  font-size: clamp(1.05rem, 0.9rem + 0.6vw, 1.35rem);
-  font-weight: 600;
-  line-height: 1.4;
-  color: var(--accent);
-  max-width: 40ch;
 }
 
 /* ---------- Slide 10: próximos passos ---------- */
 
 .next-steps {
-  margin: 2.4rem 0 0;
+  margin: 2.6rem 0 0;
   padding: 0;
   list-style: none;
   display: flex;
   flex-direction: column;
-  gap: 1.1rem;
-  max-width: 720px;
+  gap: 1.5rem;
+  max-width: 860px;
 }
 
 .next-steps li {
   display: flex;
   align-items: flex-start;
-  gap: 0.9rem;
-  font-size: 1.05rem;
-  color: var(--text-secondary);
-  line-height: 1.5;
-}
-
-.next-steps__who {
-  flex: none;
-  margin-left: auto;
-  padding-left: 0.9rem;
-  font-size: 0.8rem;
-  color: var(--text-tertiary);
-  white-space: nowrap;
+  align-items: center;
+  gap: 1.1rem;
+  font-size: 1.35rem;
+  color: var(--text-primary);
+  line-height: 1.4;
 }
 
 .next-steps__num {
@@ -952,7 +752,7 @@ body.no-webgl .hero__scrim {
   align-items: center;
   justify-content: center;
   border-radius: 50%;
-  border: 1px solid rgba(125, 211, 252, 0.35);
+  border: 1px solid rgba(0, 168, 150, 0.45);
   color: var(--accent);
   font-size: 0.82rem;
   font-weight: 700;
@@ -961,8 +761,8 @@ body.no-webgl .hero__scrim {
 /* ---------- Slide 11: encerramento ---------- */
 
 .block--closing {
-  background: radial-gradient(ellipse 70% 60% at 50% 40%, rgba(56, 189, 248, 0.07), transparent 65%),
-    linear-gradient(180deg, var(--bg-base) 0%, #030507 100%);
+  background: radial-gradient(ellipse 70% 60% at 50% 40%, rgba(0, 168, 150, 0.07), transparent 65%),
+    linear-gradient(180deg, var(--bg-base) 0%, var(--bg-deep) 100%);
 }
 
 .block--closing .block__title--closing {
@@ -971,7 +771,195 @@ body.no-webgl .hero__scrim {
   margin: 0 auto;
 }
 
-/* ---------- Backgrounds animados dos slides 02–11 (ver bg.js) ---------- */
+/* ---------- Ícones funcionais (sprite inline em index.html) ---------- */
+
+.ico {
+  width: 1.5rem;
+  height: 1.5rem;
+  flex: none;
+  fill: none;
+  stroke: var(--accent);
+  stroke-width: 1.6;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.idea-card .ico {
+  margin-bottom: 0.9rem;
+}
+
+/* ---------- Slide 04: jornada em seis passos ---------- */
+
+.journey {
+  list-style: none;
+  margin: 2.6rem 0 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 1rem;
+  max-width: 1120px;
+}
+
+.journey__step {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.8rem;
+}
+
+/* Linha que liga um passo ao próximo */
+.journey__step:not(:last-child)::after {
+  content: "";
+  position: absolute;
+  top: 1.4rem;
+  left: 3.2rem;
+  right: -0.9rem;
+  height: 1px;
+  background: linear-gradient(90deg, rgba(0, 168, 150, 0.45), rgba(0, 168, 150, 0.1));
+}
+
+.journey__icon {
+  width: 2.8rem;
+  height: 2.8rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  border: 1px solid rgba(0, 168, 150, 0.45);
+  background: rgba(0, 168, 150, 0.06);
+  position: relative;
+  z-index: 1;
+}
+
+.journey__step--accent .journey__icon {
+  border-color: rgba(0, 168, 150, 0.8);
+  box-shadow: 0 0 14px rgba(0, 168, 150, 0.45);
+}
+
+.journey__text {
+  margin: 0;
+  flex: 1;
+  font-size: 1.05rem;
+  line-height: 1.35;
+  color: var(--text-primary);
+}
+
+/* ---------- Slide 05: valores da tecnologia ---------- */
+
+.values {
+  list-style: none;
+  margin: 2rem 0 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+}
+
+.values li {
+  font-size: 0.95rem;
+  color: var(--text-primary);
+  padding: 0.45em 1em;
+  border-radius: 999px;
+  border: 1px solid rgba(0, 168, 150, 0.3);
+  background: rgba(0, 168, 150, 0.06);
+}
+
+/* ---------- Slide 08: onde estamos (três estágios conectados) ---------- */
+
+.stage-flow {
+  margin-top: 2rem;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.6rem;
+  max-width: 1180px;
+}
+
+.stage {
+  position: relative;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  padding: 1.3rem 1.4rem 1.4rem;
+  background: rgba(255, 255, 255, 0.02);
+}
+
+/* Conector entre estágios */
+.stage:not(:last-child)::after {
+  content: "";
+  position: absolute;
+  top: 2.1rem;
+  right: -1.6rem;
+  width: 1.6rem;
+  height: 1px;
+  background: rgba(0, 168, 150, 0.5);
+}
+
+.stage__kicker {
+  margin: 0 0 0.3em;
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.stage__title {
+  margin: 0 0 1.1rem;
+  font-size: 1.3rem;
+  font-weight: 700;
+  line-height: 1.25;
+  color: var(--text-primary);
+}
+
+.stage__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.stage__list li {
+  position: relative;
+  padding-left: 1.6rem;
+  font-size: 1.12rem;
+  line-height: 1.35;
+  color: var(--text-secondary);
+}
+
+.stage__list li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.32em;
+  width: 0.9rem;
+  height: 0.9rem;
+  border-radius: 50%;
+  border: 1.5px solid currentColor;
+}
+
+.stage--done { border-color: rgba(214, 215, 82, 0.32); background: rgba(214, 215, 82, 0.04); }
+.stage--done .stage__kicker { color: var(--brand-lime); }
+.stage--done .stage__list li::before { color: var(--brand-lime); background: rgba(214, 215, 82, 0.35); }
+
+.stage--review { border-color: rgba(0, 168, 150, 0.45); background: rgba(0, 168, 150, 0.05); }
+.stage--review .stage__kicker { color: var(--accent); }
+.stage--review .stage__list li::before { color: var(--accent-soft); }
+
+.stage--next { border-style: dashed; }
+.stage--next .stage__kicker { color: var(--text-tertiary); }
+.stage--next .stage__list li::before { color: var(--text-tertiary); border-style: dashed; }
+
+.progress-msg {
+  margin: 1.8rem 0 0;
+  font-size: clamp(1.05rem, 0.9rem + 0.6vw, 1.35rem);
+  font-weight: 600;
+  line-height: 1.4;
+  color: var(--accent);
+  max-width: 44ch;
+}
+
+/* ---------- Backgrounds animados dos slides 02–10 (ver bg.js) ---------- */
 /* Camada decorativa atrás do conteúdo. A máscara reduz a intensidade sobre a área do texto,
    para que o fundo dê atmosfera sem competir com a leitura. */
 
@@ -1006,25 +994,27 @@ body.no-webgl .hero__scrim {
 
 /* ---------- Responsividade dos novos componentes ---------- */
 
+@media (max-width: 1100px) {
+  .journey { grid-template-columns: repeat(3, 1fr); row-gap: 1.6rem; }
+  .journey__step::after { display: none; }
+}
+
 @media (max-width: 900px) {
-  .story-grid { grid-template-columns: repeat(2, 1fr); }
-  .plan-flow { grid-template-columns: repeat(4, 1fr); row-gap: 1.6rem; }
+  .plan-flow { grid-template-columns: repeat(3, 1fr); row-gap: 1.6rem; }
   .ledger { grid-template-columns: repeat(2, 1fr); row-gap: 1.6rem; }
-  .progress-row { grid-template-columns: 1fr; gap: 0.5rem; }
+  .stage-flow { grid-template-columns: 1fr; }
+  .stage::after { display: none; }
 }
 
 @media (max-width: 560px) {
-  .story-grid,
+  .journey,
   .plan-flow,
   .ledger { grid-template-columns: 1fr; }
-  .checklist__item { flex-wrap: wrap; }
-  .checklist__who { margin-left: 2.2rem; text-align: left; flex: 1 1 calc(100% - 2.2rem); }
   .next-steps li { flex-wrap: wrap; }
-  .next-steps__who { margin-left: 2.6rem; padding-left: 0; }
 }
 
 /* =====================================================================
-   NAVEGAÇÃO — dots 01–11 (scroll-spy via main.js)
+   NAVEGAÇÃO — dots 01–10 (scroll-spy via main.js)
    ===================================================================== */
 
 .dotnav {
@@ -1069,7 +1059,7 @@ body.no-webgl .hero__scrim {
 .dotnav__item.is-active span {
   background: var(--accent);
   transform: scale(1.6);
-  box-shadow: 0 0 8px rgba(125, 211, 252, 0.7);
+  box-shadow: 0 0 8px rgba(0, 168, 150, 0.7);
 }
 
 @media (max-width: 720px) {
@@ -1083,7 +1073,7 @@ body.no-webgl .hero__scrim {
   }
 }
 
-/* ---------- Motion leve dos slides 02–11 (fade + rise ao entrar na viewport) ----------
+/* ---------- Motion leve dos slides 02–10 (fade + rise ao entrar na viewport) ----------
    Apresentação ao vivo: conteúdo precisa estar legível em ~300–700ms, mesmo navegando
    rápido entre blocos distantes — por isso durações e delays curtos. */
 
@@ -1125,3 +1115,142 @@ body.no-webgl .hero__scrim {
     width: 14px;
   }
 }
+
+/* ---------- Projeção em tela grande (≥1700×1000) ----------
+   Em 1920×1080 o conteúdo dos slides 02–10 ocupa pouco da tela e o texto fica pequeno para
+   quem está longe. Ampliação só do conteúdo (hero, fundos e navegação ficam como estão).
+   Abaixo desse tamanho (notebook 1366×768, janela com barras) nada muda. */
+@media (min-width: 1700px) and (min-height: 1000px) {
+  .block__inner {
+    zoom: 1.25;
+  }
+}
+
+/* =====================================================================
+   IDENTIDADE WEB 3.0 / iREDE — camada de marca
+   Tipografia, gradiente de marca, logos oficiais e acabamento.
+   ===================================================================== */
+
+html { scrollbar-width: none; }
+html::-webkit-scrollbar { display: none; }
+
+/* Títulos em Kdam Thmor Pro (como no hero do site oficial); corpo em Supreme. */
+.hero__headline,
+.block__title,
+.stage__title,
+.idea-card__title,
+.person-card__name {
+  font-family: var(--font-display);
+  font-weight: 400;
+  letter-spacing: 0;
+}
+.hero__headline { line-height: 1.08; }
+.block__title { line-height: 1.16; }
+.eyebrow,
+.hero__eyebrow,
+.block__index,
+.stage__kicker { font-family: var(--font-body); font-weight: 700; }
+.flow__label,
+.journey__text,
+.plan-step__label,
+.ledger__title { font-weight: 500; }
+
+/* Destaque: gradiente de marca no texto. */
+.accent,
+.progress-msg {
+  background: var(--brand-gradient);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+}
+.person-card__role { color: var(--brand-lime); }
+.block__note code { color: var(--brand-lime); background: rgba(214, 215, 82, 0.1); }
+
+/* Marca registrada no topo de cada slide (logo Web 3.0 — fixa, discreta). */
+.brandbar {
+  position: fixed;
+  top: clamp(14px, 2.4vh, 28px);
+  left: clamp(20px, 3vw, 48px);
+  z-index: 60;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  pointer-events: none;
+}
+.brandbar__logo { display: block; height: clamp(30px, 4.4vh, 46px); width: auto; }
+.brandbar__sep { width: 1px; height: 24px; background: rgba(255, 255, 255, 0.25); }
+.brandbar__tag {
+  font-size: 0.72rem; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase;
+  color: var(--text-tertiary);
+}
+
+/* Fio de marca no topo de cada bloco e numeral fantasma. */
+.block { background: linear-gradient(180deg, var(--bg-base) 0%, var(--bg-base-2) 100%); border-top: 0; }
+.block::before {
+  content: ""; position: absolute; top: 0; left: 0; right: 0; height: 2px; z-index: 3;
+  background: var(--brand-gradient); opacity: 0.55;
+}
+.block__index {
+  display: inline-block;
+  padding-bottom: 0.45em;
+  border-bottom: 2px solid transparent;
+  border-image: var(--brand-gradient) 1;
+  color: var(--text-secondary);
+}
+.block__ghost {
+  position: absolute; z-index: 0; right: clamp(40px, 6vw, 110px); bottom: -0.12em;
+  font-family: var(--font-display); font-size: clamp(14rem, 34vw, 34rem); line-height: 1;
+  color: transparent; -webkit-text-stroke: 1px rgba(0, 168, 150, 0.11);
+  pointer-events: none; user-select: none;
+}
+
+/* Cartões: borda em gradiente de marca (padrão do site) sobre o azul-marinho. */
+.idea-card, .person-card, .stage {
+  border: 1px solid var(--card-border);
+  background: var(--card-bg);
+  border-radius: 14px;
+}
+.idea-card--accent, .person-card--mentor {
+  border: 1px solid transparent;
+  background: linear-gradient(var(--bg-base), var(--bg-base)) padding-box, var(--brand-gradient) border-box;
+}
+.stage--done { border-color: rgba(214, 215, 82, 0.4); background: rgba(214, 215, 82, 0.05); }
+.stage--review { border-color: rgba(0, 168, 150, 0.55); background: rgba(0, 168, 150, 0.08); }
+.stage--review .stage__kicker { color: #3ddcc9; }
+.tag--open { color: #3ddcc9; background: rgba(0, 168, 150, 0.14); border-color: rgba(0, 168, 150, 0.5); }
+.tag--merged { background: rgba(214, 215, 82, 0.12); border-color: rgba(214, 215, 82, 0.45); }
+.ico { stroke: var(--brand-lime); }
+.flow__dot, .ledger__dot, .plan-step__dot { background: var(--brand-teal); }
+.flow__step--accent .flow__dot, .plan-step--accent .plan-step__dot { background: var(--brand-lime); box-shadow: 0 0 12px rgba(214, 215, 82, 0.8); }
+.ledger__item, .plan-step { border-top-color: rgba(0, 168, 150, 0.55); }
+.plan-step--accent { border-top-color: var(--brand-lime); }
+.next-steps__num { border: 0; background: var(--brand-gradient); color: var(--bg-base); }
+.values li { border-color: rgba(0, 168, 150, 0.5); background: rgba(1, 255, 188, 0.06); }
+.dotnav__item.is-active span { background: var(--brand-lime); box-shadow: 0 0 8px rgba(214, 215, 82, 0.8); }
+
+/* Fechamento: marcas institucionais (iRede, MCTI) com fundo adequado — branco sobre azul-marinho. */
+.block--closing {
+  background: radial-gradient(ellipse 70% 60% at 50% 40%, rgba(1, 255, 188, 0.08), transparent 65%),
+    linear-gradient(180deg, var(--bg-base) 0%, var(--bg-deep) 100%);
+}
+.partners {
+  margin-top: clamp(1.6rem, 4vh, 3rem); padding-top: 1.4rem;
+  display: flex; align-items: center; justify-content: center; gap: clamp(1.4rem, 4vw, 3.2rem);
+  border-top: 1px solid rgba(255, 255, 255, 0.14);
+}
+.partners img { display: block; height: clamp(34px, 5.2vh, 56px); width: auto; }
+.partners__label { font-size: 0.72rem; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: var(--text-tertiary); }
+
+/* Hero: logo institucional + fio de marca. */
+.hero__eyebrow { color: var(--brand-lime); }
+.hero__brand { margin: 0 0 clamp(1.4rem, 4vh, 2.4rem); }
+.hero__brand img { display: block; height: clamp(44px, 7vh, 72px); width: auto; }
+.hero__rule { display: block; width: 64px; height: 3px; margin: 1.4em 0 0; background: var(--brand-gradient); border-radius: 2px; }
+.hero__indicator-arrow { color: var(--brand-lime); }
+
+@media (max-width: 720px) { .brandbar__tag, .brandbar__sep { display: none; } .block__ghost { display: none; } }
+@media print { .brandbar { display: none; } }
+
+/* Folga vertical menor: o slide 08 (o mais alto) precisa caber em 1366×768 sem rolagem interna. */
+.block { padding: clamp(56px, 7.5vh, 120px) 0; }

@@ -4,23 +4,41 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <title>Credenciamento de ICTs — Apresentação</title>
-  <meta name="description" content="Pitch do projeto Credenciamento de ICTs — 11 slides, navegação por scroll/teclado. Não faz parte do produto." />
+  <meta name="description" content="Apresentação executiva do projeto Credenciamento de ICTs — 10 slides, navegação por scroll/teclado." />
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-  <!-- Navegação discreta: dots 01–11. Ver main.js para scroll-spy e teclado. -->
+  <!-- Marca oficial: logo Web 3.0 (assets/brand/web3logo.png, extraído de web3.irede.org.br). -->
+  <header class="brandbar" aria-label="Residência Web 3.0">
+    <img class="brandbar__logo" src="assets/brand/web3logo.png" alt="Web 3.0 — Residência em TIC 29" />
+  </header>
+  <!-- Ícones funcionais (sprite inline, sem arquivos externos). -->
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+    <defs>
+      <symbol id="i-building" viewBox="0 0 24 24"><path d="M3 21h18M5 21V8l7-4 7 4v13M9 21v-6h6v6M9 11h.01M15 11h.01"/></symbol>
+      <symbol id="i-doc" viewBox="0 0 24 24"><path d="M7 3h7l4 4v14H7zM14 3v4h4M9.5 12h5M9.5 16h5"/></symbol>
+      <symbol id="i-check" viewBox="0 0 24 24"><path d="M12 3a9 9 0 100 18 9 9 0 000-18zM8 12.5l3 3 5-6"/></symbol>
+      <symbol id="i-badge" viewBox="0 0 24 24"><path d="M4 6h16v14H4zM4 10h16M8 3v4M16 3v4M9 15l2 2 4-4"/></symbol>
+      <symbol id="i-refresh" viewBox="0 0 24 24"><path d="M20 11a8 8 0 00-14-4.5L4 9M4 4v5h5M4 13a8 8 0 0014 4.5L20 15M20 20v-5h-5"/></symbol>
+      <symbol id="i-search" viewBox="0 0 24 24"><path d="M11 4a7 7 0 100 14 7 7 0 000-14zM20 20l-4-4"/></symbol>
+      <symbol id="i-layers" viewBox="0 0 24 24"><path d="M12 3l9 5-9 5-9-5zM3 13l9 5 9-5"/></symbol>
+      <symbol id="i-clock" viewBox="0 0 24 24"><path d="M12 4a8 8 0 100 16 8 8 0 000-16zM12 8v4l3 2"/></symbol>
+      <symbol id="i-globe" viewBox="0 0 24 24"><path d="M12 3a9 9 0 100 18 9 9 0 000-18zM3 12h18M12 3c3 3.5 3 14.5 0 18M12 3c-3 3.5-3 14.5 0 18"/></symbol>
+    </defs>
+  </svg>
+
+  <!-- Navegação discreta: dots 01–10. Ver main.js para scroll-spy e teclado. -->
   <nav class="dotnav" id="dotnav" aria-label="Navegação da apresentação">
     <button class="dotnav__item" data-target="1" aria-label="Slide 1 — Abertura"><span>01</span></button>
     <button class="dotnav__item" data-target="2" aria-label="Slide 2 — O problema"><span>02</span></button>
-    <button class="dotnav__item" data-target="3" aria-label="Slide 3 — A ideia"><span>03</span></button>
+    <button class="dotnav__item" data-target="3" aria-label="Slide 3 — A solução"><span>03</span></button>
     <button class="dotnav__item" data-target="4" aria-label="Slide 4 — Como funciona"><span>04</span></button>
     <button class="dotnav__item" data-target="5" aria-label="Slide 5 — Por que blockchain"><span>05</span></button>
-    <button class="dotnav__item" data-target="6" aria-label="Slide 6 — Como planejamos"><span>06</span></button>
-    <button class="dotnav__item" data-target="7" aria-label="Slide 7 — Nosso time"><span>07</span></button>
-    <button class="dotnav__item" data-target="8" aria-label="Slide 8 — O que já construímos"><span>08</span></button>
-    <button class="dotnav__item" data-target="9" aria-label="Slide 9 — Onde estamos agora"><span>09</span></button>
-    <button class="dotnav__item" data-target="10" aria-label="Slide 10 — Próximos passos"><span>10</span></button>
-    <button class="dotnav__item" data-target="11" aria-label="Slide 11 — Resultado esperado"><span>11</span></button>
+    <button class="dotnav__item" data-target="6" aria-label="Slide 6 — Como estamos construindo"><span>06</span></button>
+    <button class="dotnav__item" data-target="7" aria-label="Slide 7 — Quem está construindo"><span>07</span></button>
+    <button class="dotnav__item" data-target="8" aria-label="Slide 8 — O que já construímos e onde estamos"><span>08</span></button>
+    <button class="dotnav__item" data-target="9" aria-label="Slide 9 — Próximos passos"><span>09</span></button>
+    <button class="dotnav__item" data-target="10" aria-label="Slide 10 — Resultado esperado"><span>10</span></button>
   </nav>
 
   <div class="deck" id="deck">
@@ -32,9 +50,10 @@
       </div>
       <div class="hero__scrim" aria-hidden="true"></div>
       <div class="hero__content">
-        <p class="hero__eyebrow">Residência Web3</p>
+        <p class="hero__eyebrow">Residência Web 3.0 · TIC 29</p>
         <h1 class="hero__headline">Credenciamento<br />de ICTs</h1>
-        <p class="hero__subheadline">Um jeito confiável de registrar e consultar se uma instituição está credenciada.</p>
+        <p class="hero__subheadline">Um jeito confiável e transparente de registrar e consultar se uma instituição está credenciada.</p>
+        <span class="hero__rule" aria-hidden="true"></span>
         <p class="hero__note">ICT = Instituição Científica, Tecnológica e de Inovação</p>
         <p class="hero__indicator" aria-hidden="true">
           <span class="hero__indicator-arrow">↓</span>
@@ -46,40 +65,49 @@
     <!-- ============ 02 — O PROBLEMA ============ -->
     <section class="block" id="block-02" data-block="2">
       <div class="block__inner container">
-        <p class="block__index">02 / 11</p>
+        <span class="block__ghost" aria-hidden="true">02</span>
+        <p class="block__index">02 / 10</p>
         <p class="eyebrow">O problema</p>
         <h2 class="block__title block__title--question">
           Esta instituição está credenciada <span class="accent">agora?</span>
         </h2>
         <p class="block__lead">
-          O credenciamento passa por várias etapas, tem prazo e precisa ser renovado. Hoje,
-          comprovar a situação atual depende de verificação manual.
+          Responder isso hoje exige conferir registros espalhados, um a um. O credenciamento passa
+          por várias etapas, tem prazo e precisa ser renovado.
         </p>
         <ol class="flow flow--faint" aria-label="Etapas do credenciamento">
           <li class="flow__step"><span class="flow__dot"></span><span class="flow__label">Cadastro</span></li>
           <li class="flow__step"><span class="flow__dot"></span><span class="flow__label">Solicitação</span></li>
           <li class="flow__step"><span class="flow__dot"></span><span class="flow__label">Análise</span></li>
-          <li class="flow__step"><span class="flow__dot"></span><span class="flow__label">Habilitação</span></li>
+          <li class="flow__step"><span class="flow__dot"></span><span class="flow__label">Credenciamento</span></li>
           <li class="flow__step"><span class="flow__dot"></span><span class="flow__label">Auditoria</span></li>
           <li class="flow__step"><span class="flow__dot"></span><span class="flow__label">Renovação</span></li>
         </ol>
       </div>
     </section>
 
-    <!-- ============ 03 — A IDEIA ============ -->
+    <!-- ============ 03 — A SOLUÇÃO ============ -->
     <section class="block" id="block-03" data-block="3">
       <div class="block__inner container">
-        <p class="block__index">03 / 11</p>
-        <p class="eyebrow">A ideia</p>
+        <span class="block__ghost" aria-hidden="true">03</span>
+        <p class="block__index">03 / 10</p>
+        <p class="eyebrow">A solução</p>
         <h2 class="block__title">Um registro confiável do credenciamento, aberto para consulta.</h2>
         <div class="idea-grid">
           <div class="idea-card">
-            <p class="idea-card__title">Cada etapa importante fica registrada</p>
-            <p class="idea-card__text">Do pedido à renovação, com data e responsável.</p>
+            <svg class="ico" aria-hidden="true"><use href="#i-layers" /></svg>
+            <p class="idea-card__title">Informações organizadas</p>
+            <p class="idea-card__text">Cada etapa importante fica registrada, com data e responsável.</p>
+          </div>
+          <div class="idea-card">
+            <svg class="ico" aria-hidden="true"><use href="#i-clock" /></svg>
+            <p class="idea-card__title">Histórico verificável</p>
+            <p class="idea-card__text">Do pedido à renovação, é possível conferir o que aconteceu.</p>
           </div>
           <div class="idea-card idea-card--accent">
-            <p class="idea-card__title">Qualquer pessoa consulta a situação atual</p>
-            <p class="idea-card__text">Sem cadastro e sem login.</p>
+            <svg class="ico" aria-hidden="true"><use href="#i-globe" /></svg>
+            <p class="idea-card__title">Consulta pública</p>
+            <p class="idea-card__text">Qualquer pessoa vê a situação atual, sem cadastro e sem login.</p>
           </div>
         </div>
       </div>
@@ -88,121 +116,126 @@
     <!-- ============ 04 — COMO FUNCIONA ============ -->
     <section class="block" id="block-04" data-block="4">
       <div class="block__inner container">
-        <p class="block__index">04 / 11</p>
+        <span class="block__ghost" aria-hidden="true">04</span>
+        <p class="block__index">04 / 10</p>
         <p class="eyebrow">Como funciona</p>
         <h2 class="block__title">Do cadastro à consulta, em seis passos.</h2>
-        <ol class="story-grid">
-          <li class="story-step">
-            <span class="step-num">1</span>
-            <p class="story-step__text">A instituição é cadastrada no sistema</p>
-            <span class="tag tag--merged">PRONTO</span>
+        <ol class="journey">
+          <li class="journey__step">
+            <span class="journey__icon"><svg class="ico" aria-hidden="true"><use href="#i-building" /></svg></span>
+            <p class="journey__text">Cadastro da instituição</p>
+            <span class="tag tag--merged">Aprovado</span>
           </li>
-          <li class="story-step">
-            <span class="step-num">2</span>
-            <p class="story-step__text">Solicita o credenciamento</p>
-            <span class="tag tag--open">EM REVISÃO</span>
+          <li class="journey__step">
+            <span class="journey__icon"><svg class="ico" aria-hidden="true"><use href="#i-doc" /></svg></span>
+            <p class="journey__text">Pedido de credenciamento</p>
+            <span class="tag tag--open">Em validação</span>
           </li>
-          <li class="story-step">
-            <span class="step-num">3</span>
-            <p class="story-step__text">O responsável analisa e decide</p>
-            <span class="tag tag--open">EM REVISÃO</span>
+          <li class="journey__step">
+            <span class="journey__icon"><svg class="ico" aria-hidden="true"><use href="#i-check" /></svg></span>
+            <p class="journey__text">Análise e decisão</p>
+            <span class="tag tag--open">Em validação</span>
           </li>
-          <li class="story-step">
-            <span class="step-num">4</span>
-            <p class="story-step__text">Se aprovada, recebe o credenciamento com prazo de validade</p>
-            <span class="tag tag--open">EM REVISÃO</span>
+          <li class="journey__step">
+            <span class="journey__icon"><svg class="ico" aria-hidden="true"><use href="#i-badge" /></svg></span>
+            <p class="journey__text">Credenciamento com prazo de validade</p>
+            <span class="tag tag--open">Em validação</span>
           </li>
-          <li class="story-step">
-            <span class="step-num">5</span>
-            <p class="story-step__text">Pode passar por auditoria e renovação</p>
-            <span class="tag tag--open">EM REVISÃO</span>
+          <li class="journey__step">
+            <span class="journey__icon"><svg class="ico" aria-hidden="true"><use href="#i-refresh" /></svg></span>
+            <p class="journey__text">Auditoria e renovação</p>
+            <span class="tag tag--open">Em validação</span>
           </li>
-          <li class="story-step story-step--accent">
-            <span class="step-num">6</span>
-            <p class="story-step__text">Qualquer pessoa consulta a situação atual</p>
-            <span class="tag tag--open">EM REVISÃO</span>
+          <li class="journey__step journey__step--accent">
+            <span class="journey__icon"><svg class="ico" aria-hidden="true"><use href="#i-search" /></svg></span>
+            <p class="journey__text">Consulta pública da situação</p>
+            <span class="tag tag--open">Em validação</span>
           </li>
         </ol>
-        <p class="block__note">Em revisão: já construída e em ajustes após a análise do mentor.</p>
+        <p class="block__note">Aprovado: já aceito no projeto. Em validação: desenvolvido, aguardando revisão. As telas de uso ainda serão construídas.</p>
       </div>
     </section>
 
     <!-- ============ 05 — POR QUE BLOCKCHAIN ============ -->
     <section class="block" id="block-05" data-block="5">
       <div class="block__inner container">
-        <p class="block__index">05 / 11</p>
+        <span class="block__ghost" aria-hidden="true">05</span>
+        <p class="block__index">05 / 10</p>
         <p class="eyebrow">Por que blockchain?</p>
-        <h2 class="block__title">Um histórico que ninguém consegue reescrever.</h2>
+        <h2 class="block__title">Um livro de registros em que toda alteração deixa evidência.</h2>
         <ol class="ledger" aria-label="Linha do tempo de registros">
           <li class="ledger__item"><span class="ledger__dot"></span><p class="ledger__title">Pedido registrado</p><p class="ledger__meta">quando · quem</p></li>
           <li class="ledger__item"><span class="ledger__dot"></span><p class="ledger__title">Decisão registrada</p><p class="ledger__meta">quando · quem</p></li>
           <li class="ledger__item"><span class="ledger__dot"></span><p class="ledger__title">Prazo definido</p><p class="ledger__meta">quando · quem</p></li>
           <li class="ledger__item"><span class="ledger__dot"></span><p class="ledger__title">Auditoria registrada</p><p class="ledger__meta">quando · quem</p></li>
         </ol>
-        <p class="block__lead">Cada registro mostra o que aconteceu, quando e quem fez. Documentos completos e dados pessoais não ficam públicos.</p>
-        <p class="block__note">Prova de conceito, em ambiente e com dados de teste.</p>
+        <ul class="values" aria-label="O que a tecnologia traz">
+          <li>Registros verificáveis</li>
+          <li>Rastreabilidade</li>
+          <li>Transparência</li>
+          <li>Mais confiança no histórico</li>
+        </ul>
+        <p class="block__note">Pelo desenho do projeto, documentos completos e dados pessoais ficam fora do registro público. Etapa atual: prova de conceito, com dados de teste.</p>
       </div>
     </section>
 
-    <!-- ============ 06 — COMO PLANEJAMOS ============ -->
+    <!-- ============ 06 — COMO ESTAMOS CONSTRUINDO ============ -->
     <section class="block" id="block-06" data-block="6">
       <div class="block__inner container">
-        <p class="block__index">06 / 11</p>
-        <p class="eyebrow">Como planejamos</p>
-        <h2 class="block__title">Primeiro entendemos e planejamos; depois construímos.</h2>
+        <span class="block__ghost" aria-hidden="true">06</span>
+        <p class="block__index">06 / 10</p>
+        <p class="eyebrow">Como estamos construindo</p>
+        <h2 class="block__title">Passo a passo, com cuidado em cada entrega.</h2>
         <ol class="plan-flow">
-          <li class="plan-step"><span class="plan-step__dot"></span><p class="plan-step__label">Problema</p></li>
-          <li class="plan-step"><span class="plan-step__dot"></span><p class="plan-step__label">Regras</p><p class="plan-step__ref">ADR-001</p></li>
-          <li class="plan-step"><span class="plan-step__dot"></span><p class="plan-step__label">Riscos</p><p class="plan-step__ref">Modelo de ameaças</p></li>
-          <li class="plan-step"><span class="plan-step__dot"></span><p class="plan-step__label">Responsabilidades</p><p class="plan-step__ref">ADR-002</p></li>
-          <li class="plan-step"><span class="plan-step__dot"></span><p class="plan-step__label">Divisão do trabalho</p><p class="plan-step__ref">15 tarefas</p></li>
-          <li class="plan-step plan-step--accent"><span class="plan-step__dot"></span><p class="plan-step__label">Desenvolvimento</p></li>
-          <li class="plan-step plan-step--accent"><span class="plan-step__dot"></span><p class="plan-step__label">Testes e revisão</p></li>
+          <li class="plan-step"><span class="plan-step__dot"></span><p class="plan-step__label">Planejamos o funcionamento</p></li>
+          <li class="plan-step"><span class="plan-step__dot"></span><p class="plan-step__label">Definimos como proteger as informações</p></li>
+          <li class="plan-step plan-step--accent"><span class="plan-step__dot"></span><p class="plan-step__label">Desenvolvemos as funcionalidades</p></li>
+          <li class="plan-step plan-step--accent"><span class="plan-step__dot"></span><p class="plan-step__label">Testamos e validamos cada entrega</p></li>
+          <li class="plan-step plan-step--accent"><span class="plan-step__dot"></span><p class="plan-step__label">Evoluímos o sistema por etapas</p></li>
         </ol>
-        <p class="block__note">Cada entrega é testada e revisada antes de entrar no projeto.</p>
       </div>
     </section>
 
-    <!-- ============ 07 — NOSSO TIME ============ -->
+    <!-- ============ 07 — QUEM ESTÁ CONSTRUINDO ============ -->
     <section class="block" id="block-07" data-block="7">
       <div class="block__inner container">
-        <p class="block__index">07 / 11</p>
-        <p class="eyebrow">Nosso time</p>
-        <h2 class="block__title">Cada pessoa cuida de uma parte do problema.</h2>
+        <span class="block__ghost" aria-hidden="true">07</span>
+        <p class="block__index">07 / 10</p>
+        <p class="eyebrow">Quem está construindo</p>
+        <h2 class="block__title">Cada pessoa cuida de uma parte da solução.</h2>
         <div class="people-grid">
           <div class="person-card">
             <p class="person-card__name">Lukas</p>
-            <p class="person-card__role">Regras, riscos e parte do fluxo de credenciamento</p>
+            <p class="person-card__role">Regras, riscos e etapas centrais do credenciamento</p>
             <ul class="person-card__areas">
-              <li>Regras do sistema <span class="ref">T-002</span></li>
-              <li>Mapeamento dos riscos <span class="ref">T-003</span></li>
-              <li>Ativação, auditoria e consulta pública <span class="ref">T-008 a T-010</span></li>
+              <li>Regras do sistema e mapa de riscos</li>
+              <li>Ativação, auditoria e renovação</li>
+              <li>Consulta pública da situação</li>
             </ul>
           </div>
           <div class="person-card">
             <p class="person-card__name">Gabriel</p>
             <p class="person-card__role">Entrada da instituição e início do credenciamento</p>
             <ul class="person-card__areas">
-              <li>Cadastro oficial da instituição <span class="ref">T-006</span></li>
-              <li>Solicitação e decisão <span class="ref">T-007</span></li>
+              <li>Registro oficial da instituição</li>
+              <li>Pedido de credenciamento e decisão</li>
             </ul>
           </div>
           <div class="person-card">
             <p class="person-card__name">Alison</p>
-            <p class="person-card__role">Regras de autorização e base de usuários</p>
+            <p class="person-card__role">Permissões e usuários</p>
             <ul class="person-card__areas">
-              <li>Quem pode fazer cada ação <span class="ref">T-005</span></li>
-              <li>Mapeamento dos riscos <span class="ref">T-003</span></li>
-              <li>Base de usuários <span class="ref">T-011</span></li>
+              <li>Quem pode fazer cada ação</li>
+              <li>Mapa de riscos</li>
+              <li>Base de usuários</li>
             </ul>
           </div>
           <div class="person-card">
             <p class="person-card__name">Kaique</p>
             <p class="person-card__role">Experiência web, pública e interna</p>
             <ul class="person-card__areas">
-              <li>Site público <span class="ref">T-004</span></li>
-              <li>Área interna <span class="ref">T-014</span></li>
-              <li>Login no site <span class="ref">T-015</span></li>
+              <li>Página pública do projeto</li>
+              <li>Estrutura da área interna</li>
             </ul>
           </div>
           <div class="person-card person-card--mentor">
@@ -216,88 +249,68 @@
       </div>
     </section>
 
-    <!-- ============ 08 — O QUE JÁ CONSTRUÍMOS ============ -->
+    <!-- ============ 08 — O QUE JÁ CONSTRUÍMOS E ONDE ESTAMOS ============ -->
     <section class="block" id="block-08" data-block="8">
       <div class="block__inner container">
-        <p class="block__index">08 / 11</p>
-        <p class="eyebrow">O que já construímos</p>
-        <h2 class="block__title">Resultados concretos.</h2>
-        <ul class="checklist">
-          <li class="checklist__item"><span class="check"></span><span class="checklist__text">Regras do sistema definidas</span><span class="checklist__who">Lukas <span class="ref">T-002</span></span></li>
-          <li class="checklist__item"><span class="check"></span><span class="checklist__text">Riscos principais mapeados</span><span class="checklist__who">Lukas · Alison <span class="ref">T-003</span></span></li>
-          <li class="checklist__item"><span class="check"></span><span class="checklist__text">Regras de autorização definidas</span><span class="checklist__who">Alison <span class="ref">T-005</span></span></li>
-          <li class="checklist__item"><span class="check"></span><span class="checklist__text">Site público criado</span><span class="checklist__who">Kaique <span class="ref">T-004</span></span></li>
-          <li class="checklist__item"><span class="check"></span><span class="checklist__text">Área interna criada</span><span class="checklist__who">Kaique <span class="ref">T-014</span></span></li>
-          <li class="checklist__item"><span class="check"></span><span class="checklist__text">Cadastro da instituição implementado</span><span class="checklist__who">Gabriel <span class="ref">T-006</span></span></li>
-          <li class="checklist__item checklist__item--pending"><span class="check check--pending"></span><span class="checklist__text">Base inicial de usuários implementada <span class="tag tag--pending">Validação final pendente</span></span><span class="checklist__who">Alison <span class="ref">T-011</span></span></li>
-        </ul>
+        <span class="block__ghost" aria-hidden="true">08</span>
+        <p class="block__index">08 / 10</p>
+        <p class="eyebrow">O que já construímos e onde estamos</p>
+        <h2 class="block__title">Onde estamos hoje.</h2>
+        <div class="stage-flow">
+          <section class="stage stage--done" aria-labelledby="st-done">
+            <p class="stage__kicker">Já temos</p>
+            <h3 class="stage__title" id="st-done">Aprovado no projeto</h3>
+            <ul class="stage__list">
+              <li>Página pública do projeto</li>
+              <li>Estrutura da área interna</li>
+              <li>Núcleo do registro da instituição</li>
+              <li>Regras, riscos e permissões definidos</li>
+            </ul>
+          </section>
+          <section class="stage stage--review" aria-labelledby="st-review">
+            <p class="stage__kicker">Estamos validando</p>
+            <h3 class="stage__title" id="st-review">Aguardando revisão</h3>
+            <ul class="stage__list">
+              <li>Pedido de credenciamento e decisão</li>
+              <li>Ativação do credenciamento</li>
+              <li>Auditoria e renovação</li>
+              <li>Consulta pública da situação</li>
+              <li>Base de usuários (com ajuste pendente)</li>
+            </ul>
+          </section>
+          <section class="stage stage--next" aria-labelledby="st-next">
+            <p class="stage__kicker">Vem a seguir</p>
+            <h3 class="stage__title" id="st-next">Ainda a construir</h3>
+            <ul class="stage__list">
+              <li>Login no sistema</li>
+              <li>Cadastro e envio de documentos pela tela</li>
+              <li>Conexão entre site, sistema e registros</li>
+            </ul>
+          </section>
+        </div>
+        <p class="progress-msg">Estamos saindo da construção das peças para começar a conectá-las.</p>
+        <p class="block__note">Projeto em fase de prova de conceito, ainda sem uso real.</p>
       </div>
     </section>
 
-    <!-- ============ 09 — ONDE ESTAMOS AGORA ============ -->
+    <!-- ============ 09 — PRÓXIMOS PASSOS ============ -->
     <section class="block" id="block-09" data-block="9">
       <div class="block__inner container">
-        <p class="block__index">09 / 11</p>
-        <p class="eyebrow">Onde estamos agora</p>
-        <h2 class="block__title">Planejamento pronto; fluxo em revisão.</h2>
-        <div class="progress-list">
-          <div class="progress-row">
-            <p class="progress-row__label">Planejamento e preparação</p>
-            <div class="progress-row__body">
-              <div class="bar" aria-hidden="true"><i class="seg seg--done"></i><i class="seg seg--done"></i><i class="seg seg--done"></i><i class="seg seg--done"></i></div>
-              <p class="progress-row__note">4 de 4 entregas concluídas</p>
-            </div>
-          </div>
-          <div class="progress-row">
-            <p class="progress-row__label">Fluxo de credenciamento</p>
-            <div class="progress-row__body">
-              <div class="bar" aria-hidden="true"><i class="seg seg--done"></i><i class="seg seg--review"></i><i class="seg seg--review"></i><i class="seg seg--review"></i><i class="seg seg--review"></i></div>
-              <p class="progress-row__note">1 etapa aprovada · 4 em revisão</p>
-            </div>
-          </div>
-          <div class="progress-row">
-            <p class="progress-row__label">Sistema e usuários</p>
-            <div class="progress-row__body">
-              <div class="bar" aria-hidden="true"><i class="seg seg--pending"></i><i class="seg seg--todo"></i><i class="seg seg--todo"></i></div>
-              <p class="progress-row__note">Base de usuários implementada · login e o restante pendentes</p>
-            </div>
-          </div>
-          <div class="progress-row">
-            <p class="progress-row__label">Experiência web</p>
-            <div class="progress-row__body">
-              <div class="bar" aria-hidden="true"><i class="seg seg--done"></i><i class="seg seg--done"></i><i class="seg seg--todo"></i></div>
-              <p class="progress-row__note">Site público e área interna prontos · login pendente</p>
-            </div>
-          </div>
-        </div>
-        <ul class="legend" aria-label="Legenda">
-          <li><i class="seg seg--done"></i>Concluído</li>
-          <li><i class="seg seg--review"></i>Em revisão</li>
-          <li><i class="seg seg--pending"></i>Implementado, validação pendente</li>
-          <li><i class="seg seg--todo"></i>A fazer</li>
-        </ul>
-        <p class="progress-msg">Estamos saindo da construção das peças para começar a conectá-las.</p>
-      </div>
-    </section>
-
-    <!-- ============ 10 — PRÓXIMOS PASSOS ============ -->
-    <section class="block" id="block-10" data-block="10">
-      <div class="block__inner container">
-        <p class="block__index">10 / 11</p>
+        <span class="block__ghost" aria-hidden="true">09</span>
+        <p class="block__index">09 / 10</p>
         <p class="eyebrow">Próximos passos</p>
         <h2 class="block__title">O caminho até a primeira versão (MVP).</h2>
         <ol class="next-steps">
-          <li><span class="next-steps__num">1</span> Concluir os ajustes das etapas em revisão <span class="next-steps__who">Gabriel · Lukas</span></li>
-          <li><span class="next-steps__num">2</span> Implementar o login e o restante do sistema <span class="next-steps__who">Lukas</span></li>
-          <li><span class="next-steps__num">3</span> Conectar interface, sistema e registros do credenciamento <span class="next-steps__who">Kaique · Lukas</span></li>
-          <li><span class="next-steps__num">4</span> Testar o fluxo completo <span class="next-steps__who">Equipe</span></li>
-          <li><span class="next-steps__num">5</span> Preparar a demonstração da primeira versão <span class="next-steps__who">Equipe</span></li>
+          <li><span class="next-steps__num">1</span> Concluir a validação das etapas em revisão</li>
+          <li><span class="next-steps__num">2</span> Criar o login e o acesso ao sistema</li>
+          <li><span class="next-steps__num">3</span> Conectar site, sistema e registros do credenciamento</li>
+          <li><span class="next-steps__num">4</span> Testar o fluxo completo e preparar a demonstração do MVP</li>
         </ol>
       </div>
     </section>
 
-    <!-- ============ 11 — RESULTADO ESPERADO ============ -->
-    <section class="block block--closing" id="block-11" data-block="11">
+    <!-- ============ 10 — RESULTADO ESPERADO ============ -->
+    <section class="block block--closing" id="block-10" data-block="10">
       <div class="block__inner container block__inner--center">
         <p class="eyebrow">Resultado esperado</p>
         <ol class="flow flow--center" aria-label="Resultado esperado">
@@ -306,8 +319,13 @@
           <li class="flow__step flow__step--accent"><span class="flow__dot"></span><span class="flow__label">Confia no histórico que levou até ela</span></li>
         </ol>
         <h2 class="block__title block__title--closing">
-          Transformar um processo complexo em uma consulta <span class="accent">simples, confiável e rastreável.</span>
+          Registrar, acompanhar e verificar credenciamentos de forma <span class="accent">simples, confiável e rastreável.</span>
         </h2>
+        <div class="partners" aria-label="Realização">
+          <span class="partners__label">Realização</span>
+          <img src="assets/brand/irede-logo.png" alt="iRede" />
+          <img src="assets/brand/mcti-futuro.png" alt="MCTI — Futuro" />
+        </div>
       </div>
     </section>
 

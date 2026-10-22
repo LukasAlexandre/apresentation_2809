@@ -85,10 +85,10 @@
       y: [-3.6, 3.6],
       z: [-3.2, 2.4],
     },
-    accentColor: 0x7dd3fc,
-    haloColor: 0x9fe4ff,
-    lineColor: 0x4fa9d6,
-    nodeColor: 0xbfe3f5,
+    accentColor: 0xd6d752,
+    haloColor: 0xd6d752,
+    lineColor: 0x00a896,
+    nodeColor: 0xe9eaa6,
     autoRotate: !reduceMotion,
     mouseParallax: !reduceMotion && !isCoarsePointer,
     // "Vida" das partículas: deslocamento contínuo em x/y (leve z), por cluster + por nó.
@@ -631,8 +631,8 @@
 })();
 
 /**
- * Navegação da apresentação completa (11 slides): dots laterais, scroll-spy,
- * atalhos de teclado e reveal leve dos slides 02–11 ao entrar na viewport.
+ * Navegação da apresentação completa (10 slides): dots laterais, scroll-spy,
+ * atalhos de teclado e reveal leve dos slides 02–10 ao entrar na viewport.
  * Independente do bloco de rede 3D acima — roda mesmo se o Three.js falhar.
  */
 (function () {
@@ -675,7 +675,7 @@
   // dispara e todo clique/tecla seguinte é ignorado silenciosamente. Comparar
   // Date.now() a cada chamada não tem esse risco: não existe estado que precise de um
   // timer para ser "destravado". O alvo é sempre recalculado e limitado a maxScroll(),
-  // então mesmo o último slide (11) alinha exatamente ao topo da viewport.
+  // então mesmo o último slide (10) alinha exatamente ao topo da viewport.
   var lastNavAt = 0;
   var NAV_COOLDOWN = 300; // ms — só para absorver tecla segurada/duplo clique, nunca trava
 

@@ -2,7 +2,7 @@
 const fs = require("fs");
 const path = require("path");
 const root = __dirname;
-const types = { ".html": "text/html", ".css": "text/css", ".js": "application/javascript" };
+const types = { ".html": "text/html", ".css": "text/css", ".js": "application/javascript", ".png": "image/png", ".svg": "image/svg+xml", ".woff2": "font/woff2" };
 http.createServer((req, res) => {
   let p = req.url.split("?")[0];
   if (p === "/") p = "/index.html";
