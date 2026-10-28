@@ -1548,3 +1548,63 @@ html.member-open { overflow: hidden; }
   .member-modal__list li[data-tip],
   .member-tip { transition: none; }
 }
+
+/* ---------- Slide 09: o sistema na prática (captura real da interface) ---------- */
+
+.screen-shot {
+  margin: clamp(1.2rem, 3vh, 2.2rem) 0 0;
+  /* Largura limitada pela altura disponível: o slide inteiro cabe na tela sem cortar a imagem. */
+  width: min(100%, calc((78vh - 250px) * 16 / 9));
+  min-width: min(100%, 480px);
+}
+.screen-shot__frame {
+  overflow: hidden;
+  border: 1px solid transparent;
+  border-radius: 14px;
+  background:
+    linear-gradient(var(--bg-deep), var(--bg-deep)) padding-box,
+    linear-gradient(135deg, rgba(214, 215, 82, 0.6), rgba(0, 168, 150, 0.45)) border-box;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.45), 0 0 0 1px rgba(0, 0, 0, 0.2);
+}
+.screen-shot__bar {
+  display: flex;
+  gap: 6px;
+  padding: 9px 12px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.03);
+}
+.screen-shot__bar span {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.18);
+}
+.screen-shot__frame img {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 16 / 9;
+}
+.screen-shot__caption {
+  margin-top: 0.9rem;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.4rem 1.2rem;
+  font-size: 0.88rem;
+  line-height: 1.45;
+  color: var(--text-tertiary);
+}
+.screen-shot__credit {
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--brand-lime);
+  white-space: nowrap;
+}
+/* Telas grandes: .block__inner recebe zoom 1.25 — compensa para a captura continuar cabendo na altura. */
+@media (min-width: 1700px) and (min-height: 1000px) {
+  .screen-shot { width: min(100%, calc((62vh - 200px) * 16 / 9)); }
+}

@@ -25,8 +25,9 @@
     6: "build", // Como estamos construindo — progressão em degraus
     7: "ambient", // Quem está construindo — sistema compartilhado, discreto
     8: "progress", // O que já construímos e onde estamos — varredura de progresso
-    9: "path", // Próximos passos — trajetória rumo ao horizonte
-    10: "closing", // Resultado — rede solene e centrada
+    9: "ambient", // O sistema na prática — fundo discreto atrás da captura de tela
+    10: "path", // Próximos passos — trajetória rumo ao horizonte
+    11: "closing", // Resultado — rede solene e centrada
   };
 
   var reduceMotionQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
