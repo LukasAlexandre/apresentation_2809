@@ -1,0 +1,386 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Roteiro da Equipe</title>
+  <meta name="description" content="Roteiro da Apresentação — Credenciamento de ICTs. Guia rápido de falas da equipe." />
+  <meta name="robots" content="noindex" />
+  <style>
+    @font-face { font-family: "Supreme"; font-weight: 400; font-display: swap; src: url("assets/fonts/Supreme-Regular.woff2") format("woff2"); }
+    @font-face { font-family: "Supreme"; font-weight: 700; font-display: swap; src: url("assets/fonts/Supreme-Bold.woff2") format("woff2"); }
+    @font-face { font-family: "Kdam Thmor Pro"; font-weight: 400; font-display: swap; src: url("assets/fonts/KdamThmorPro.woff2") format("woff2"); }
+
+    :root {
+      --bg: #0e1e32;
+      --bg-deep: #091526;
+      --card: rgba(255, 255, 255, 0.04);
+      --card-border: rgba(255, 255, 255, 0.12);
+      --text: #ffffff;
+      --text-2: rgba(255, 255, 255, 0.8);
+      --text-3: rgba(255, 255, 255, 0.58);
+      --yellow: #d6d752;
+      --cyan: #00c2ad;
+      --lukas: #d6d752;
+      --gabriel: #38bdf8;
+      --alison: #f472b6;
+      --kaique: #01ffbc;
+      --font-display: "Kdam Thmor Pro", "Segoe UI", sans-serif;
+      --font-body: "Supreme", "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; scroll-padding-top: 120px; }
+    body {
+      margin: 0;
+      background: var(--bg-deep);
+      background-image: radial-gradient(ellipse at top, #13304d 0%, var(--bg-deep) 60%);
+      background-attachment: fixed;
+      color: var(--text);
+      font-family: var(--font-body);
+      font-size: 17px;
+      line-height: 1.55;
+      -webkit-text-size-adjust: 100%;
+    }
+    .wrap { max-width: 760px; margin: 0 auto; padding: 0 16px; }
+
+    /* Cabeçalho */
+    header { padding: 36px 0 20px; }
+    .eyebrow { margin: 0 0 8px; color: var(--cyan); font-size: 0.78rem; letter-spacing: 0.14em; text-transform: uppercase; font-weight: 700; }
+    h1 { margin: 0; font-family: var(--font-display); font-weight: 400; font-size: clamp(1.7rem, 1.2rem + 2.4vw, 2.5rem); line-height: 1.15; }
+    h1 .accent { background: linear-gradient(90deg, var(--yellow), var(--cyan)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+    .subtitle { margin: 8px 0 0; color: var(--text-2); }
+
+    .stats { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin: 22px 0 0; padding: 0; list-style: none; }
+    .stats li { background: var(--card); border: 1px solid var(--card-border); border-radius: 12px; padding: 10px 12px; }
+    .stats b { display: block; font-size: 1.25rem; color: var(--yellow); }
+    .stats span { color: var(--text-3); font-size: 0.82rem; }
+    @media (min-width: 640px) { .stats { grid-template-columns: repeat(4, 1fr); } }
+
+    .people { display: flex; flex-wrap: wrap; gap: 6px 14px; margin: 14px 0 0; color: var(--text-2); font-size: 0.92rem; }
+    .people span::before { content: ""; display: inline-block; width: 9px; height: 9px; border-radius: 50%; margin-right: 6px; background: var(--c); }
+    .people .mentor { color: var(--text-3); }
+
+    .links { display: flex; flex-wrap: wrap; gap: 8px; margin: 18px 0 0; }
+    .btn {
+      display: inline-flex; align-items: center; gap: 6px; min-height: 44px; padding: 10px 16px;
+      border-radius: 999px; border: 1px solid var(--card-border); background: var(--card);
+      color: var(--text); font: inherit; font-size: 0.92rem; font-weight: 700; text-decoration: none; cursor: pointer;
+    }
+    .btn--primary { background: var(--yellow); border-color: var(--yellow); color: #0e1e32; }
+    .btn:focus-visible, .chip:focus-visible, .nav a:focus-visible { outline: 2px solid var(--cyan); outline-offset: 2px; }
+
+    .rules { margin: 18px 0 0; padding: 12px 14px; border-left: 3px solid var(--cyan); background: rgba(0, 194, 173, 0.08); border-radius: 0 10px 10px 0; font-size: 0.92rem; color: var(--text-2); }
+    .rules b { color: var(--text); }
+    .rules ul { margin: 6px 0 0; padding-left: 18px; }
+
+    /* Barra fixa: filtro + navegação */
+    .bar { position: sticky; top: 0; z-index: 5; background: rgba(9, 21, 38, 0.94); backdrop-filter: blur(8px); border-bottom: 1px solid var(--card-border); padding: 10px 0; }
+    .filter, .nav { display: flex; gap: 6px; overflow-x: auto; scrollbar-width: none; }
+    .filter::-webkit-scrollbar, .nav::-webkit-scrollbar { display: none; }
+    .nav { margin-top: 8px; }
+    .chip {
+      flex: none; min-height: 36px; padding: 6px 14px; border-radius: 999px; border: 1px solid var(--card-border);
+      background: transparent; color: var(--text-2); font: inherit; font-size: 0.88rem; font-weight: 700; cursor: pointer;
+    }
+    .chip[aria-pressed="true"] { background: var(--c, var(--text)); border-color: var(--c, var(--text)); color: #0e1e32; }
+    .nav a {
+      flex: none; display: grid; place-items: center; min-width: 38px; height: 34px; padding: 0 8px; border-radius: 8px;
+      border: 1px solid var(--card-border); color: var(--text-2); text-decoration: none; font-size: 0.85rem; font-weight: 700;
+      border-bottom: 3px solid var(--c);
+    }
+    .nav a[hidden] { display: none; }
+
+    /* Cards dos slides */
+    main { padding: 18px 0 40px; }
+    .slide { background: var(--card); border: 1px solid var(--card-border); border-radius: 16px; padding: 18px 16px; margin: 0 0 14px; }
+    .slide[hidden], .turn[hidden] { display: none; }
+    .slide__head { display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap; margin: 0 0 4px; }
+    .slide__num { font-family: var(--font-display); color: var(--yellow); font-size: 1.5rem; line-height: 1; }
+    .slide__title { margin: 0; font-size: 1.12rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; }
+    .slide__time { margin-left: auto; color: var(--text-3); font-size: 0.82rem; }
+    .slide__screen { margin: 2px 0 0; color: var(--text-3); font-size: 0.86rem; }
+
+    .turn { margin: 14px 0 0; padding: 12px 0 0 14px; border-left: 4px solid var(--c); }
+    .turn + .turn { margin-top: 18px; }
+    .label { margin: 0; color: var(--text-3); font-size: 0.72rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; }
+    .who { display: inline-block; margin: 2px 0 10px; padding: 2px 10px; border-radius: 999px; background: var(--c); color: #0e1e32; font-weight: 700; font-size: 0.92rem; }
+    .action { margin: 0 0 10px; padding: 8px 10px; border-radius: 8px; background: rgba(214, 215, 82, 0.1); color: var(--text-2); font-size: 0.88rem; }
+    .action b { color: var(--yellow); }
+    .speech { margin: 4px 0 12px; font-size: 1.04rem; color: var(--text); }
+    .next { margin: 4px 0 0; color: var(--cyan); font-size: 0.94rem; }
+    .next::before { content: "→ "; }
+
+    footer { padding: 0 0 40px; color: var(--text-3); font-size: 0.82rem; text-align: center; }
+    .toast { position: fixed; left: 50%; bottom: 20px; transform: translateX(-50%); background: var(--yellow); color: #0e1e32; padding: 10px 16px; border-radius: 999px; font-weight: 700; font-size: 0.9rem; }
+    .toast[hidden] { display: none; }
+
+    /* Impressão / PDF: fundo branco, tudo visível */
+    @media print {
+      :root { --text: #000; --text-2: #222; --text-3: #555; --card-border: #ccc; --cyan: #006b60; --yellow: #6b6a00; }
+      body { background: #fff; color: #000; font-size: 12pt; }
+      .bar, .links, .toast { display: none !important; }
+      .slide { break-inside: avoid; background: #fff; }
+      .stats li { background: #fff; }
+      .who { border: 1px solid #000; background: #fff !important; color: #000; }
+      .action { background: #f3f3f3; }
+      h1 .accent { color: #000; background: none; }
+    }
+  </style>
+</head>
+<body>
+  <header class="wrap">
+    <p class="eyebrow">Residência Web3 — Guia rápido da equipe</p>
+    <h1>Roteiro da Apresentação — <span class="accent">Credenciamento de ICTs</span></h1>
+    <p class="subtitle">Quem fala, o que falar e quando passar a palavra.</p>
+
+    <ul class="stats">
+      <li><b id="stat-time">~6 min</b><span>tempo total estimado</span></li>
+      <li><b>11</b><span>slides</span></li>
+      <li><b>4</b><span>pessoas falam</span></li>
+      <li><b>15–40 s</b><span>por fala</span></li>
+    </ul>
+
+    <div class="people" aria-label="Integrantes">
+      <span style="--c: var(--lukas)">Lukas</span>
+      <span style="--c: var(--gabriel)">Gabriel</span>
+      <span style="--c: var(--alison)">Alison</span>
+      <span style="--c: var(--kaique)">Kaique</span>
+      <span class="mentor" style="--c: rgba(255,255,255,.4)">Heitor (mentor, sem fala)</span>
+    </div>
+
+    <div class="links">
+      <a class="btn" href="https://ict-mvp5.vercel.app/" target="_blank" rel="noopener">Abrir apresentação ↗</a>
+      <button class="btn btn--primary" type="button" id="copy">Copiar roteiro completo</button>
+      <button class="btn" type="button" id="print">Imprimir / Salvar em PDF</button>
+    </div>
+
+    <div class="rules">
+      <b>Combinados rápidos</b>
+      <ul>
+        <li>Fale com suas palavras. O texto é o caminho, não precisa decorar.</li>
+        <li>É um MVP em construção: diga <b>“desenvolvemos”</b> ou <b>“está em revisão”</b>. Nunca “está pronto”.</li>
+        <li>No slide 07, quem controla a tela abre o card da pessoa antes de ela falar.</li>
+      </ul>
+    </div>
+  </header>
+
+  <div class="bar">
+    <div class="wrap">
+      <div class="filter" role="group" aria-label="Filtrar por integrante">
+        <button class="chip" type="button" data-filter="todos" aria-pressed="true">Todos</button>
+        <button class="chip" type="button" data-filter="lukas" style="--c: var(--lukas)" aria-pressed="false">Lukas</button>
+        <button class="chip" type="button" data-filter="gabriel" style="--c: var(--gabriel)" aria-pressed="false">Gabriel</button>
+        <button class="chip" type="button" data-filter="alison" style="--c: var(--alison)" aria-pressed="false">Alison</button>
+        <button class="chip" type="button" data-filter="kaique" style="--c: var(--kaique)" aria-pressed="false">Kaique</button>
+      </div>
+      <nav class="nav" id="nav" aria-label="Ir para o slide"></nav>
+    </div>
+  </div>
+
+  <main class="wrap" id="slides"></main>
+
+  <footer class="wrap">
+    Baseado na versão atual da apresentação (11 slides) · Projeto em prova de conceito, com dados de teste.
+  </footer>
+
+  <p class="toast" id="toast" role="status" hidden></p>
+
+  <script>
+    (function () {
+      "use strict";
+
+      var NAMES = { lukas: "Lukas", gabriel: "Gabriel", alison: "Alison", kaique: "Kaique" };
+
+      // Cada slide: número, título, o que aparece na tela, e as falas (quem, ação na tela, fala, segundos, próximo).
+      var SLIDES = [
+        { n: "01", title: "Abertura", screen: "Credenciamento de ICTs", turns: [
+          { who: "lukas", s: 20,
+            say: "Boa tarde! Somos a equipe da Residência Web3 e vamos apresentar o Credenciamento de ICTs. ICT é uma Instituição Científica, Tecnológica e de Inovação. Estamos criando um jeito confiável e transparente de registrar e consultar se uma instituição está credenciada.",
+            next: "Lukas continua no slide 02." } ] },
+
+        { n: "02", title: "O problema", screen: "Esta instituição está credenciada agora?", turns: [
+          { who: "lukas", s: 25,
+            say: "Parece uma pergunta simples: essa instituição está credenciada agora? Mas, hoje, responder isso exige conferir registros espalhados, um por um. E o credenciamento tem várias etapas: cadastro, pedido, análise, credenciamento, auditoria e renovação.",
+            next: "Lukas continua no slide 03." } ] },
+
+        { n: "03", title: "A solução", screen: "Um registro confiável do credenciamento, aberto para consulta", turns: [
+          { who: "lukas", s: 20,
+            say: "Nossa proposta é um registro confiável do credenciamento. Cada etapa fica registrada com data e responsável, o histórico pode ser conferido, e qualquer pessoa consulta a situação atual, sem cadastro e sem login.",
+            next: "Lukas continua no slide 04." } ] },
+
+        { n: "04", title: "Como funciona", screen: "Do cadastro à consulta, em seis passos", turns: [
+          { who: "lukas", s: 30,
+            say: "Na prática, são seis passos: a instituição se cadastra, faz o pedido, recebe a decisão, ganha um credenciamento com prazo, pode ser auditada e renovar. E qualquer pessoa consulta a situação. Sendo transparente: o cadastro já foi aprovado no projeto. Os outros passos já foram desenvolvidos e estão em validação. As telas de uso ainda serão construídas.",
+            next: "Lukas continua no slide 05." } ] },
+
+        { n: "05", title: "Por que blockchain?", screen: "Um livro de registros em que toda alteração deixa evidência", turns: [
+          { who: "lukas", s: 25,
+            say: "Por que blockchain? Pense num livro de registros em que toda alteração deixa marca. Cada pedido, decisão, prazo e auditoria fica registrado com quando e quem fez. Isso traz mais confiança no histórico. Documentos completos e dados pessoais ficam fora do registro público. E, por enquanto, é uma prova de conceito com dados de teste.",
+            next: "Lukas continua no slide 06." } ] },
+
+        { n: "06", title: "Como estamos construindo", screen: "Passo a passo, com cuidado em cada entrega", turns: [
+          { who: "lukas", s: 20,
+            say: "Não saímos construindo no impulso. Primeiro planejamos o funcionamento e definimos como proteger as informações. Depois desenvolvemos, testamos e validamos cada entrega. Assim o sistema evolui por etapas.",
+            next: "Lukas continua no slide 07." } ] },
+
+        { n: "07", title: "Quem está construindo", screen: "Cards interativos dos integrantes — clique para ver as contribuições", turns: [
+          { who: "lukas", s: 25,
+            say: "Cada pessoa da equipe cuida de uma parte da solução. Eu cuidei das regras do sistema, do mapa de riscos e das etapas centrais: ativação, auditoria, renovação e consulta pública. O Heitor é nosso mentor: ele orienta a parte técnica e revisa cada entrega antes de entrar no projeto. Agora cada um conta a sua parte, começando pelo Gabriel.",
+            next: "Abrir o card do Gabriel e passar a palavra: “Gabriel, é com você.”" },
+          { who: "gabriel", s: 25, action: "Abrir o card do <b>Gabriel</b>.",
+            say: "Eu cuidei da entrada da instituição no sistema. Primeiro, o registro da instituição: cada uma fica ligada a uma única conta, então ninguém consegue agir em nome de outra. Depois, o pedido de credenciamento: na blockchain fica só uma “impressão digital” dos documentos, nunca o conteúdo. Por fim, o órgão responsável registra a decisão, que fica no histórico e pode ser conferida depois.",
+            next: "Fechar o card e passar a palavra: “Alison, sua vez.”" },
+          { who: "alison", s: 25, action: "Abrir o card da <b>Alison</b>.",
+            say: "Eu cuidei de quem pode fazer o quê no sistema. Definimos quatro papéis: administrador, órgão credenciador, instituição e auditor. Cada um só faz as ações permitidas a ele. Também pensei na proteção das chaves de acesso, separando a conta de administração das contas do dia a dia. E estruturei a base de usuários, com senhas guardadas de forma protegida.",
+            next: "Fechar o card e passar a palavra: “Kaique, com você.”" },
+          { who: "kaique", s: 25, action: "Abrir o card do <b>Kaique</b>.",
+            say: "Eu cuido da parte que as pessoas veem e usam. Fiz a página pública, que apresenta o projeto, e a estrutura da área interna, com o menu e os espaços para Solicitações, Habilitações e Auditorias. O menu funciona no celular e pelo teclado. O login está em revisão, e a conexão com o resto do sistema ainda vamos construir.",
+            next: "Fechar o card. Kaique continua no slide 08." } ] },
+
+        { n: "08", title: "O que já construímos e onde estamos", screen: "Três colunas: Já temos · Estamos validando · Vem a seguir", turns: [
+          { who: "kaique", s: 40,
+            say: "Aqui está o retrato de hoje. Já temos, aprovado no projeto: a página pública, a estrutura da área interna, o núcleo do registro da instituição e as regras, riscos e permissões. Estamos validando o pedido e a decisão, a ativação, a auditoria e renovação, a consulta pública e a base de usuários. E vem a seguir: o login, o envio de documentos pela tela e a conexão entre tudo. Estamos saindo da construção das peças para começar a conectá-las.",
+            next: "Kaique continua no slide 09." } ] },
+
+        { n: "09", title: "O sistema na prática", screen: "Imagem real da interface pública do sistema", turns: [
+          { who: "kaique", s: 20,
+            say: "Esta é a interface que desenvolvi para o sistema. É a página pública, onde qualquer pessoa vai poder consultar a habilitação de uma instituição. Ela ainda é uma prova de conceito, em rede de teste e com dados fictícios.",
+            next: "Kaique continua no slide 10." } ] },
+
+        { n: "10", title: "Próximos passos", screen: "O caminho até a primeira versão (MVP)", turns: [
+          { who: "kaique", s: 25,
+            say: "Até a primeira versão, o MVP, temos quatro passos: concluir a validação do que está em revisão, criar o login e o acesso ao sistema, conectar site, sistema e registros, e testar o fluxo completo para preparar a demonstração.",
+            next: "Passar a palavra: “Lukas, pode fechar.”" } ] },
+
+        { n: "11", title: "Resultado esperado / Encerramento", screen: "Consulta → situação atual → confiança no histórico", turns: [
+          { who: "lukas", s: 20,
+            say: "No fim, queremos isto: alguém consulta uma instituição, vê a situação atual e confia no histórico que levou até ela. Registrar, acompanhar e verificar credenciamentos de forma simples, confiável e rastreável. Obrigado! Ficamos abertos a perguntas.",
+            next: "Fim. Abrir para perguntas." } ] }
+      ];
+
+      var main = document.getElementById("slides");
+      var nav = document.getElementById("nav");
+
+      function totalSeconds(who) {
+        var t = 0;
+        SLIDES.forEach(function (sl) {
+          sl.turns.forEach(function (tu) { if (!who || tu.who === who) t += tu.s; });
+        });
+        return t;
+      }
+      function fmt(sec) {
+        var m = Math.floor(sec / 60), s = sec % 60;
+        return m ? m + " min" + (s ? " " + s + " s" : "") : s + " s";
+      }
+
+      // Monta os cards e a navegação.
+      SLIDES.forEach(function (sl) {
+        var art = document.createElement("article");
+        art.className = "slide";
+        art.id = "slide-" + sl.n;
+        art.dataset.who = sl.turns.map(function (t) { return t.who; }).join(" ");
+        var time = sl.turns.reduce(function (a, t) { return a + t.s; }, 0);
+        var html =
+          '<div class="slide__head"><span class="slide__num">' + sl.n + '</span>' +
+          '<h2 class="slide__title">' + sl.title + '</h2>' +
+          '<span class="slide__time">~' + fmt(time) + '</span></div>' +
+          '<p class="slide__screen">Na tela: ' + sl.screen + '</p>';
+        sl.turns.forEach(function (t) {
+          html +=
+            '<section class="turn" data-who="' + t.who + '" style="--c: var(--' + t.who + ')">' +
+            '<p class="label">Responsável</p><span class="who">' + NAMES[t.who] + '</span>' +
+            (t.action ? '<p class="action"><b>Na tela:</b> ' + t.action + '</p>' : '') +
+            '<p class="label">Fala · ~' + t.s + ' s</p><p class="speech">“' + t.say + '”</p>' +
+            '<p class="label">Transição</p><p class="next">' + t.next + '</p></section>';
+        });
+        art.innerHTML = html;
+        main.appendChild(art);
+
+        var a = document.createElement("a");
+        a.href = "#slide-" + sl.n;
+        a.textContent = sl.n;
+        a.dataset.who = art.dataset.who;
+        a.style.setProperty("--c", "var(--" + sl.turns[0].who + ")");
+        a.setAttribute("aria-label", "Slide " + sl.n + " — " + sl.title);
+        nav.appendChild(a);
+      });
+
+      document.getElementById("stat-time").textContent = "~" + fmt(totalSeconds());
+
+      // Filtro por integrante (também via link: roteiro-equipe.html?quem=gabriel).
+      var chips = document.querySelectorAll("[data-filter]");
+      var current = "todos";
+      function applyFilter(who) {
+        current = NAMES[who] ? who : "todos";
+        chips.forEach(function (c) { c.setAttribute("aria-pressed", String(c.dataset.filter === current)); });
+        document.querySelectorAll(".slide, .nav a").forEach(function (el) {
+          el.hidden = current !== "todos" && el.dataset.who.split(" ").indexOf(current) === -1;
+        });
+        document.querySelectorAll(".turn").forEach(function (el) {
+          el.hidden = current !== "todos" && el.dataset.who !== current;
+        });
+        var url = new URL(location.href);
+        if (current === "todos") url.searchParams.delete("quem"); else url.searchParams.set("quem", current);
+        try { history.replaceState(null, "", url); } catch (e) { /* ignora */ }
+      }
+      chips.forEach(function (c) {
+        c.addEventListener("click", function () { applyFilter(c.dataset.filter); });
+      });
+      applyFilter(new URLSearchParams(location.search).get("quem") || "todos");
+
+      // Copiar roteiro completo (texto puro, bom para colar no WhatsApp).
+      function plainText() {
+        var lines = [
+          "*ROTEIRO DA APRESENTAÇÃO — CREDENCIAMENTO DE ICTs*",
+          "Residência Web3 — Guia rápido da equipe",
+          "Tempo estimado: ~" + fmt(totalSeconds()) + " · 11 slides",
+          "Apresentação: https://ict-mvp5.vercel.app/",
+          ""
+        ];
+        SLIDES.forEach(function (sl) {
+          lines.push("*SLIDE " + sl.n + " — " + sl.title.toUpperCase() + "*");
+          sl.turns.forEach(function (t) {
+            lines.push("RESPONSÁVEL: " + NAMES[t.who]);
+            if (t.action) lines.push("NA TELA: " + t.action.replace(/<[^>]+>/g, ""));
+            lines.push("FALA: “" + t.say + "”");
+            lines.push("TRANSIÇÃO: " + t.next);
+            lines.push("");
+          });
+        });
+        return lines.join("\n");
+      }
+      var toast = document.getElementById("toast");
+      var toastTimer;
+      function say(msg) {
+        toast.textContent = msg;
+        toast.hidden = false;
+        clearTimeout(toastTimer);
+        toastTimer = setTimeout(function () { toast.hidden = true; }, 2200);
+      }
+      function fallbackCopy(text) {
+        var ta = document.createElement("textarea");
+        ta.value = text;
+        ta.setAttribute("readonly", "");
+        ta.style.position = "fixed";
+        ta.style.opacity = "0";
+        document.body.appendChild(ta);
+        ta.select();
+        var ok = false;
+        try { ok = document.execCommand("copy"); } catch (e) { ok = false; }
+        document.body.removeChild(ta);
+        say(ok ? "Roteiro copiado!" : "Não foi possível copiar.");
+      }
+      document.getElementById("copy").addEventListener("click", function () {
+        var text = plainText();
+        if (navigator.clipboard && window.isSecureContext) {
+          navigator.clipboard.writeText(text).then(function () { say("Roteiro copiado!"); }, function () { fallbackCopy(text); });
+        } else {
+          fallbackCopy(text);
+        }
+      });
+      document.getElementById("print").addEventListener("click", function () { window.print(); });
+    })();
+  </script>
+</body>
+</html>
