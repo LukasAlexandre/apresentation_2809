@@ -1483,3 +1483,68 @@ html.member-open { overflow: hidden; }
   .member-modal[open]::backdrop { animation: none; }
 }
 .member-modal__panel:focus { outline: none; }
+
+/* ---------- Slide 07: legenda dos boxes "O que fez na prática" (members.js) ---------- */
+
+.member-modal__list li[data-tip] {
+  cursor: help;
+  transition: border-color 150ms ease, background-color 150ms ease;
+}
+.member-modal__list li[data-tip]:hover,
+.member-modal__list li[data-tip][aria-describedby] {
+  border-color: rgba(214, 215, 82, 0.5);
+  background: rgba(214, 215, 82, 0.05);
+}
+.member-modal__list li[data-tip]:focus { outline: none; }
+.member-modal__list li[data-tip]:focus-visible { outline: 2px solid var(--brand-lime); outline-offset: 2px; }
+
+.member-tip {
+  position: fixed;
+  z-index: 2;
+  width: max-content;
+  max-width: min(340px, calc(100vw - 16px));
+  padding: 0.85rem 1rem;
+  border: 1px solid rgba(0, 168, 150, 0.55);
+  border-radius: 12px;
+  background: #0b1a2c;
+  box-shadow: 0 14px 36px rgba(0, 0, 0, 0.55);
+  font-family: var(--font-body);
+  pointer-events: none;
+  opacity: 0;
+  transform: translateY(4px);
+  transition: opacity 150ms ease, transform 150ms ease;
+}
+.member-tip[hidden] { display: none; }
+.member-tip.is-visible { opacity: 1; transform: none; }
+.member-tip p { margin: 0; }
+.member-tip__id {
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #3ddcc9;
+}
+.member-tip__title {
+  margin-top: 0.25rem !important;
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--brand-lime);
+}
+.member-tip__desc {
+  margin-top: 0.4rem !important;
+  font-size: 0.88rem;
+  line-height: 1.45;
+  color: var(--text-primary);
+}
+.member-tip__ref {
+  margin-top: 0.55rem !important;
+  padding-top: 0.45rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  font-size: 0.75rem;
+  line-height: 1.4;
+  color: var(--text-tertiary);
+}
+@media (prefers-reduced-motion: reduce) {
+  .member-modal__list li[data-tip],
+  .member-tip { transition: none; }
+}
