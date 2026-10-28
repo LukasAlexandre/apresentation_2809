@@ -182,16 +182,87 @@
   var current = null;
 
   // ---------- Legenda (tooltip) dos boxes "O que fez na prática" ----------
-  // Um único elemento dentro do <dialog> (fica na camada do modal), posicionado em
-  // position: fixed junto ao box. Abre por hover, foco de teclado ou toque.
+  // Fica FORA do painel do modal, de preferência à esquerda, alinhada ao box e ligada a ele
+  // por uma linha com seta (SVG). Os elementos ficam dentro do <dialog> e não no body: o
+  // modal aberto ocupa a camada superior (top layer), e nada fora dele aparece por cima.
+  // Abre por hover, foco de teclado ou toque.
+  var SVG_NS = "http://www.w3.org/2000/svg";
   var tip = document.createElement("div");
   tip.className = "member-tip";
   tip.id = "member-tip";
   tip.setAttribute("role", "tooltip");
   tip.hidden = true;
   modal.appendChild(tip);
+
+  var link = document.createElementNS(SVG_NS, "svg");
+  link.setAttribute("class", "member-tip-link");
+  link.setAttribute("aria-hidden", "true");
+  link.innerHTML =
+    '<defs><marker id="member-tip-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">' +
+    '<path d="M0 0 L10 5 L0 10 z"></path></marker></defs>' +
+    '<circle r="3"></circle><line marker-end="url(#member-tip-arrow)"></line>';
+  link.style.display = "none";
+  modal.appendChild(link);
+  var linkLine = link.querySelector("line");
+  var linkDot = link.querySelector("circle");
+
   var tipTarget = null;
   var lastPointer = "mouse";
+
+  var EDGE = 8; // distância mínima da borda da tela
+  var GAP = 28; // espaço entre a legenda e o painel (onde corre a linha)
+  var MAX_W = 320;
+  var MIN_W = 176;
+
+  function position() {
+    if (!tipTarget) return;
+    var r = tipTarget.getBoundingClientRect();
+    var p = panel.getBoundingClientRect();
+    var vw = window.innerWidth;
+    var vh = window.innerHeight;
+    var spaceLeft = p.left - EDGE - GAP;
+    var spaceRight = vw - p.right - EDGE - GAP;
+    var side = spaceLeft >= spaceRight ? "left" : "right";
+    var space = Math.max(spaceLeft, spaceRight);
+    var cy = r.top + r.height / 2;
+    var x1, y1, x2, y2, w, h, left, top;
+
+    if (space >= MIN_W) {
+      // Fora do modal, alinhada verticalmente ao centro do box.
+      w = Math.min(MAX_W, space);
+      tip.style.width = w + "px";
+      tip.classList.toggle("member-tip--narrow", w < 240);
+      h = tip.offsetHeight;
+      left = side === "left" ? p.left - GAP - w : p.right + GAP;
+      top = Math.max(EDGE, Math.min(cy - h / 2, vh - h - EDGE));
+      x1 = side === "left" ? left + w : left;
+      y1 = Math.max(top + 14, Math.min(cy, top + h - 14));
+      x2 = side === "left" ? r.left - 3 : r.right + 3;
+      y2 = cy;
+    } else {
+      // Tela estreita (celular): sem espaço fora do modal. Acima do box (ou abaixo), seta vertical.
+      w = Math.min(MAX_W, vw - 2 * EDGE);
+      tip.style.width = w + "px";
+      tip.classList.remove("member-tip--narrow");
+      h = tip.offsetHeight;
+      left = Math.max(EDGE, Math.min(r.left, vw - w - EDGE));
+      var above = r.top - h - 22 >= EDGE;
+      top = above ? r.top - h - 22 : Math.min(r.bottom + 22, vh - h - EDGE);
+      x1 = x2 = Math.max(left + 20, Math.min(r.left + 28, left + w - 20));
+      y1 = above ? top + h : top;
+      y2 = above ? r.top - 3 : r.bottom + 3;
+    }
+
+    tip.style.left = Math.round(left) + "px";
+    tip.style.top = Math.round(top) + "px";
+    link.setAttribute("viewBox", "0 0 " + vw + " " + vh);
+    linkLine.setAttribute("x1", x1);
+    linkLine.setAttribute("y1", y1);
+    linkLine.setAttribute("x2", x2);
+    linkLine.setAttribute("y2", y2);
+    linkDot.setAttribute("cx", x1);
+    linkDot.setAttribute("cy", y1);
+  }
 
   function showTip(li) {
     var entry = current && current.did[Number(li.getAttribute("data-tip"))];
@@ -206,36 +277,33 @@
     tipTarget = li;
     li.setAttribute("aria-describedby", "member-tip");
     tip.hidden = false;
+    link.style.display = "";
     tip.classList.remove("is-visible");
-
-    // Acima do box; se não couber, abaixo. Sempre dentro da tela (margem de 8px).
-    var r = li.getBoundingClientRect();
-    var w = tip.offsetWidth;
-    var h = tip.offsetHeight;
-    var gap = 10;
-    var vw = window.innerWidth;
-    var vh = window.innerHeight;
-    var left = r.left;
-    var top = r.top - h - gap;
-    if (top < 8) top = r.bottom + gap;
-    if (top + h > vh - 8) {
-      // Tela baixa: ao lado do box, se houver espaço; senão, o mais perto possível.
-      top = Math.min(Math.max(8, r.top), vh - h - 8);
-      if (r.right + gap + w <= vw - 8) left = r.right + gap;
-      else if (r.left - gap - w >= 8) left = r.left - gap - w;
-    }
-    left = Math.max(8, Math.min(left, vw - w - 8));
-    tip.style.top = Math.max(8, top) + "px";
-    tip.style.left = left + "px";
+    link.classList.remove("is-visible");
+    position();
     void tip.offsetWidth; // reinicia a transição de entrada
     tip.classList.add("is-visible");
+    link.classList.add("is-visible");
   }
 
   function hideTip() {
     if (tipTarget) tipTarget.removeAttribute("aria-describedby");
     tipTarget = null;
     tip.classList.remove("is-visible");
+    link.classList.remove("is-visible");
     tip.hidden = true;
+    link.style.display = "none";
+  }
+
+  // Resize, zoom ou rolagem do painel: recalcula a posição em vez de esconder.
+  var repositionQueued = false;
+  function queueReposition() {
+    if (!tipTarget || repositionQueued) return;
+    repositionQueued = true;
+    requestAnimationFrame(function () {
+      repositionQueued = false;
+      position();
+    });
   }
 
   function tipBox(event) {
@@ -270,8 +338,8 @@
     if (li && li !== tipTarget) showTip(li);
     else hideTip();
   });
-  panel.addEventListener("scroll", hideTip, { passive: true });
-  window.addEventListener("resize", hideTip, { passive: true });
+  panel.addEventListener("scroll", queueReposition, { passive: true });
+  window.addEventListener("resize", queueReposition, { passive: true });
 
   function esc(text) {
     var div = document.createElement("div");
