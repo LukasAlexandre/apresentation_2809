@@ -284,6 +284,7 @@
     void tip.offsetWidth; // reinicia a transição de entrada
     tip.classList.add("is-visible");
     link.classList.add("is-visible");
+    queueReposition(); // confirma a posição no próximo quadro, com o layout já assentado
   }
 
   function hideTip() {
@@ -340,6 +341,9 @@
   });
   panel.addEventListener("scroll", queueReposition, { passive: true });
   window.addEventListener("resize", queueReposition, { passive: true });
+  // Fim da animação de abertura do modal e carregamento das fontes também movem o box.
+  modal.addEventListener("animationend", queueReposition);
+  if (document.fonts && document.fonts.addEventListener) document.fonts.addEventListener("loadingdone", queueReposition);
 
   function esc(text) {
     var div = document.createElement("div");
