@@ -204,7 +204,7 @@
         <p class="eyebrow">Quem está construindo</p>
         <h2 class="block__title">Cada pessoa cuida de uma parte da solução.</h2>
         <div class="people-grid">
-          <div class="person-card">
+          <div class="person-card" data-member="lukas" role="button" tabindex="0" aria-haspopup="dialog" aria-label="Lukas: ver contribuições">
             <p class="person-card__name">Lukas</p>
             <p class="person-card__role">Regras, riscos e etapas centrais do credenciamento</p>
             <ul class="person-card__areas">
@@ -213,7 +213,7 @@
               <li>Consulta pública da situação</li>
             </ul>
           </div>
-          <div class="person-card">
+          <div class="person-card" data-member="gabriel" role="button" tabindex="0" aria-haspopup="dialog" aria-label="Gabriel: ver contribuições">
             <p class="person-card__name">Gabriel</p>
             <p class="person-card__role">Entrada da instituição e início do credenciamento</p>
             <ul class="person-card__areas">
@@ -221,7 +221,7 @@
               <li>Pedido de credenciamento e decisão</li>
             </ul>
           </div>
-          <div class="person-card">
+          <div class="person-card" data-member="alison" role="button" tabindex="0" aria-haspopup="dialog" aria-label="Alison: ver contribuições">
             <p class="person-card__name">Alison</p>
             <p class="person-card__role">Permissões e usuários</p>
             <ul class="person-card__areas">
@@ -230,7 +230,7 @@
               <li>Base de usuários</li>
             </ul>
           </div>
-          <div class="person-card">
+          <div class="person-card" data-member="kaique" role="button" tabindex="0" aria-haspopup="dialog" aria-label="Kaique: ver contribuições">
             <p class="person-card__name">Kaique</p>
             <p class="person-card__role">Experiência web, pública e interna</p>
             <ul class="person-card__areas">
@@ -238,7 +238,7 @@
               <li>Estrutura da área interna</li>
             </ul>
           </div>
-          <div class="person-card person-card--mentor">
+          <div class="person-card person-card--mentor" data-member="heitor" role="button" tabindex="0" aria-haspopup="dialog" aria-label="Heitor: ver contribuições">
             <p class="person-card__name">Heitor</p>
             <p class="person-card__role">Mentoria</p>
             <ul class="person-card__areas">
@@ -246,6 +246,7 @@
             </ul>
           </div>
         </div>
+        <p class="people-hint">Clique em um card para ver as contribuições.</p>
       </div>
     </section>
 
@@ -331,8 +332,17 @@
 
   </div>
 
+  <!-- Slide 07: painel expandido dos integrantes. Conteúdo e comportamento em members.js. -->
+  <dialog class="member-modal" id="member-modal" aria-labelledby="member-modal-name">
+    <div class="member-modal__panel" tabindex="-1">
+      <button type="button" class="member-modal__close" aria-label="Fechar painel">&times;</button>
+      <div class="member-modal__body" id="member-modal-body"></div>
+    </div>
+  </dialog>
+
   <script src="https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.min.js"></script>
   <script src="main.js"></script>
   <script src="bg.js"></script>
+  <script src="members.js"></script>
 </body>
 </html>
